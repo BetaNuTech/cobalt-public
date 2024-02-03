@@ -1,0 +1,80 @@
+
+
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+  <span id="date_selection">
+    Showing Conversions for Properties for
+    <input type="text" id="datepicker" value="<%= @date.strftime("%m/%d/%Y") %>">
+  </span>
+<% end %>
+
+<span id="conversions_for_properties_form">
+<%= form_tag conversions_for_properties_path, method: 'get' do %>
+  <%= hidden_field_tag :date, @date.strftime("%m/%d/%Y") %>
+  <%= select_tag :team_code, options_for_select(@team_codes, @team_code) %>
+  <%= submit_tag "Update", class: "btn btn-primary" %>
+<% end %>
+</span>
+
+<div id="severity-scale">
+  <span><strong>Severity Scale: </strong></span>
+  <span class="level-1">1</span><span> </span>
+  <span class="level-2">2</span><span> </span>
+  <span class="level-3">3</span><span> </span>
+  <span class="level-6">4</span>
+</div>
+
+<div id="conversions_for_properties">  
+  <table id="conversions_for_properties_table" class="stripe" width="100%" cellpadding="0" cellspacing="0" border="0" class="table" >
+    <thead>
+      <th>
+        Property
+      </th>
+      <th>
+        Units
+      </th>
+      <th>
+        Occupancy
+      </th>
+      <th>
+        Trending
+      </th>
+      <th>
+        AVG<br>Renewal
+      </th>
+      <th>
+        AVG<br>Decline
+      </th>
+      <th>
+        AVG<br>Conversion
+      </th>
+      <th>
+        AVG<br>Closing
+      </th>
+      <th>
+        Leads<br>Needed
+      </th>
+      <th>
+        Leads<br>Reported
+      </th>
+      <th>
+        BlueSky Leads<span class="info" title="<%= t('conversions_for_properties_descriptions.bluesky_leads') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        ALERT
+      </th>
+      <th>
+        Ideal Leads<span class="info" title="<%= t('conversions_for_properties_descriptions.ideal_leads') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        Blueshift Leads<span class="info" title="<%= t('conversions_for_properties_descriptions.blueshift_leads') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>

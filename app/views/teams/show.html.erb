@@ -1,0 +1,42 @@
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+<% end %>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Property Logo:</strong><br>
+  <%= retina_image_tag(@team.logo, :normal) if @team.logo? %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @team.code %>
+</p>
+
+<p>
+  <strong>Slack Channel:</strong>
+  <%= @team.slack_channel %>
+</p>
+
+<% if @team.slack_channel.present? %>
+  <div>
+    <%= button_to "Send test message to Slack Channel", 
+      send_test_message_to_slack_team_path(@team.id),
+      method: :post %>
+  </div>
+  <br />
+<% end %>
+
+<p>
+  <strong>Active:</strong>
+  <%= @team.active %>
+</p>
+
+
+<%= link_to 'Edit', edit_team_path(@team) %> |
+<%= link_to 'Back', teams_path %>

@@ -1,0 +1,19 @@
+
+
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+  <span id="date_selection">
+    Showing Charts for: <strong><%= @cfa_agent %></strong>
+    <% if @date %> ending on <strong><%= @date %></strong> <% end %>
+  </span>
+<% end %>
+
+<div id="charts">  
+  <% @charts_data.each_with_index do |data, index| %>
+    <div class="cfa_graph_container" <%= data.to_s %>></div>
+  <% end %>
+</div>

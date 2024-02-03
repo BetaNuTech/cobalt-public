@@ -1,0 +1,399 @@
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+  <div id="application_header_second_image"><%= image_tag "blue_shift_maint_logo.png" %></div>
+<% end %>
+
+<input id='current_metric_id' type='hidden' value='<%= @current_metric.id %>'>
+<input id='property_id' type='hidden' value='<%= @property.id %>'>
+<input id='created_on_date' type='hidden' value='<%= @todays_date %>'>
+
+<div id="blue_shift_form">
+  <div id="view_past_blue_shifts">
+    <%= link_to "View past Maintenance BlueShifts", property_maint_blue_shifts_path(property_id: @property.id) %>
+  </div>
+  <br />
+  <% if @property_blueshift_html %>
+    <br />
+    <div id="view_property_blue_shift">
+      <%= @property_blueshift_html.html_safe %>
+    </div>
+  <% end %>
+
+  <br />
+  <br />
+  
+  <div id="archive_container">
+    <% if @blue_shift.archived? %>
+      <span style="color: <%= @blue_shift.archived_status == 'success' ? 'blue' : 'red' %>">
+        
+        <% if @blue_shift.initial_archived_status != @blue_shift.archived_status && @blue_shift.archive_edit_user && @blue_shift.archive_edit_date %>
+          Archived as a <%= @blue_shift.initial_archived_status %>
+          (Overridden as a <%= @blue_shift.archived_status %> by <%= @blue_shift.archive_edit_user.first_name %> <%= @blue_shift.archive_edit_user.last_name %> on <%= @blue_shift.archive_edit_date %>)
+        <% else %> 
+          Archived as a <%= @blue_shift.archived_status %>
+        <% end %>
+        <br />
+        <% if can? :edit_archived_status, @blue_shift %> 
+          <%= form_for [@property, @blue_shift], method: @blue_shift.persisted? ? 'patch' : 'post',
+            url: { action: "archive" } do |f| %>
+            <button id="edit_archive_action">Change</button>
+            <span id="edit_archive_details_container">
+              <br>
+              <span>Change Archived BlueShift to</span>
+              <%= f.radio_button :archived_status, "success", value: "success", class: 'editable'  %>
+              <%= f.label :archived_status_success, "Success" %>
+              <%= f.radio_button :archived_status, "failure", value: "failure", class: 'editable'  %>
+              <%= f.label :archived_status_failure, "Failure" %>
+              
+              <%= f.submit "Submit", class: "editable", 
+                data: { confirm: "Are you sure you wish to update this archive?" } %>
+              <button id="cancel_edit_archive">Cancel</button>
+            </span>
+          <% end %> 
+        <% end %>  
+      </span>
+    <% elsif can? :archive, @blue_shift %>
+      <%= form_for [@property, @blue_shift], method: @blue_shift.persisted? ? 'patch' : 'post',
+        url: { action: "archive" } do |f| %>
+        <button id="archive_action">Archive</button>
+        <span id="archive_details_container">
+          <span>Archive  BlueShift as a</span>
+          <%= f.radio_button :archived_status, "success", value: "success", class: 'editable'  %>
+          <%= f.label :archived_status_success, "Success" %>
+          <%= f.radio_button :archived_status, "failure", value: "failure", class: 'editable'  %>
+          <%= f.label :archived_status_failure, "Failure" %>
+          
+          <%= f.submit "Submit for Archiving", class: "editable", 
+            data: { confirm: "Are you sure you wish to archive this BlueShift?" } %>
+          <button id="cancel_archiving">Cancel</button>
+        </span>
+      <% end %> 
+    <% end %>
+    <% if can? :delete, @blue_shift %>
+      <%= button_to "Delete", 
+        property_maint_blue_shift_path(@blue_shift.property.id, @blue_shift.id), 
+        method: :delete, 
+        data: { confirm: "Are you sure you wish to delete this BlueShift? All data, comments, and images associated with this BlueShift will be deleted as well." },
+        class: "editable" %>
+    <% end %>
+  </div>
+  
+  <% if @blue_shift.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@blue_shift.errors.count, "error") %> prohibited
+        the BlueShift from being saved:
+      </h2>
+      <ul>
+        <% @blue_shift.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <br>
+  <%= form_for [@property, @blue_shift], method: @blue_shift.persisted? ? 'patch' : 'post' do |f| %>
+    <div>
+      <label>
+        <% if @property.type == 'Team' %>
+          TEAM:
+        <% else %>
+          PROPERTY:
+        <% end %>
+      </label>
+      <%= @property.code %>
+    </div>
+    <% if @property.type != 'Team' %>
+      <div>
+      <label>
+        LOCATION:
+      </label>
+      <%= @property.city %>, <%= @property.state %>
+      </div>
+    <% end %>
+    <div>
+      <label>
+        NAME/TITLE:
+      </label>
+      <%= @blue_shift.user.name %>
+    </div>
+    <div>
+      <label>
+        BLUESHIFT CREATION DATE:
+      </label>
+      <span id="created_on_readonly_text">
+        <%= formatted_date(@todays_date) %>
+      </span>
+      <%= f.hidden_field :created_on, value: @todays_date.to_s %>
+    </div>
+    <% if @due_date %>
+      <div>
+        <label>
+          BLUESHIFT DUE DATE:
+        </label>
+        <span>
+          <%= formatted_date(@due_date) %>
+        </span>
+      </div>
+    <% end %>
+
+    <div class="blue_shift_metrics">
+      <span class="level-<%= @current_metric.maintenance_percentage_ready_over_vacant_level %>">
+        Blueshift Date Make Ready:
+        <%= number_to_percentage(@current_metric.maintenance_percentage_ready_over_vacant, precision: 1, strip_insignificant_zeros: true) %>
+      </span>
+      <span class="level-<%= @current_metric.maintenance_open_wos_level %>">
+        Blueshift Date Work Orders:
+        <%= number_with_precision(@current_metric.maintenance_open_wos, precision: 0, strip_insignificant_zeros: true) %>
+      </span>
+    </div>
+    <% if @latest_metric %>
+    <div class="blue_shift_metrics">
+      <span class="level-<%= @latest_metric.maintenance_percentage_ready_over_vacant_level %>">
+        <% if @is_archived_current %>Archived<% else %>Current<% end%> Make Ready:
+        <%= number_to_percentage(@latest_metric.maintenance_percentage_ready_over_vacant, precision: 1, strip_insignificant_zeros: true) %>
+      </span>
+      <span class="level-<%= @latest_metric.maintenance_open_wos_level %>">
+        <% if @is_archived_current %>Archived<% else %>Current<% end%> Work Orders:
+        <%= number_with_precision(@latest_metric.maintenance_open_wos, precision: 0, strip_insignificant_zeros: true) %>
+        </span>
+    </div>
+    <% end %>
+    <p>
+      <strong>
+        MY 
+        <% if @metrics_names_causing_blue_shift.length == 0 %>
+          PAST METRIC
+        <% elsif @metrics_names_causing_blue_shift.length == 1 %>
+            <%= @metrics_names_causing_blue_shift[0].html_safe %>
+        <% elsif @metrics_names_causing_blue_shift.length == 2 %>
+          <%= @metrics_names_causing_blue_shift.join(" AND ").html_safe %>
+        <% elsif @metrics_names_causing_blue_shift.length >= 3 %>
+          <%= @metrics_names_causing_blue_shift[0..@metrics_names_causing_blue_shift.length-2].join(", ").html_safe %>
+          AND <%= @metrics_names_causing_blue_shift[@metrics_names_causing_blue_shift.length-1].html_safe %>
+        <% end %> 
+      
+
+        <%= @metrics_names_causing_blue_shift.length > 1 ? "ARE" : "IS" %>
+        <span class="red">IN THE RED</span> BECAUSE I HAVE:
+      </strong>
+    </p>
+    <div class="blue_shift_section">
+      <strong>
+        A PEOPLE PROBLEM? (unskilled or shortstaffed)
+      </strong>
+      <div class="blue_shift_selection">
+        <%= f.radio_button :people_problem, false, value: false, checked: true,
+          class: can?(:add_maint_blue_shift_problem, @blue_shift, :people_problem) ? 'editable' : '' %> 
+        <%= f.label :people_problem_false do %>
+          <strong>NO</strong>
+        <% end %>
+      </div>
+      <div class="blue_shift_selection">
+        <%= f.radio_button :people_problem, true, value: true,
+          class: can?(:add_maint_blue_shift_problem, @blue_shift, :people_problem) ? 'editable' : ''  %>
+        <%= f.label :people_problem_true do %>
+          <strong>YES</strong>
+        <% end %>
+        <div class="blue_shift_input">
+          <% if can?(:add_maint_blue_shift_problem, @blue_shift, :people_problem) %>
+            <%= f.text_area :people_problem_fix, cols: 90, rows: 10 %>
+          <% else %>
+            <div class="text_area_static_text"><%= simple_format(@blue_shift.people_problem_fix || '') %></div>
+          <% end %>
+
+          <br /><br />        
+          I WILL FIX MY PEOPLE PROBLEM BY 
+          <%= render "editable_date", f: f, 
+            problem: :people_problem,
+            attribute: "people_problem_fix_by",
+            value: @blue_shift.people_problem_fix_by %>
+        </div>
+        <% if @blue_shift.people_problem_comment_thread.present? and @blue_shift.people_problem_comment_thread.persisted? %>    
+          <div>
+            <%= hidden_field_tag 'people_problem_comment_thread_id', 
+              @blue_shift.people_problem_comment_thread.id, class: "comment_thread_id" %>
+            <%= commontator_thread(@blue_shift.people_problem_comment_thread) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    
+    <div class="blue_shift_section">
+      <strong>
+        A VENDOR PROBLEM? (timely delivery of appliances, flooring, services)
+      </strong>
+      <div class="blue_shift_selection">
+        <%= f.radio_button :vendor_problem, false, value: false, checked: true,
+          class: can?(:add_maint_blue_shift_problem, @blue_shift, :vendor_problem) ? 'editable' : '' %> 
+        <%= f.label :vendor_problem_false do %>
+          <strong>NO</strong>
+        <% end %>
+      </div>
+      <div class="blue_shift_selection">
+        <%= f.radio_button :vendor_problem, true, value: true,
+          class: can?(:add_maint_blue_shift_problem, @blue_shift, :vendor_problem) ? 'editable' : ''   %>
+        <%= f.label :vendor_problem_true do %>
+          <strong>YES</strong>
+        <% end %>
+        <div class="blue_shift_input">
+          <% if can?(:add_maint_blue_shift_problem, @blue_shift, :vendor_problem) %>
+            <%= f.text_area :vendor_problem_fix, cols: 90, rows: 10 %>
+          <% else %>
+            <div class="text_area_static_text"><%= simple_format(@blue_shift.vendor_problem_fix || '') %></div>
+          <% end %>
+            
+          <br /><br />        
+          I WILL FIX MY VENDOR PROBLEM BY 
+          <%= render "editable_date", f: f, 
+            problem: :vendor_problem,
+            attribute: "vendor_problem_fix_by",
+            value: @blue_shift.vendor_problem_fix_by %>
+        </div>
+        <% if @blue_shift.vendor_problem_comment_thread.present? and @blue_shift.vendor_problem_comment_thread.persisted? %>
+          <div>
+            <%= hidden_field_tag 'vendor_problem_comment_thread_id', 
+              @blue_shift.vendor_problem_comment_thread.id, class: "comment_thread_id" %>
+            <%= commontator_thread(@blue_shift.vendor_problem_comment_thread) %>
+          </div>
+        <% end %>        
+      </div>  
+    </div>
+    
+    <div class="blue_shift_section">
+      <strong>
+        A PARTS PROBLEM?
+      </strong>
+      <div class="blue_shift_selection">
+        <%= f.radio_button :parts_problem, false, value: false, checked: true,
+          class: can?(:add_maint_blue_shift_problem, @blue_shift, :parts_problem) ? 'editable' : '' %> 
+        <%= f.label :parts_problem_false do %>
+          <strong>NO</strong>
+        <% end %>
+      </div>
+      <div class="blue_shift_selection">
+        <%= f.radio_button :parts_problem, true, value: true,
+          class: can?(:add_maint_blue_shift_problem, @blue_shift, :parts_problem) ? 'editable' : ''   %>
+        <%= f.label :parts_problem_true do %>
+          <strong>YES</strong>
+        <% end %>
+        <div class="blue_shift_input">
+          <% if can?(:add_maint_blue_shift_problem, @blue_shift, :parts_problem) %>
+            <%= f.text_area :parts_problem_fix, cols: 90, rows: 10 %>
+          <% else %>
+            <div class="text_area_static_text"><%= simple_format(@blue_shift.parts_problem_fix || '') %></div>
+          <% end %>
+
+          <% if @show_image_uploads_for_parts %>
+            <div id="part_image_uploads" class="image_uploads">
+              <%  @blue_shift.parts_problem_images.each_with_index do |image, i| %>
+      
+                <% path = image.path %>
+                <% caption = image.caption %>
+                <% url = image.url %>
+                
+                <br />
+                <input type="hidden"
+                  id='blue_shift_parts_problem_image_<%=i%>' 
+                  name='blue_shift[parts_problem_image_<%=i%>]'
+                  value="<%= path %>">
+                  
+                <img src='<%= url%>' class="uploaded_image">
+                <br />
+                Caption 
+                <input type='text' class='image_caption' maxlength='255' 
+                  id='blue_shift_parts_problem_image_caption_<%=i%>' 
+                  name='blue_shift[parts_problem_image_caption_<%=i%>]'
+                  value="<%= caption%>">
+                <br />
+              <% end %>
+            </div>
+          <% end %>
+          
+          <br /><br />        
+          I WILL FIX MY PARTS PROBLEM BY 
+          <%= render "editable_date", f: f, 
+            problem: :parts_problem,
+            attribute: "parts_problem_fix_by",
+            value: @blue_shift.parts_problem_fix_by %>
+        </div>
+        <% if @blue_shift.parts_problem_comment_thread.present? and @blue_shift.parts_problem_comment_thread.persisted? %>
+          <div>
+            <%= hidden_field_tag 'parts_problem_comment_thread_id', 
+              @blue_shift.parts_problem_comment_thread.id, class: "comment_thread_id" %>
+            <%= commontator_thread(@blue_shift.parts_problem_comment_thread) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="blue_shift_section">
+      <%= f.check_box(:need_help) %>
+      <strong>
+        I DON’T HAVE A PROBLEM WITH PEOPLE, VENDORS OR PARTS, BUT I NEED HELP.
+      </strong>
+      <div class="blue_shift_input">
+        <% if @blue_shift.need_help_with %>
+          <div class="text_area_static_text"><%= simple_format(@blue_shift.need_help_with || '') %></div>
+        <% else %>
+          <%= f.text_area(:need_help_with, cols: 90, rows: 10) %>
+        <% end %>
+        
+        <% if @blue_shift.persisted? and @blue_shift.need_help %>
+          <div>
+            <%= hidden_field_tag 'need_help_comment_thread_id', 
+              @blue_shift.need_help_comment_thread.id, class: "comment_thread_id" %>
+            <%= commontator_thread(@blue_shift.need_help_comment_thread) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="blue_shift_section">
+      <%= f.check_box :reviewed, disabled: !can?(:edit_reviewed, @blue_shift) %>
+      <strong>
+        TRS Reviewed
+      </strong>
+    </div>
+    <br />
+    <% if !@form_disabled or can?(:add_maint_blue_shift_problem, @blue_shift, :people_problem) or
+      can?(:add_maint_blue_shift_problem, @blue_shift, :vendor_problem) or
+      can?(:add_maint_blue_shift_problem, @blue_shift, :parts_problem) or 
+      can?(:edit, @blue_shift)%>
+      <%= f.submit class: "editable" %>
+
+      <div id="image_upload_template">
+        <div class="image_upload">
+          <br />
+          <span class="upload_label"></span>
+          <%= f.s3_file_field :parts_problem_image_index, :class => 'js-s3_file_field editable', 
+            key: "uploads/blue_shifts/{timestamp}-{unique_id}/${filename}" %>
+          <div class="progress">
+            <div class="meter" style="width: 0%">
+              Uploading
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    
+  <% end %>
+  
+</div>
+
+<br />
+<br />
+
+<script id="template-upload" type="text/x-tmpl">
+  <div id="file-{%=o.unique_id%}" class="upload">
+    {%=o.name%}
+    <div class="progress"><div class="bar" style="width: 0%"></div></div>
+  </div>
+</script>
+
+<script id="template-download" type="text/x-tmpl">
+
+</script>

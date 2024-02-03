@@ -1,0 +1,135 @@
+
+
+#date_selection {
+  position: absolute;
+  top: 40px;
+  left: 200px;
+  color: white;
+}
+
+#rent_change_reasons {
+  .flash_red.flashing {
+    color: red;
+  }
+  
+  .flash_blue.flashing {
+    color: blue;
+  }
+
+  .flash_red.flashing_background {
+    background-color: red;
+    color: white !important;
+    span, span a {
+      color: white !important;      
+    }
+  }
+  
+  .flash_blue.flashing_background {
+    background-color: blue;
+    color: white !important;
+    span, span a {
+      color: white !important;      
+    }
+  }
+
+
+  .flash_blue.flashing {
+    td, td span, td a {
+      color: white !important;
+      background-color: blue;
+    }
+  }
+  
+  .flash_red.flashing {
+    td, td span, td a {
+      color: white !important;
+      background-color: red;
+    }
+  }
+  
+  a.flash {
+    color: black;
+    text-decoration: none;
+  }
+  
+  a:visited {
+    color: black;
+  }
+  
+  a.blue {
+    color: blue;
+  }
+  
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  table {
+    td {
+      white-space: nowrap;
+    }
+    
+
+    td, th {
+      text-align: left;
+    }
+    
+    th {
+      white-space: nowrap;
+    }
+    
+    th span.info {
+      background: url(image-path('question_mark.png')) no-repeat; background-size: 16px;
+      position:absolute;
+      top: -2px;
+      margin-left: -5px;
+    }
+  }
+
+  table.dataTable.stripe tbody tr.odd{
+    background-color: #F3F3F3 !important;
+  }
+
+  #compliance_issues_table {
+    thead {
+      th span.info {
+        display: none;
+      }
+    }
+    tbody {
+      tr > td:nth-child(3), tr > td:nth-child(9), tr > td:nth-child(10){
+        padding-left: 0px;
+      }
+    }
+  }
+  
+  .compliance_issue_graph_container {
+    border: 1px solid black;
+    left: 20px;
+    background-color: white;
+    z-index: 999999;
+    
+    .chart_title {
+      font-size: 16pt;
+    }
+  }  
+
+  div.dataTables_wrapper {
+    width: 100%;
+    
+    table thead tr {
+      th:nth-child(3), th:nth-child(9), th:nth-child(10) {
+        padding-left: 12px;
+      }
+      
+      th:nth-child(9) {
+        width: 131px;
+      }
+    }
+    
+    .DTFC_LeftBodyLiner {
+      border-bottom: 1px solid #111;
+    }
+  }
+}

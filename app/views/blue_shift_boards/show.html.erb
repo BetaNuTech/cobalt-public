@@ -1,0 +1,259 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<% content_for :header do %>
+    <div id="application_header_logo">
+        <%= link_to root_path, data: { turbolinks: false } do %>
+            <%= show_svg('cobalt_report_white.svg') %>
+        <% end %>
+    </div>
+<% end %>
+
+<div id="hud">
+  <div id="loading"></div>
+</div>
+
+<div id="blue_shift_board_show_container">
+    <% if @property.present? %>
+        <%= hidden_field_tag :property_id, @property.id %>
+    <% end %>
+
+    <%# HEADER %>
+    
+    <%# MANAGER / PROPERTY %>
+    <div id="blue_shift_board_manager_property" class="blue_shift_board_bkg_color_very_light_blue">
+        <div id="blue_shift_board_manager_img"><%= retina_image_tag(@property_manager.profile_image, :thumb) if @property_manager.present? && @property_manager.profile_image? %></div>
+        <div id="blue_shift_board_manager_info" class="blue_shift_board_flex_container_vertical blue_shift_board_bkg_bkg_color_blue">
+            <p id="blue_shift_board_text_manager_name" class="blue_shift_board_color_blue"><%= "#{@property_manager_name}" %></p>
+            <p id="blue_shift_board_text_manager_title" class="blue_shift_board_color_blue">Property Manager</p>
+            <p id="blue_shift_board_text_manager_date" class="blue_shift_board_color_blue"><%= "Since #{@property_manager_start_date}" if @property_manager.present? %></p>
+        </div>
+        <div id="blue_shift_board_property_logo" class="blue_shift_board_flex_container_vertical">
+            <%= retina_image_tag(@property.logo, :normal) if @property.present? && @property.logo? %>
+        </div>
+        <div id="blue_shift_board_property_img"><%= retina_image_tag(@property.image, :normal) if @property.present? && @property.image? %></div>
+        <div id="blue_shift_board_property_info" class="blue_shift_board_flex_container_horizontal_spaced blue_shift_board_bkg_color_blue">
+            <p class="blue_shift_board_color_white blue_shift_board_text_property_info"><%= @property_location %></p>
+            <p class="blue_shift_board_color_white blue_shift_board_text_property_info"><%= @property_num_of_units %></p>
+        </div>
+    </div>
+
+    <%# METRICS %>
+    <div id="blue_shift_board_metrics" class="blue_shift_board_grid_container_metrics blue_shift_board_bkg_color_dark_blue">
+        <% if @blueshift.present? || @blueshift_required %>
+            <div id="blue_shift_board_metrics_trigger" class="blue_shift_board_flex_container_vertical">
+                <p class="blue_shift_board_color_white blue_shift_board_text_metric_descriptor">TRIGGER</p>
+                <p class="blue_shift_board_color_white blue_shift_board_text_metric_date"><%= "#{@blueshift_trigger_date}" %></p>
+                <p class="blue_shift_board_color_<%="#{@blueshift_trigger_occupancy_status}"%> blue_shift_board_text_metric"><%= "#{@blueshift_trigger_occupancy}" %></p>
+                <p class="blue_shift_board_color_white blue_shift_board_text_metric_descriptor">OCCUPANCY</p>
+                <p class="blue_shift_board_color_<%="#{@blueshift_trigger_trending_status}"%> blue_shift_board_text_metric"><%= "#{@blueshift_trigger_trending}" %></p>
+                <p class="blue_shift_board_color_white blue_shift_board_text_metric_descriptor">TRENDING</p>
+                <p class="blue_shift_board_color_<%="#{@blueshift_trigger_basis_status}"%> blue_shift_board_text_metric"><%= "#{@blueshift_trigger_basis}" %></p>
+                <p class="blue_shift_board_color_white blue_shift_board_text_metric_descriptor">BASIS</p>
+            </div>
+        <% else %>
+            <%# SHOW THUMBS UP %>
+            <svg class="blue_shift_board_svg_thumbs_up"><%= show_svg('hand.thumbsup.fill.svg') %></svg>
+        <% end %>
+        <% if @latest_metric.present? %>
+            <div id="blue_shift_board_metrics_latest" class="blue_shift_board_flex_container_vertical">
+                <p class="blue_shift_board_color_white blue_shift_board_text_metric_descriptor">LATEST</p>
+                <p class="blue_shift_board_color_white blue_shift_board_text_metric_date"><%= "#{@latest_metric_date}" %></p>
+                <p class="blue_shift_board_color_<%="#{@latest_metric_occupancy_status}"%> blue_shift_board_text_metric"><%= "#{@latest_metric_occupancy}" %></p>
+                <p class="blue_shift_board_color_white blue_shift_board_text_metric_descriptor">OCCUPANCY</p>
+                <p class="blue_shift_board_color_<%="#{@latest_metric_trending_status}"%> blue_shift_board_text_metric"><%= "#{@latest_metric_trending}" %></p>
+                <p class="blue_shift_board_color_white blue_shift_board_text_metric_descriptor">TRENDING</p>
+                <p class="blue_shift_board_color_<%="#{@latest_metric_basis_status}"%> blue_shift_board_text_metric"><%= "#{@latest_metric_basis}" %></p>
+                <p class="blue_shift_board_color_white blue_shift_board_text_metric_descriptor">BASIS</p>
+            </div>
+        <% end %>
+        <% if @blueshift.present? %>
+            <div id="blue_shift_board_metrics_goal" class="blue_shift_board_flex_container_vertical">
+                <div class="blue_shift_board_text_metric_go_to_blueshift blue_shift_board_color_light_blue">
+                    <a data-turbolinks=false href="<%= property_blue_shift_path(@property.id, @blueshift.id) %>">Go to Blueshift</a>
+                </div> 
+                <p class="blue_shift_board_color_white blue_shift_board_text_metric_descriptor">GOAL</p>
+                <p class="blue_shift_board_color_white blue_shift_board_text_metric_date"><%= "#{@blueshift_goal_date}" %></p>
+                <div class="blue_shift_board_flex_container_horizontal">
+                    <p class="blue_shift_board_color_white blue_shift_board_text_metric"><%= "#{@blueshift_goal_occupancy}" %></p>
+                    <p class="blue_shift_board_color_white blue_shift_board_text_metric">&nbsp;/&nbsp;</p>
+                    <% if @blueshift_goal_occupancy_offset.present? %>
+                        <p class="blue_shift_board_color_alert blue_shift_board_text_metric"><%= "#{@blueshift_goal_occupancy_offset}" %></p>
+                    <% else %>
+                        <svg class="blue_shift_board_svg_star blue_shift_board_text_metric"><%= show_svg('star.fill.svg') %></svg>
+                    <% end %>
+                </div>
+                <p class="blue_shift_board_color_white blue_shift_board_text_metric_descriptor">OCCUPANCY</p>
+                <div class="blue_shift_board_flex_container_horizontal">
+                    <p class="blue_shift_board_color_white blue_shift_board_text_metric"><%= "#{@blueshift_goal_trending}" %></p>
+                    <p class="blue_shift_board_color_white blue_shift_board_text_metric">&nbsp;/&nbsp;</p>
+                    <% if @blueshift_goal_trending_offset.present? %>
+                        <p class="blue_shift_board_color_alert blue_shift_board_text_metric"><%= "#{@blueshift_goal_trending_offset}" %></p>
+                    <% else %>
+                        <svg class="blue_shift_board_svg_star blue_shift_board_text_metric"><%= show_svg('star.fill.svg') %></svg>
+                    <% end %>
+                </div>
+                <p class="blue_shift_board_color_white blue_shift_board_text_metric_descriptor">TRENDING</p>
+                <div class="blue_shift_board_flex_container_horizontal">
+                    <p class="blue_shift_board_color_white blue_shift_board_text_metric"><%= "#{@blueshift_goal_basis}" %></p>
+                    <p class="blue_shift_board_color_white blue_shift_board_text_metric">&nbsp;/&nbsp;</p>
+                    <% if @blueshift_goal_basis_offset.present? %>
+                        <p class="blue_shift_board_color_alert blue_shift_board_text_metric"><%= "#{@blueshift_goal_basis_offset}" %></p>
+                    <% else %>
+                        <svg class="blue_shift_board_svg_star blue_shift_board_text_metric"><%= show_svg('star.fill.svg') %></svg>
+                    <% end %>                </div>
+                <p class="blue_shift_board_color_white blue_shift_board_text_metric_descriptor">BASIS</p>
+            </div>
+        <% elsif @blueshift_required %>
+            <div id="blue_shift_board_metrics_goal" class="blue_shift_board_flex_container_vertical">
+                <div class="blue_shift_board_text_metric_go_to_blueshift blue_shift_board_color_red">
+                    <a data-turbolinks="false" href="<%= new_property_blue_shift_path(property_id: @property.id) %>">Go to Blueshift</a>
+                </div>                
+            </div>
+        <% else %>
+            <%# SHOW SAPPHIRE GRAPHIC %>
+            <div class="blue_shift_board_flex_container_vertical">
+                <%= image_tag(
+                    path_to_image('sapphire_large.png'),
+                    alt: "Sapphire Image",
+                    title: "Sapphire Image",
+                    class: "blue_shift_board_img_sapphire",
+                    srcset: "#{path_to_image('sapphire_large_2x.png')} 2x, #{path_to_image('sapphire_large_3x.png')} 3x" ) %>
+                <div class="blue_shift_board_text_metric_go_to_blueshift blue_shift_board_color_white">
+                    <a data-turbolinks=false href="<%= new_property_blue_shift_path(property_id: @property.id) %>">Go to Blueshift</a>
+                </div> 
+            </div>
+        <% end %>
+        <div class="blue_shift_board_metrics_vertical_bar"></div>
+        <div id="blue_shift_board_metrics_cnoi" class="blue_shift_board_flex_container_vertical">
+            <p class="blue_shift_board_color_<%="#{@latest_metric_cnoi_status}"%> blue_shift_board_text_metric_large"><%= "#{@latest_metric_cnoi}" %></p>
+            <p class="blue_shift_board_color_white blue_shift_board_text_metric_descriptor_large">CNOI</p>
+        </div>
+        <div class="blue_shift_board_metrics_vertical_bar"></div>
+        <div id="blue_shift_board_metrics_days" class="blue_shift_board_flex_container_vertical">
+            <p class="blue_shift_board_color_<%="#{@blueshift_goal_days_status}"%> blue_shift_board_text_metric_days"><%= "#{@blueshift_goal_days}" %></p>
+            <p class="blue_shift_board_color_<%="#{@blueshift_goal_days_status}"%> blue_shift_board_text_metric"><%= "#{@blueShift_goal_days_secondary_text}" %></p>
+        </div>
+    </div>
+
+    <%# WHY? %>
+    <div id="blue_shift_board_why" class="blue_shift_board_flex_container_horizontal blue_shift_board_bkg_color_off_white">
+        <div class="blue_shift_board_why_horz_bar"></div>
+        <p id="blue_shift_board_text_why" class="blue_shift_board_color_dark_blue">WHY?</p>
+        <div class="blue_shift_board_why_horz_bar"></div>
+    </div>
+
+    <%# SECTION SPACER %>
+    <div class="blue_shift_board_why_section_spacer blue_shift_board_bkg_color_dark_blue"></div>
+
+    <%# PEOPLE %>
+    <div id="blue_shift_board_people" class="blue_shift_board_grid_container_ppp_section blue_shift_board_bkg_color_very_light_blue">
+        <%# PEOPLE ICON %>
+        <div class="blue_shift_board_flex_container_vertical">
+            <svg id="blue_shift_board_svg_people"><%= show_svg('people.svg') %></svg>
+            <p class="blue_shift_board_text_why_title blue_shift_board_color_white">PEOPLE</p>
+        </div>
+        <%# BLUESKY - UNCLAIMED LEADS / LEADSPEED / TENACITY %>
+        <div id="bluesky_stats_<%= @property.id %>" class="blue_shift_board_people_stats blue_shift_board_flex_container_vertical">
+            <%= render partial: 'properties/bluesky_stats', locals: {property: @property, on_date: nil} %>
+        </div>
+
+        <%# LEASING AGENTS TABLE %>
+        <div>
+            <div id="blue_shift_board_people_table">
+                <%= render 'leasing_agents_table'%>
+            </div>
+
+            <br>
+
+            <%# RECRUITING TABLE %>
+            <div id="blue_shift_board_people_workable_jobs_table">
+                <%= render 'workable_jobs_table'%>
+            </div>
+        </div>
+    </div>
+
+    <%# SECTION SPACER %>
+    <div class="blue_shift_board_why_section_spacer blue_shift_board_bkg_color_dark_blue"></div>
+
+
+    <%# PRODUCT %>
+    <div id="blue_shift_board_product" class="blue_shift_board_grid_container_ppp_section blue_shift_board_bkg_color_very_light_blue">
+        <%# PRODUCT ICON %>
+        <div class="blue_shift_board_flex_container_vertical">
+            <svg id="blue_shift_board_svg_product"><%= show_svg('doc.text.magnifyingglass.svg') %></svg>
+            <p class="blue_shift_board_text_why_title blue_shift_board_color_white">PRODUCT</p>
+        </div>
+
+        <%# LATEST INSPECITON AND DEFICIENT ITEMS %>
+        <div id="property_latest_inspection_and_deficients_<%= @property.id %>" class="blue_shift_board_product_sparkle blue_shift_board_flex_container_vertical_space_evenly">
+            <%= render partial: 'properties/latest_inspection_and_deficients', locals: {property: @property } %>
+        </div>
+
+        <%# TURNS FOR PROPERTY GRAPHIC %>
+        <%# Copied from maint_bluebot_turns_goal_template.htm %>
+        <% if @turns_for_property_data.present? %>
+        <div id="blue_shift_board_people_turns_for_property" class="blue_shift_board_grid_container_turns_for_property blue_shift_board_bkg_color_dark_blue">
+            <div id="div-left">
+                <strong><p class="turns-header blue_shift_board_color_white">9-day turn history</p></strong>
+                <strong><p id="turns-metric" class="blue_shift_board_color_light_blue"><%= @turns_for_property_data[:metric].html_safe %></p></strong>
+                <div id="progress-bar" class="w3-panel w3-large">
+                <div id="progress-bar-inner" class="w3-container w3-center blue_shift_board_color_white blue_shift_board_bkg_color_light_blue" style="width:<%= @turns_for_property_data[:progress_bar_value] %>%"><%= @turns_for_property_data[:percent].html_safe %>%</div>
+                </div>
+                <%= @turns_for_property_data[:status_html].html_safe %>
+            </div>
+
+            <div id="vertical-bar" class="blue_shift_board_bkg_color_white"></div>
+
+            <div id="div-right">
+                <strong><p class="turns-header blue_shift_board_color_white">To do in <em>next</em> 9 days</p></strong>
+                <strong><p id="turns-todo-next" class="blue_shift_board_color_light_blue"><%= @turns_for_property_data[:todo].html_safe %></p></strong>
+            </div>
+        </div>
+        <% end %>
+    </div>
+
+    <%# SECTION SPACER %>
+    <div class="blue_shift_board_why_section_spacer blue_shift_board_bkg_color_dark_blue"></div>
+
+    <%# PRICE %>
+    <div id="blue_shift_board_price" class="blue_shift_board_grid_container_ppp_section blue_shift_board_bkg_color_very_light_blue">
+        <%# PRODUCT ICON %>
+        <div class="blue_shift_board_flex_container_vertical">
+            <svg id="blue_shift_board_svg_price"><%= show_svg('dollarsign.square.svg') %></svg>
+            <p class="blue_shift_board_text_why_title blue_shift_board_color_white">PRICE</p>
+        </div>
+
+        <%# SURVEY DATE & LEADS NEEDED/RECEIVED %>
+        <div class="blue_shift_board_price_survey_and_leads blue_shift_board_flex_container_vertical">
+            <div class="latest_inspection_and_deficients_flex_container_horizontal_space_evenly"> 
+                <div class="blue_shift_board_text_price_survey_date_title blue_shift_board_color_white">SURVEY:</div>
+                <div class="blue_shift_board_text_price_survey_date blue_shift_board_color_<%= @latest_comp_survey_date.nil? ? "alert" : "blue" %>">
+                    <%= @latest_comp_survey_date.nil? ? 'Survey Missing' : @latest_comp_survey_date.strftime("%m/%d/%Y") %>
+                </div>
+            </div>
+            <div class="blue_shift_board_price_leads_needed blue_shift_board_flex_container_horizontal_spaced">
+                <p class="blue_shift_board_price_leads_title blue_shift_board_color_dark_blue">LEADS NEEDED</p>
+                <p class="blue_shift_board_price_leads_data blue_shift_board_color_<%= @property_conversions_data_alert ? 'alert' : 'white' %>"><%= @property_conversions_data[:num_of_leads_needed].to_i %></p>
+            </div>
+            <div class="blue_shift_board_price_leads_received blue_shift_board_flex_container_horizontal_spaced">
+                <p class="blue_shift_board_price_leads_title blue_shift_board_color_dark_blue">LEADS RECEIVED</p>
+                <p class="blue_shift_board_price_leads_data blue_shift_board_color_white"><%= @property_conversions_data[:prospects_30days].to_i %></p>
+            </div>
+        </div>
+
+        <%# UNIT TYPE PRICES %>
+        <div id="blue_shift_board_price_table">
+            <%= render 'unit_types_table'%>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function show_hud() {
+        $('#hud').show();
+    }
+    $(document).ready(function() {
+        $('#hud').hide();
+    });
+</script>

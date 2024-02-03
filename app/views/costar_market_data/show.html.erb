@@ -1,0 +1,88 @@
+
+
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+  <span id="header_title">Costar Market Data</span>
+<% end %>
+
+<span id="costar_market_data_form">
+<%= form_for(@date_form, url: costar_market_data_path, method: :get) do |form| %>
+  <%= form.label :import_date, 'Import Date', class: "costar_market_data_form_label" %>
+  <%= form.select :import_date, costar_market_data_date_selections(@date_form.import_date) %>
+  <%= form.submit "Update", class: "costar_market_data_form_button" %>
+<% end %>
+&nbsp;
+</span>
+
+<div id="costar_market_data">  
+  <table id="costar_market_data_table" class="stripe" width="100%" cellpadding="0" cellspacing="0" border="0" class="table" >
+    <thead>
+      <th>
+        Property
+      </th>
+      <th>
+        CNR
+      </th> 
+      <th>
+        Comp<br/>Occupancy
+      </th>
+      <th>
+        Our<br/>Occupancy
+      </th>
+      <th>
+        Comp<br/>Rent
+      </th>
+      <th>
+        Change
+      </th>
+      <th>
+        Our<br/>Rent
+      </th>     
+      <th>
+        Comp<br/>1br<br/>Rent
+      </th>
+      <th>
+        Change
+      </th>
+      <th>
+        Our<br/>1br<br/>Rent
+      </th>
+      <th>
+        Comp<br/>2br<br/>Rent
+      </th>
+      <th>
+        Change
+      </th>
+      <th>
+        Our<br/>2br<br/>Rent
+      </th>
+      <th>
+        Comp<br/>3br<br/>Rent
+      </th>
+      <th>
+        Change
+      </th>
+      <th>
+        Our<br/>3br<br/>Rent
+      </th>
+      <th>
+        Survey<br/>Date
+      </th>
+      <th>
+        Survey<br/>1br
+      </th>
+      <th>
+        Survey<br/>2br
+      </th>
+      <th>
+        Survey<br/>3br
+      </th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>

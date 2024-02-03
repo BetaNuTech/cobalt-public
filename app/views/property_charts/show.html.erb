@@ -1,0 +1,26 @@
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+  <span id="date_selection">
+    Showing Charts for Property: <strong><%= @property.full_name %></strong>
+    <% if @date %> ending on <strong><%= @date %></strong> <% end %>
+  </span>
+<% end %>
+
+<% if @overlay_chart_data %>
+  <button id="overlay_button">Show/Hide Overlay Graph</button>
+<% end %>
+
+<div id="charts">  
+  <% @charts_data.each_with_index do |data, index| %>
+    <div class="metric_graph_container" <%= data.to_s %>></div>
+    <% if @overlay_chart_data && @overlay_chart_data_index_only.nil? %>
+      <div class="metric_overlay_graph_container" <%= @overlay_chart_data.to_s %>></div>
+    <% elsif !@overlay_chart_data_index_only.nil? && @overlay_chart_data_index_only == index %>
+        <div class="metric_overlay_graph_container" <%= @overlay_chart_data.to_s %>></div>
+    <% end %>
+  <% end %>
+</div>

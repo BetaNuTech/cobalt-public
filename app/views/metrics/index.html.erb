@@ -1,0 +1,157 @@
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+  <span id="date_selection">
+    Showing metrics for
+    <input type="text" id="datepicker" value="<%= @date.strftime("%m/%d/%Y") %>">
+  </span>
+<% end %>
+
+<div id="hud">
+  <div id="loading"></div>
+</div>
+
+<div id="metrics">
+
+  <div id="metrics_left_panel" style="float: left; display=block; margin-right: 10px;">
+    <% if !@team_id.nil? %>
+      <%= button_to "#{current_user.view_all_properties ? 'View Team Properties' : 'View All Properties'}", toggle_team_ui_path, remote: true %>
+    <% end %>
+    <% if !current_user.view_all_properties && @team_codes.count > 0 %>
+      <%= form_tag metrics_path, method: 'get' do %>
+        <%= select_tag :team_code, options_for_select(@team_codes) %>
+        <%= submit_tag "View Team", class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+
+    <div style="float: none; display=block;">
+        <%= form_tag property_charts_path, method: 'get' do %>
+          <%= hidden_field_tag :property_charts_date, @date %>
+          <%= select_tag :code, options_for_select(@property_codes) %>
+          <%= submit_tag "View Charts", class: "btn btn-primary" %>
+        <% end %>
+    </div>   
+
+    <div style="float: none; display=block; margin-bottom: 10px;">
+      <%= form_tag metric_attribute_charts_path, method: 'post' do %>
+        <%= hidden_field_tag :metric_attribute_charts_date, @date %>
+        <%= select_tag :attribute, options_for_select(@chart_metric_attributes) %>
+        <%= submit_tag "View Charts", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+
+  <% if @maint_user %>
+    <%= button_to "Go to Manager View", {:controller => "metrics", :action => "index"}, :method => :get, params: {manager_view: "true"} %>
+  <% else %>
+    <div style="float: none; display=block; margin-bottom: 4px;">
+        <%= @conversions_for_properties_link %>
+    </div>
+    <div style="float: none; display=block; margin-bottom: 4px;">
+      <%= @bluebot_rollup_report_link %>
+    </div>
+    <div style="float: none; display=block; margin-bottom: 4px;">
+      <%= @costar_market_data_link %>
+    </div>
+    <div style="float: none; display=block; margin-bottom: 4px;">
+      <%= @collections_details_link %>
+    </div>
+    <% if can?(:show_workable_jobs, WorkableJob.new())  %>
+      <div style="float: none; display=block; margin-bottom: 4px;">
+        <%= @recruiting_link %>
+      </div>
+    <% end %>
+
+  <% end %>
+
+  <input id="maint_user" type='hidden' value='<%= @maint_user %>'>
+  <input id="manager_view" type='hidden' value='<%= @manager_view %>'>
+  
+  <div id="metrics_severity-scale">
+    <span><strong>Severity Scale: </strong></span>
+    <span class="level-1">1</span><span> </span>
+    <span class="level-2">2</span><span> </span>
+    <span class="level-3">3</span><span> </span>
+    <span class="level-6">4</span>
+  </div>
+
+  <% if @maint_user %>
+  <table id="metrics_table" class="stripe" width="100%" cellpadding="0" cellspacing="0" border="0" class="table" >
+    <thead>
+      <th>
+        Property<span class="info" title="<%= t('metric_descriptions.property') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        CNOI<span class="info" title="<%= t('metric_descriptions.cnoi') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        Make Ready<span class="info" title="<%= t('metric_descriptions.maintenance') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span></th>
+      <th>
+        WOs<span class="info" title="<%= t('metric_descriptions.work_orders') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span></th>
+      <th>
+        Renewals<span class="info" title="<%= t('metric_descriptions.renewals') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        Occupancy<span class="info" title="<%= t('metric_descriptions.occupancy') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        Trending<span class="info" title="<%= t('metric_descriptions.trending') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <% else %>
+  <table id="metrics_table" class="stripe" width="100%" cellpadding="0" cellspacing="0" border="0" class="table" >
+    <thead>
+      <th>
+        Property<span class="info" title="<%= t('metric_descriptions.property') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        CNR<span class="info" title="<%= t('metric_descriptions.basis') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        CNOI<span class="info" title="<%= t('metric_descriptions.cnoi') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        Trending<span class="info" title="<%= t('metric_descriptions.trending') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        Occupancy<span class="info" title="<%= t('metric_descriptions.occupancy') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        Average Rents<span class="info" title="<%= t('metric_descriptions.average_rents') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        Concessions<span class="info" title="<%= t('metric_descriptions.concessions') %>"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        Renewals<span class="info" title="<%= t('metric_descriptions.renewals') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        Collections<span class="info" title="<%= t('metric_descriptions.collections') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>&nbsp;</th>
+      <th>
+        Make Ready<span class="info" title="<%= t('metric_descriptions.maintenance') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span></th>
+      <th>
+        WOs<span class="info" title="<%= t('metric_descriptions.work_orders') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span></th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <% end %>
+</div>
+
+
+<script>
+    function show_hud() {
+        $('#hud').show();
+    }
+    $(document).ready(function() {
+        $('#hud').hide();
+    });
+</script>

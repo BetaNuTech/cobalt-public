@@ -1,0 +1,348 @@
+#header {
+  img:nth-child(2) {
+    margin-left: 20px;
+  }
+}
+
+#blue_shift_show_container .thread, #blue_shift_form {
+  margin-left: 10px;
+  width: 800px;
+}
+
+#blue_shift_form {
+  
+  #view_past_blue_shifts {
+    float: left; 
+    width: 30%;
+  }
+
+  #view_maint_blue_shift {
+    float: left; 
+    width: 30%;
+  }
+  
+  #archive_container {
+    float: none; 
+    text-align: right; 
+    width: 100%;
+    #archive_details_container {
+      display: none;
+    }
+    #edit_archive_details_container {
+      display: none;
+    }
+
+    form {
+      margin-left: 10px;
+      display: inline;
+    }
+  }
+  
+  fieldset {
+    border: none;
+  }
+  
+  input:disabled, textarea:disabled {
+    opacity: 0.9;
+    // -webkit-text-fill-color:#000000;
+  }
+  
+  .change_date {
+    margin-left: 15px;
+  }
+  
+  .blue_shift_metrics {
+    display: table;
+    table-layout: fixed; /*Optional*/
+    width: 100%;    
+    span {
+      display: table-cell;
+      width: 240px;
+    }
+  }
+  .blue_shift_section {
+    margin-top: 30px;
+    .blue_shift_selection {
+      margin-top: 6px;
+    }
+  }
+  
+  .blue_shift_input {
+    margin-top: 6px;
+    display: none;
+  }
+
+  .inspection_section {
+    margin-left: 6px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .inspection_title {
+    color:blue;
+    display: inline;
+    padding-left: 12px;
+    padding-right: 6px;
+  }
+
+  .inspection_report {
+    display: inline;
+    padding-left: 12px;
+  }
+  
+  .inspection_alert {
+    color:red;
+    display: inline;
+    padding-left: 12px;
+  }
+
+  .survey_average_days_section {
+    margin-left: 6px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .survey_average_days_title {
+    color:black;
+    display: inline;
+    padding-left: 12px;
+    padding-right: 6px;
+  }
+
+  .no_survey_done_section {
+    margin-left: 6px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .no_survey_done_title {
+    color:black;
+    display: inline;
+    padding-left: 12px;
+    padding-right: 6px;
+  }
+
+  span[data-rent-change-reasons] {
+    cursor: pointer;
+  }
+  
+  .image_uploads {
+    img {
+      max-width: 100%;
+    }
+  }
+  
+  .progress {
+    width: 300px;
+    display: inline-block;
+    border: 1px solid black;
+    .meter {
+      background-color: #58B957;
+      height: 20px;
+      display: inline-block;
+    }
+  }
+  
+  #image_upload_template {
+    display: none;
+  }
+  .image_caption {
+    width: 200px;
+  }
+
+  .text_area_static_text {
+    background-color: lightgray;
+  }
+}
+
+#audit_line_items {
+  font-size: 12px;
+}
+
+textarea {
+  font-size: 13px;
+}
+
+#rent_change_reasons {
+  .flash_red.flashing {
+    color: red;
+  }
+  
+  .flash_blue.flashing {
+    color: blue;
+  }
+
+  .flash_red.flashing_background {
+    background-color: red;
+    color: white !important;
+    span, span a {
+      color: white !important;      
+    }
+  }
+  
+  .flash_blue.flashing_background {
+    background-color: blue;
+    color: white !important;
+    span, span a {
+      color: white !important;      
+    }
+  }
+
+
+  .flash_blue.flashing {
+    td, td span, td a {
+      color: white !important;
+      background-color: blue;
+    }
+  }
+  
+  .flash_red.flashing {
+    td, td span, td a {
+      color: white !important;
+      background-color: red;
+    }
+  }
+  
+  a.flash {
+    color: black;
+    text-decoration: none;
+  }
+  
+  a:visited {
+    color: black;
+  }
+  
+  a.blue {
+    color: blue;
+  }
+  
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  table {
+    td {
+      white-space: nowrap;
+      span[data-unit-type-rent-history] {
+        cursor: pointer;
+      }
+    }
+    
+
+    td, th {
+      text-align: left;
+    }
+    
+    th {
+      white-space: nowrap;
+    }
+    
+    th span.info {
+      background: url(image-path('question_mark.png')) no-repeat; background-size: 16px;
+      position:absolute;
+      top: -2px;
+      margin-left: -5px;
+    }
+  }
+
+  table.dataTable.stripe tbody tr.odd{
+    background-color: #F3F3F3 !important;
+  }
+  
+  .rent_change_reason_graph_container {
+    border: 1px solid black;
+    left: 20px;
+    background-color: white;
+    z-index: 999999;
+    
+    .chart_title {
+      font-size: 16pt;
+    }
+  }  
+
+  div.dataTables_wrapper {
+    width: 100%;
+    
+    table thead tr {
+      th:nth-child(3), th:nth-child(9), th:nth-child(10) {
+        padding-left: 12px;
+      }
+      
+      th:nth-child(9) {
+        width: 131px;
+      }
+    }
+    
+    .DTFC_LeftBodyLiner {
+      border-bottom: 1px solid #111;
+    }
+  }
+}
+
+a#people_problem_video, a#pricing_problem_video, a#product_problem_video {
+  display: inline-block;
+  margin-left: 8px;
+  margin-bottom: -5px;
+  width: 30px; 
+  height: 21px; 
+  background-image: url(image-path('BlueTubeIcon_small.png'));
+}
+
+
+/* Popup container */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  color: blue;
+}
+
+/* The actual popup (appears on top) */
+.popup .popuptext {
+  visibility: hidden;
+  width: 500px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 20%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}

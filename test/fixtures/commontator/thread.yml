@@ -1,0 +1,4 @@
+default_pricing_problem:
+  id: 1
+  commontable_type: "BlueShift"
+  commontable_id: 1

@@ -1,0 +1,16 @@
+<% if @form_disabled and cannot?(:add_blue_shift_problem, @blue_shift, problem) %>
+  <span class="readonly_date">
+    <%= formatted_date(value) %>
+  </span>
+  
+  <% if can?(:edit, @blue_shift)  %>
+    <span class="change_date">
+      <%= f.label attribute, "Change: " %>
+      <%= f.text_field(attribute, class: 'editable',
+        value: formatted_date(value), data: {
+        attribute: attribute }) %>
+    </span>
+  <% end %>
+<% else %>
+  <%= f.text_field(attribute, class: 'date editable', value: formatted_date(value)) %>
+<% end %>

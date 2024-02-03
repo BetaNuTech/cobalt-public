@@ -1,0 +1,46 @@
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+<% end %>
+
+<div id="workable_jobs_edit_container">
+  <%= form_for(@workable_job) do |f| %>
+    <% if @workable_job.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@workable_job.errors.count, "error") %> prohibited this property from being saved:</h2>
+
+        <ul>
+        <% @workable_job.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <h3>Hired Candidate Name: <strong><%= @workable_job.hired_candidate_name%></strong></h3>
+    
+    <div class="field">
+      <%= f.label :employee_first_name_override, 'Employee First Name (Override)' %><br>
+      <%= f.text_field :employee_first_name_override %>
+    </div>
+    <div class="field">
+      <%= f.label :employee_last_name_override, 'Employee Last Name (Override)' %><br>
+      <%= f.text_field :employee_last_name_override %>
+    </div>
+    <div class="field">
+      <%= f.check_box :employee_ignore %>
+      <%= f.label :employee_ignore, "Ignore Employee - exclude employee from metrics & tracking" %>
+    </div>
+
+    <br>
+
+    <p><i>NOTE: Add/Updating the Employee Name Override will not take effect immedidately</i></p>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
+</div>

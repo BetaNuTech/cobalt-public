@@ -1,0 +1,69 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+        <%= show_svg('cobalt_collections_white.svg') %>
+      <% end %>
+  </div>
+<% end %>
+
+<input id='timestamp_string' type='hidden' value='<%= @timestamp_string %>'>
+
+<span id="date_selection">
+  Showing collections for
+  <input type="text" id="datepicker" value="<%= @date.strftime("%m/%d/%Y") %>">
+</span>
+
+<div id="collections_details_timestamp">
+  <span id="collections_details_arrows"><%= @back_arrow_html %><%= @forward_arrow_html %></span>UPDATED: <span id='timestamp_localized'></span>
+</div>
+
+<span id="collections_details_form">
+<%= form_tag collections_details_path, method: 'get' do %>
+  <%= select_tag :team_code, options_for_select(@team_codes, @team_code) %>
+  <%= submit_tag "Update", class: "btn btn-primary" %>
+<% end %>
+</span>
+
+<div id="severity-scale">
+  <span><strong>Severity Scale: </strong></span>
+  <span class="level-1">1</span><span> </span>
+  <span class="level-2">2</span><span> </span>
+  <span class="level-3">3</span><span> </span>
+  <span class="level-6">4</span>
+</div>
+
+
+<div id="collections_details">  
+  <table id="collections_details_table" class="stripe" width="100%" cellpadding="0" cellspacing="0" border="0" class="table" >
+    <thead>
+      <th>
+        Property
+      </th>
+      <th>
+        Occ / ADO / T60<span class="info" title="<%= t('collections_details_descriptions.occ_trend') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        Collections<span class="info" title="<%= t('collections_details_descriptions.collections') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        Unknown<span class="info" title="<%= t('collections_details_descriptions.unknown') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        Payment<span class="info" title="<%= t('collections_details_descriptions.payment_plan') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span><br>Plan
+      </th>
+      <th>
+        Paid<span class="info" title="<%= t('collections_details_descriptions.paid_in_full') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span><br>in Full
+      </th>
+      <th>
+        Evictions<span class="info" title="<%= t('collections_details_descriptions.evictions') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </th>
+      <th>
+        Past Due /<br>Covid Adjusted
+      </th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,76 @@
+
+
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+  <span id="header_title">Rent Change Reasons for <strong><%=@property_name%></strong> on <strong><%=@date%></strong></span>
+<% end %>
+
+<div id="severity-scale">
+  <span><strong>Severity Scale: </strong></span>
+  <span class="level-1">1</span><span> </span>
+  <span class="level-2">2</span><span> </span>
+  <span class="level-3">3</span><span> </span>
+  <span class="level-6">4</span>
+</div>
+
+<div id="rent_change_reasons">  
+  <table id="rent_change_reasons_table" class="stripe" width="100%" cellpadding="0" cellspacing="0" border="0" class="table" >
+    <thead>
+      <th>
+        Unit Type
+      </th>
+      <th>
+        Old<br>Market<br>Rent
+      </th>
+      <th>
+        New<br>Rent
+      </th>
+      <th>
+        Net<br>Effective<br>Avg. Rent
+      </th>
+      <th>
+        Comp<br>Market<br>Rent
+      </th>
+      <th>
+        Last<br>Three<br>Rent
+      </th>
+      <th>
+        %<br>Change
+      </th>
+      <th>
+        Change<br>Amount
+      </th>
+      <th>
+        Trigger
+      </th>
+      <th>
+        Next<br>Month
+      </th>
+      <th>
+        Two<br>Months
+      </th>
+      <th>
+        Three<br>Months
+      </th>
+      <th>
+        Days Since<br>Last Survey
+      </th>
+      <th>
+        Units<br>
+        Vacant<br>
+        Unrented
+      </th>
+      <th>
+        Units<br>
+        Notice<br>
+        Unrented
+      </th>    
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,58 @@
+
+#collections_non_eviction_past20_details {  
+  table {
+    td {
+      white-space: nowrap;
+    }
+
+    td, th {
+      text-align: left;
+    }
+    
+    th {
+      white-space: nowrap;
+    }
+    
+    th span.info {
+      background: url(image-path('question_mark.png')) no-repeat; background-size: 16px;
+      position:absolute;
+      top: -2px;
+      margin-left: -5px;
+    }
+  }
+
+  table.dataTable.stripe tbody tr.odd{
+    background-color: #F3F3F3 !important;
+  }
+
+  #collections_non_eviction_past20_details_table {
+    thead {
+      th span.info {
+        display: none;
+      }
+    }
+    tbody {
+      tr > td:nth-child(3), tr > td:nth-child(9), tr > td:nth-child(10){
+        padding-left: 0px;
+      }
+    }
+  } 
+
+  div.dataTables_wrapper {
+    width: 100%;
+    
+    table thead tr {
+      th:nth-child(3), th:nth-child(9), th:nth-child(10) {
+        padding-left: 12px;
+      }
+      
+      th:nth-child(9) {
+        width: 131px;
+      }
+    }
+    
+    .DTFC_LeftBodyLiner {
+      border-bottom: 1px solid #111;
+    }
+  }
+}

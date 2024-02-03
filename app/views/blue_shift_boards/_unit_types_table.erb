@@ -1,0 +1,16 @@
+<%# TABLE HEADER %>
+<div id="blue_shift_board_price_table_header" class="blue_shift_board_bkg_color_white blue_shift_board_grid_container_price_table_header">
+    <p class="blue_shift_board_color_blue blue_shift_board_text_price_table_header" >Unit Type</p>
+    <p class="blue_shift_board_color_blue blue_shift_board_text_price_table_header" >Us</p>
+    <p class="blue_shift_board_color_blue blue_shift_board_text_price_table_header" >Comp</p>
+    <p class="blue_shift_board_color_blue blue_shift_board_text_price_table_header" >Last Change</p>
+</div>
+<% @price_unit_types_data.each_with_index do |element, index| %>
+    <div class="blue_shift_board_price_table_row blue_shift_board_bkg_color_price_table_row_<%= index.odd? ? 'odd' : 'even' %> blue_shift_board_grid_container_price_table_row">
+        <p class="blue_shift_board_color_white blue_shift_board_text_price_table_row_first"><%=element[:unit_type_code]%> (<%= element[:num_of_units]%>,<span class="blue_shift_board_color_<%= element[:units_vacant_not_leased_alert] ? 'alert' : 'white' %>"><%= element[:units_vacant_not_leased]%></span>V,<span class="blue_shift_board_color_<%= element[:units_on_notice_not_leased_alert] ? 'alert' : 'white' %>"><%= element[:units_on_notice_not_leased]%></span>N)</p>
+        <p class="blue_shift_board_color_<%= element[:last_change_alert] ? 'alert' : 'white' %> blue_shift_board_text_price_table_row"><%= element[:net_effective_avg_rent] %></p>
+        <p class="blue_shift_board_color_white blue_shift_board_text_price_table_row"><%= element[:market_rent] %></p>
+        <p class="blue_shift_board_color_<%= element[:last_change_alert] ? 'alert' : 'white' %> blue_shift_board_text_price_table_row"><%= element[:last_change_amount] %></p>
+        <p class="blue_shift_board_color_white blue_shift_board_text_price_table_row"><%= element[:last_change_date] %></p>
+    </div>
+<% end %>

@@ -1,0 +1,525 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<% content_for :header do %>
+    <div id="application_header_logo">
+        <%= link_to root_path, data: { turbolinks: false } do %>
+            <%= show_svg('cobalt_recruiting_white.svg') %>
+        <% end %>
+    </div>
+<% end %>
+
+<div id="workable_jobs_index_container">
+
+    <div id="workable_jobs_export"><%= button_to "Export Jobs", workable_jobs_export_path(format: "csv"), method: :post %></div>
+
+    <div id="workable_jobs_alert_counts">
+        <span class="workable_jobs_alert_count workable_jobs_bkg_color_red workable_jobs_color_white"><%= @alerts_lvl2_count %></span>
+        <span class="workable_jobs_alert_count workable_jobs_bkg_color_darkorange workable_jobs_color_white"><%= @alerts_lvl1_count %></span>
+        <%= form_tag workable_jobs_path, method: 'get' do %>
+            <%= select_tag :sort_by, options_for_select(@sort_options, @sort_option_selected) %>
+            <%= submit_tag "Update Sort", class: "btn btn-primary" %>
+        <% end %>
+    </div>
+
+
+    <%# STATS %>
+    <div id="workable_jobs_stats_section" class="workable_jobs_grid_container_stats_section workable_jobs_bkg_color_dark_blue">
+        <%# OPEN %>
+        <div class="workable_jobs_open_jobs workable_jobs_flex_container_vertical">
+            <p class="workable_jobs_color_white workable_jobs_text_open_360_jobs"><%= @open_360_jobs_count %> </p>
+            <p class="workable_jobs_color_white workable_jobs_text_open_jobs_descriptor">360 JOBS</p>
+            <p class="workable_jobs_color_white workable_jobs_text_open_property_jobs"><%= @open_property_jobs_count %></p>
+            <p class="workable_jobs_color_white workable_jobs_text_open_jobs_descriptor">PROPERTY JOBS</p>
+        </div>
+        <div class="workable_jobs_metrics_vertical_bar"></div>
+        <%# ALL %>
+        <div class="workable_jobs_stats workable_jobs_flex_container_vertical">
+            <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_large">ALL</p>
+            <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor">hired | days2fill | days2start</p>
+            <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor">accept. | employed 90d+ (#)</p>
+            <div class="workable_jobs_stats_box">
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @all_closed_all_stats[:hired_count] %> | <span class="workable_jobs_color_<%= @all_closed_all_stats[:avg_time_to_fill_color]%>"><%= @all_closed_all_stats[:avg_time_to_fill] %></span> | <span class="workable_jobs_color_<%= @all_closed_all_stats[:avg_time_to_start_color]%>"><%= @all_closed_all_stats[:avg_time_to_start] %></span></p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @all_closed_all_stats[:avg_acceptance] %>% | <%= @all_closed_all_stats[:employed_ninty_plus_days] %>% (<%= @all_closed_all_stats[:employees_employed_over_90_days_ago] %>)</p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_medium">All</p>
+            </div>
+            <div class="workable_jobs_stats_box">
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @all_closed_360_stats[:hired_count] %> | <span class="workable_jobs_color_<%= @all_closed_360_stats[:avg_time_to_fill_color]%>"><%= @all_closed_360_stats[:avg_time_to_fill] %></span> | <span class="workable_jobs_color_<%= @all_closed_360_stats[:avg_time_to_start_color]%>"><%= @all_closed_360_stats[:avg_time_to_start] %></span></p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @all_closed_360_stats[:avg_acceptance] %>% | <%= @all_closed_360_stats[:employed_ninty_plus_days] %>% (<%= @all_closed_360_stats[:employees_employed_over_90_days_ago] %>)</p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_medium">360</p>
+            </div>
+            <% @all_closed_property_by_team_stats.each do |jobs_of_team| %>
+                <div class="workable_jobs_stats_box">
+                    <p class="workable_jobs_color_white workable_jobs_text_metric"><%= jobs_of_team[:hired_count] %> | <span class="workable_jobs_color_<%= jobs_of_team[:avg_time_to_fill_color]%>"><%= jobs_of_team[:avg_time_to_fill] %></span> | <span class="workable_jobs_color_<%= jobs_of_team[:avg_time_to_start_color]%>"><%= jobs_of_team[:avg_time_to_start] %></span></p>
+                    <p class="workable_jobs_color_white workable_jobs_text_metric"><%= jobs_of_team[:avg_acceptance] %>% | <%= jobs_of_team[:employed_ninty_plus_days] %>% (<%= jobs_of_team[:employees_employed_over_90_days_ago] %>)</p>
+                    <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_medium"><%= jobs_of_team[:team] %></p>
+                </div>
+            <% end %>
+        </div>
+        <div class="workable_jobs_metrics_vertical_bar"></div>
+        <%# YTD %>
+        <div class="workable_jobs_stats workable_jobs_flex_container_vertical">
+            <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_large">YTD</p>
+            <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor">hired | days2fill | days2start</p>
+            <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor">accept. | employed 90d+ (#)</p>
+            <div class="workable_jobs_stats_box">
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @ytd_closed_all_stats[:hired_count] %> | <span class="workable_jobs_color_<%= @ytd_closed_all_stats[:avg_time_to_fill_color]%>"><%= @ytd_closed_all_stats[:avg_time_to_fill] %></span> | <span class="workable_jobs_color_<%= @ytd_closed_all_stats[:avg_time_to_start_color]%>"><%= @ytd_closed_all_stats[:avg_time_to_start] %></span></p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @ytd_closed_all_stats[:avg_acceptance] %>% | <%= @ytd_closed_all_stats[:employed_ninty_plus_days] %>% (<%= @ytd_closed_all_stats[:employees_employed_over_90_days_ago] %>)</p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_medium">All</p>
+            </div>
+            <div class="workable_jobs_stats_box">
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @ytd_closed_360_stats[:hired_count] %> | <span class="workable_jobs_color_<%= @ytd_closed_360_stats[:avg_time_to_fill_color]%>"><%= @ytd_closed_360_stats[:avg_time_to_fill] %></span> | <span class="workable_jobs_color_<%= @ytd_closed_360_stats[:avg_time_to_start_color]%>"><%= @ytd_closed_360_stats[:avg_time_to_start] %></span></p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @ytd_closed_360_stats[:avg_acceptance] %>% | <%= @ytd_closed_360_stats[:employed_ninty_plus_days] %>% (<%= @ytd_closed_360_stats[:employees_employed_over_90_days_ago] %>)</p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_medium">360</p>
+            </div>
+            <% @ytd_closed_property_by_team_stats.each do |jobs_of_team| %>
+                <div class="workable_jobs_stats_box">
+                    <p class="workable_jobs_color_white workable_jobs_text_metric"><%= jobs_of_team[:hired_count] %> | <span class="workable_jobs_color_<%= jobs_of_team[:avg_time_to_fill_color]%>"><%= jobs_of_team[:avg_time_to_fill] %></span> | <span class="workable_jobs_color_<%= jobs_of_team[:avg_time_to_start_color]%>"><%= jobs_of_team[:avg_time_to_start] %></span></p>
+                    <p class="workable_jobs_color_white workable_jobs_text_metric"><%= jobs_of_team[:avg_acceptance] %>% | <%= jobs_of_team[:employed_ninty_plus_days] %>% (<%= jobs_of_team[:employees_employed_over_90_days_ago] %>)</p>
+                    <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_medium"><%= jobs_of_team[:team] %></p>
+                </div>
+            <% end %>
+        </div>
+        <div class="workable_jobs_metrics_vertical_bar"></div>
+        <%# 6mo %>
+        <div class="workable_jobs_stats workable_jobs_flex_container_vertical">
+            <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_large">6 MO.</p>
+            <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor">hired | days2fill | days2start</p>
+            <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor">accept. | employed 90d+ (#)</p>
+            <div class="workable_jobs_stats_box">
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @six_mo_closed_all_stats[:hired_count] %> | <span class="workable_jobs_color_<%= @six_mo_closed_all_stats[:avg_time_to_fill_color]%>"><%= @six_mo_closed_all_stats[:avg_time_to_fill] %></span> | <span class="workable_jobs_color_<%= @six_mo_closed_all_stats[:avg_time_to_start_color]%>"><%= @six_mo_closed_all_stats[:avg_time_to_start] %></span></p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @six_mo_closed_all_stats[:avg_acceptance] %>% | <%= @six_mo_closed_all_stats[:employed_ninty_plus_days] %>% (<%= @six_mo_closed_all_stats[:employees_employed_over_90_days_ago] %>)</p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_medium">All</p>
+            </div>
+            <div class="workable_jobs_stats_box">
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @six_mo_closed_360_stats[:hired_count] %> | <span class="workable_jobs_color_<%= @six_mo_closed_360_stats[:avg_time_to_fill_color]%>"><%= @six_mo_closed_360_stats[:avg_time_to_fill] %></span> | <span class="workable_jobs_color_<%= @six_mo_closed_360_stats[:avg_time_to_start_color]%>"><%= @six_mo_closed_360_stats[:avg_time_to_start] %></span></p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @six_mo_closed_360_stats[:avg_acceptance] %>% | <%= @six_mo_closed_360_stats[:employed_ninty_plus_days] %>% (<%= @six_mo_closed_360_stats[:employees_employed_over_90_days_ago] %>)</p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_medium">360</p>
+            </div>
+            <% @six_mo_closed_property_by_team_stats.each do |jobs_of_team| %>
+                <div class="workable_jobs_stats_box">
+                    <p class="workable_jobs_color_white workable_jobs_text_metric"><%= jobs_of_team[:hired_count] %> | <span class="workable_jobs_color_<%= jobs_of_team[:avg_time_to_fill_color]%>"><%= jobs_of_team[:avg_time_to_fill] %></span> | <span class="workable_jobs_color_<%= jobs_of_team[:avg_time_to_start_color]%>"><%= jobs_of_team[:avg_time_to_start] %></span></p>
+                    <p class="workable_jobs_color_white workable_jobs_text_metric"><%= jobs_of_team[:avg_acceptance] %>% | <%= jobs_of_team[:employed_ninty_plus_days] %>% (<%= jobs_of_team[:employees_employed_over_90_days_ago] %>)</p>
+                    <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_medium"><%= jobs_of_team[:team] %></p>
+                </div>
+            <% end %>
+        </div>
+            <div class="workable_jobs_metrics_vertical_bar"></div>
+        <%# 3mo %>
+        <div class="workable_jobs_stats workable_jobs_flex_container_vertical">
+            <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_large">3 MO.</p>
+            <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor">hired | days2fill | days2start</p>
+            <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor">accept. | employed</p>
+            <div class="workable_jobs_stats_box">
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @three_mo_closed_all_stats[:hired_count] %> | <span class="workable_jobs_color_<%= @three_mo_closed_all_stats[:avg_time_to_fill_color]%>"><%= @three_mo_closed_all_stats[:avg_time_to_fill] %></span> | <span class="workable_jobs_color_<%= @three_mo_closed_all_stats[:avg_time_to_start_color]%>"><%= @three_mo_closed_all_stats[:avg_time_to_start] %></span></p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @three_mo_closed_all_stats[:avg_acceptance] %>% | <%= @three_mo_closed_all_stats[:employees_active] %></p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_medium">All</p>
+            </div>
+            <div class="workable_jobs_stats_box">
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @three_mo_closed_360_stats[:hired_count] %> | <span class="workable_jobs_color_<%= @three_mo_closed_360_stats[:avg_time_to_fill_color]%>"><%= @three_mo_closed_360_stats[:avg_time_to_fill] %></span> | <span class="workable_jobs_color_<%= @three_mo_closed_360_stats[:avg_time_to_start_color]%>"><%= @three_mo_closed_360_stats[:avg_time_to_start] %></span></p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= @three_mo_closed_360_stats[:avg_acceptance] %>% | <%= @three_mo_closed_360_stats[:employees_active] %></p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_medium">360</p>
+            </div>
+            <% @three_mo_closed_property_by_team_stats.each do |jobs_of_team| %>
+            <div class="workable_jobs_stats_box">
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= jobs_of_team[:hired_count] %> | <span class="workable_jobs_color_<%= jobs_of_team[:avg_time_to_fill_color]%>"><%= jobs_of_team[:avg_time_to_fill] %></span> | <span class="workable_jobs_color_<%= jobs_of_team[:avg_time_to_start_color]%>"><%= jobs_of_team[:avg_time_to_start] %></span></p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric"><%= jobs_of_team[:avg_acceptance] %>% | <%= jobs_of_team[:employees_active] %></p>
+                <p class="workable_jobs_color_white workable_jobs_text_metric_descriptor_medium"><%= jobs_of_team[:team] %></p>
+            </div>
+            <% end %>
+        </div>
+    </div>
+
+    <%# 360 %>
+    <div class="workable_jobs_section workable_jobs_grid_container_jobs_section workable_jobs_bkg_color_very_light_blue">
+        <%# JOB SEARCH ICON %>
+        <div class="workable_jobs_flex_container_vertical">
+            <svg class="workable_jobs_svg_job_search"><%= show_svg('job-search-in-newspapers.svg') %></svg>
+            <p class="workable_jobs_text_section_title workable_jobs_color_white">360</p>
+        </div>
+
+        <%# 360 JOBS TABLE %>
+        <div class="workable_jobs_jobs_table">
+            <%# TABLE HEADER %>
+            <div class="workable_jobs_jobs_table_header workable_jobs_bkg_color_white workable_jobs_grid_container_jobs_table_header">
+                <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Opened</p>
+                <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Days</p>
+                <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Region</p>
+                <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Activity</p>
+                <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Activity</p>
+                <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Notes / Alerts</p>
+            </div>
+            <% @open_360_jobs_data.each_with_index do |element, index| %>
+                <div class="workable_jobs_jobs_table_row workable_jobs_bkg_color_jobs_table_row_<%= index.odd? ? 'odd' : 'even' %>">
+                    <p class="workable_jobs_color_white workable_jobs_jobs_table_row_title workable_jobs_text_jobs_table_row_title">
+                        <% if element[:state] == 'closed' %>
+                            UNPUBLISHED: 
+                        <% end %>
+                        <% if element[:url].present? %>
+                            <a target="_blank" href="<%= element[:url] %>"><%= element[:title] %></a>
+                        <% else %>
+                            <%= element[:title] %>
+                        <% end %>
+                    </p>
+                </div>
+                <div class="workable_jobs_jobs_table_row workable_jobs_grid_container_jobs_table_row workable_jobs_bkg_color_jobs_table_row_<%= index.odd? ? 'odd' : 'even' %>">
+                    <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+                        <%= element[:date_opened] %>
+                    </p>
+                    <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+                        <% if element[:time_to_start].nil? %>
+                            <%= element[:days_open] %>
+                        <% end %>
+                        <% if element[:time_to_fill].present? %>
+                            <% if element[:time_to_start].nil? %><br><% end %>
+                            <span class="workable_jobs_color_white workable_jobs_text_jobs_table_row_time_to_title"><%= element[:time_to_fill] %></span>
+                            <br>
+                            <span class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_time_to_sub_text">days2fill</span>
+                        <% end %>
+                        <% if element[:time_to_start].present? %>
+                            <br>
+                            <span class="workable_jobs_color_white workable_jobs_text_jobs_table_row_time_to_title"><%= element[:time_to_start] %></span>
+                            <br>
+                            <span class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_time_to_sub_text">days2start</span>
+                        <% end %>
+                    </p>
+                    <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+                        <% if element[:team_logo].present? %>
+                            <%= retina_image_tag(element[:team_logo], :small, :class => "workable_jobs_team_logo_white_bkgrd") %>
+                            <br>
+                        <% end %>
+                        <%= element[:code] %>
+                    </p>
+                    <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+                        <% if element[:last_activity_member_profile_image].present? %>
+                            <%= retina_image_tag(element[:last_activity_member_profile_image], :small, :class => "workable_jobs_member_img") %>
+                            <br>
+                        <% end %>
+                        <% if element[:last_activity_member_slack_dm_url].nil? %>
+                            <%= element[:last_activity_member_name] %><br>
+                        <% else %>
+                            <a href="<%= element[:last_activity_member_slack_dm_url] %>"><%= element[:last_activity_member_name] %></a><br>
+                        <% end %>
+                        <span class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_sub_text">
+                            <%= element[:last_activity_member_action] %><br>
+                            <%= element[:last_activity_member_date] %>
+                        </span>
+                    </p>
+                    <p class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_sub_text"><%= element[:last_activity_candidate_action] %><br><%= element[:last_activity_candidate_date] %></p>
+                    <p class="workable_jobs_text_jobs_table_row_sub_text">
+                        <% element[:notes_alerts].each do |note_alert| %>
+                            <span class="workable_jobs_bkg_color_<%= note_alert[:bkgrd_color]%> workable_jobs_color_<%= note_alert[:color]%>"><%= note_alert[:text] %></span><br>
+                        <% end %>
+                    </p>
+                </div>
+            <% end %>
+        </div>
+    </div>
+
+    <%# SECTION SPACER %>
+    <div class="workable_jobs_section_spacer workable_jobs_bkg_color_dark_blue"></div>
+
+    <%# PROPERTY %>
+    <div class="workable_jobs_section workable_jobs_grid_container_jobs_section workable_jobs_bkg_color_very_light_blue">
+        <%# JOB SEARCH ICON %>
+        <div class="workable_jobs_flex_container_vertical">
+            <svg class="workable_jobs_svg_job_search"><%= show_svg('job-search-in-newspapers.svg') %></svg>
+            <p class="workable_jobs_text_section_title workable_jobs_color_white">PROPERTY</p>
+        </div>
+
+
+
+        <%# PROPERTY JOBS TABLE %>
+        <div class="workable_jobs_jobs_table_for_team">
+        <% @open_property_jobs_data_by_team.each do |team| %>
+
+            <div class="workable_jobs_jobs_table">
+                <%# TEAM HEADER %>
+                <div class="workable_jobs_jobs_table_header workable_jobs_bkg_color_white">
+                    <% if team.first[:team_logo].present? %>
+                        <%= retina_image_tag(team.first[:team_logo], :normal, :class => "workable_jobs_team_logo") %>
+                    <% else %>
+                        <p class="workable_jobs_color_light_blue workable_jobs_text_jobs_team_header" ><%= team.first[:team] %></p>
+                    <% end %>
+                </div>
+                <%# TABLE HEADER %>
+                <div class="workable_jobs_jobs_table_header workable_jobs_bkg_color_white workable_jobs_grid_container_jobs_table_header">
+                    <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Opened</p>
+                    <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Days</p>
+                    <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Property</p>
+                    <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Activity</p>
+                    <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Activity</p>
+                    <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Notes / Alerts</p>
+                </div>
+                <% team.each_with_index do |element, index| %>
+                    <div class="workable_jobs_jobs_table_row workable_jobs_bkg_color_jobs_table_row_<%= index.odd? ? 'odd' : 'even' %>">
+                        <p class="workable_jobs_color_white workable_jobs_jobs_table_row_title workable_jobs_text_jobs_table_row_title">
+                            <% if element[:state] == 'closed' %>
+                                UNPUBLISHED: 
+                            <% end %>
+                            <% if element[:url].present? %>
+                                <a target="_blank" href="<%= element[:url] %>"><%= element[:title] %></a>
+                            <% else %>
+                                <%= element[:title] %>
+                            <% end %>
+                        </p>
+                    </div>
+                    <div class="workable_jobs_jobs_table_row workable_jobs_grid_container_jobs_table_row workable_jobs_bkg_color_jobs_table_row_<%= index.odd? ? 'odd' : 'even' %>">
+                        <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+                            <%= element[:date_opened] %>
+                        </p>
+                        <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+                            <% if element[:time_to_start].nil? %>
+                                <%= element[:days_open] %>
+                            <% end %>
+                            <% if element[:time_to_fill].present? %>
+                                <% if element[:time_to_start].nil? %><br><% end %>
+                                <span class="workable_jobs_color_white workable_jobs_text_jobs_table_row_time_to_title"><%= element[:time_to_fill] %></span>
+                                <br>
+                                <span class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_time_to_sub_text">days2fill</span>
+                            <% end %>
+                            <% if element[:time_to_start].present? %>
+                                <br>
+                                <span class="workable_jobs_color_white workable_jobs_text_jobs_table_row_time_to_title"><%= element[:time_to_start] %></span>
+                                <br>
+                                <span class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_time_to_sub_text">days2start</span>
+                            <% end %>
+                        </p>
+                        <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+                            <% if element[:property_image].present? %>
+                                <%= retina_image_tag(element[:property_image], :small, :class => "workable_jobs_property_img") %>
+                                <br>
+                            <% end %>
+                            <%= element[:code] %>
+                        </p>
+                        <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+                            <% if element[:last_activity_member_profile_image].present? %>
+                            <%= retina_image_tag(element[:last_activity_member_profile_image], :small, :class => "workable_jobs_member_img") %>
+                            <br>
+                            <% end %>
+                            <% if element[:last_activity_member_slack_dm_url].nil? %>
+                                <%= element[:last_activity_member_name] %><br>
+                            <% else %>
+                                <a href="<%= element[:last_activity_member_slack_dm_url] %>"><%= element[:last_activity_member_name] %></a><br>
+                            <% end %>
+                            <span class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_sub_text">
+                                <%= element[:last_activity_member_action] %><br>
+                                <%= element[:last_activity_member_date] %>
+                            </span>
+                        </p>                        
+                        <p class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_sub_text"><%= element[:last_activity_candidate_action] %><br><%= element[:last_activity_candidate_date] %></p>
+                        <p class="workable_jobs_text_jobs_table_row_sub_text">
+                            <% element[:notes_alerts].each do |note_alert| %>
+                                <span class="workable_jobs_bkg_color_<%= note_alert[:bkgrd_color]%> workable_jobs_color_<%= note_alert[:color]%>"><%= note_alert[:text] %></span><br>
+                            <% end %>
+                        </p>
+                    </div>
+                <% end %>
+            </div>
+
+        <% end %>
+        </div>
+    </div>
+
+
+    <%# SECTION SPACER %>
+    <div class="workable_jobs_section_spacer workable_jobs_bkg_color_dark_blue"></div>
+
+
+
+    <%# CLOSED 360 %>
+    <div class="workable_jobs_section workable_jobs_grid_container_jobs_section workable_jobs_bkg_color_very_light_gray">
+        <%# JOB SEARCH ICON %>
+        <div class="workable_jobs_flex_container_vertical">
+            <svg class="workable_jobs_svg_job_search"><%= show_svg('job-search-in-newspapers.svg') %></svg>
+            <p class="workable_jobs_text_section_title workable_jobs_color_white">360<br>(ARCHIVED)</p>
+        </div>
+
+        <%# CLOSED 360 JOBS TABLE %>
+        <div class="workable_jobs_jobs_table">
+            <%# TABLE HEADER %>
+            <div class="workable_jobs_jobs_table_header workable_jobs_bkg_color_white workable_jobs_grid_container_jobs_table_header">
+                <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Opened</p>
+                <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Days</p>
+                <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Region</p>
+                <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Activity</p>
+                <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Employee Stats</p>
+                <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Notes / Alerts</p>
+            </div>
+            <% @closed_360_jobs_data.each_with_index do |element, index| %>
+                <div class="workable_jobs_jobs_table_row workable_jobs_bkg_color_jobs_table_row_<%= index.odd? ? 'odd' : 'even' %>">
+                    <% if element[:allow_edit] %>
+                        <p class="workable_jobs_color_white workable_jobs_bkg_color_<%= element[:title_bkg_color]%> workable_jobs_jobs_table_row_title workable_jobs_text_jobs_table_row_title">
+                        <% if element[:url].present? %>
+                            <%= link_to '[edit]', edit_workable_job_path(id: element[:job_id]) %> <a target="_blank" href="<%= element[:url] %>"><%= element[:title] %></a>
+                        <% else %>
+                            <%= link_to '[edit]', edit_workable_job_path(id: element[:job_id]) %> <%= element[:title] %>
+                        <% end %>
+                        </p>
+                    <% else %>
+                        <p class="workable_jobs_color_white workable_jobs_bkg_color_<%= element[:title_bkg_color]%> workable_jobs_jobs_table_row_title workable_jobs_text_jobs_table_row_title">
+                        <% if element[:url].present? %>
+                            <%= link_to '[edit]', edit_workable_job_path(id: element[:job_id]) %> <a target="_blank" href="<%= element[:url] %>"><%= element[:title] %></a>
+                        <% else %>
+                            <%= link_to '[edit]', edit_workable_job_path(id: element[:job_id]) %> <%= element[:title] %>
+                        <% end %>
+                        </p>
+                    <% end %>
+                </div>
+                <div class="workable_jobs_jobs_table_row workable_jobs_grid_container_jobs_table_row workable_jobs_bkg_color_jobs_table_row_<%= index.odd? ? 'odd' : 'even' %>">
+                    <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row"><%= element[:date_opened] %></p>
+                    <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+                        <% if element[:time_to_fill].present? %>
+                            <span class="workable_jobs_color_white workable_jobs_text_jobs_table_row_time_to_title"><%= element[:time_to_fill] %></span>
+                            <br>
+                            <span class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_time_to_sub_text">days2fill</span>
+                        <% end %>
+                        <% if element[:time_to_start].present? %>
+                            <br>
+                            <span class="workable_jobs_color_white workable_jobs_text_jobs_table_row_time_to_title"><%= element[:time_to_start] %></span>
+                            <br>
+                            <span class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_time_to_sub_text">days2start</span>
+                        <% end %>
+                    </p>
+                    <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+                        <% if element[:team_logo].present? %>
+                            <%= retina_image_tag(element[:team_logo], :small, :class => "workable_jobs_team_logo_white_bkgrd") %>
+                            <br>
+                        <% end %>
+                        <%= element[:code] %>
+                    </p>
+                    <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+                        <% if element[:last_activity_member_profile_image].present? %>
+                            <%= retina_image_tag(element[:last_activity_member_profile_image], :small, :class => "workable_jobs_member_img") %>
+                            <br>
+                        <% end %>
+                        <% if element[:last_activity_member_slack_dm_url].nil? %>
+                            <%= element[:last_activity_member_name] %><br>
+                        <% else %>
+                            <a href="<%= element[:last_activity_member_slack_dm_url] %>"><%= element[:last_activity_member_name] %></a><br>
+                        <% end %>
+                        <span class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_sub_text">
+                            <%= element[:last_activity_member_action] %><br>
+                            <%= element[:last_activity_member_date] %>
+                        </span>
+                    </p>
+                    <p class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_sub_text"><%= element[:employee_date_in_job] %><br>-to-<br><span class="workable_jobs_color_<%= element[:employee_date_last_worked_color] %> workable_jobs_bkg_color_<%= element[:employee_date_last_worked_bkg_color] %>"><%= element[:employee_date_last_worked] %></span><br><br><span class="workable_jobs_color_white"><%= element[:employee_days_in_job_string] %></span></p>
+                    <p class="workable_jobs_text_jobs_table_row_sub_text">
+                        <span class="workable_jobs_color_white"><%= element[:acceptance_percentage_string] %></span><br>
+                        <% element[:notes_alerts].each do |note_alert| %>
+                            <span class="workable_jobs_bkg_color_<%= note_alert[:bkgrd_color]%> workable_jobs_color_<%= note_alert[:color]%>"><%= note_alert[:text] %></span><br>
+                        <% end %>
+                    </p>
+                </div>
+            <% end %>
+        </div>
+    </div>
+
+    <%# SECTION SPACER %>
+    <div class="workable_jobs_section_spacer workable_jobs_bkg_color_dark_blue"></div>
+
+    <%# CLOSED PROPERTY %>
+    <div class="workable_jobs_section workable_jobs_grid_container_jobs_section workable_jobs_bkg_color_very_light_gray">
+        <%# JOB SEARCH ICON %>
+        <div class="workable_jobs_flex_container_vertical">
+            <svg class="workable_jobs_svg_job_search"><%= show_svg('job-search-in-newspapers.svg') %></svg>
+            <p class="workable_jobs_text_section_title workable_jobs_color_white">PROPERTY<br>(ARCHIVED)</p>
+        </div>
+
+
+
+        <%# CLOSED PROPERTY JOBS TABLE %>
+        <div class="workable_jobs_jobs_table_for_team">
+        <% @closed_property_jobs_data_by_team.each do |team| %>
+
+            <div class="workable_jobs_jobs_table">
+                <%# TEAM HEADER %>
+                <div class="workable_jobs_jobs_table_header workable_jobs_bkg_color_white">
+                    <% if team.first[:team_logo].present? %>
+                        <%= retina_image_tag(team.first[:team_logo], :normal, :class => "workable_jobs_team_logo") %>
+                    <% else %>
+                        <p class="workable_jobs_color_light_blue workable_jobs_text_jobs_team_header" ><%= team.first[:team] %></p>
+                    <% end %>
+                </div>
+                <%# TABLE HEADER %>
+                <div class="workable_jobs_jobs_table_header workable_jobs_bkg_color_white workable_jobs_grid_container_jobs_table_header">
+                    <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Opened</p>
+                    <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Days</p>
+                    <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Property</p>
+                    <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Activity</p>
+                    <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Employee Stats</p>
+                    <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Notes / Alerts</p>
+                </div>
+                <% team.each_with_index do |element, index| %>
+                    <div class="workable_jobs_jobs_table_row workable_jobs_bkg_color_jobs_table_row_<%= index.odd? ? 'odd' : 'even' %>">
+                        <% if element[:allow_edit] %>
+                            <p class="workable_jobs_color_white workable_jobs_bkg_color_<%= element[:title_bkg_color]%> workable_jobs_jobs_table_row_title workable_jobs_text_jobs_table_row_title">
+                            <% if element[:url].present? %>
+                                <%= link_to '[edit]', edit_workable_job_path(id: element[:job_id]) %> <a target="_blank" href="<%= element[:url] %>"><%= element[:title] %></a>
+                            <% else %>
+                                <%= link_to '[edit]', edit_workable_job_path(id: element[:job_id]) %> <%= element[:title] %>
+                            <% end %>
+                            </p>
+                        <% else %>
+                            <p class="workable_jobs_color_white workable_jobs_bkg_color_<%= element[:title_bkg_color]%> workable_jobs_jobs_table_row_title workable_jobs_text_jobs_table_row_title">
+                            <% if element[:url].present? %>
+                                <%= link_to '[edit]', edit_workable_job_path(id: element[:job_id]) %><a target="_blank" href="<%= element[:url] %>"><%= element[:title] %></a>
+                            <% else %>
+                                <%= link_to '[edit]', edit_workable_job_path(id: element[:job_id]) %> <%= element[:title] %>
+                            <% end %>
+                            </p>
+                        <% end %>
+                    </div>
+                    <div class="workable_jobs_jobs_table_row workable_jobs_grid_container_jobs_table_row workable_jobs_bkg_color_jobs_table_row_<%= index.odd? ? 'odd' : 'even' %>">
+                        <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row"><%= element[:date_opened] %></p>
+                        <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+                            <% if element[:time_to_fill].present? %>
+                                <span class="workable_jobs_color_white workable_jobs_text_jobs_table_row_time_to_title"><%= element[:time_to_fill] %></span>
+                                <br>
+                                <span class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_time_to_sub_text">days2fill</span>
+                            <% end %>
+                            <% if element[:time_to_start].present? %>
+                                <br>
+                                <span class="workable_jobs_color_white workable_jobs_text_jobs_table_row_time_to_title"><%= element[:time_to_start] %></span>
+                                <br>
+                                <span class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_time_to_sub_text">days2start</span>
+                            <% end %>
+                        </p>
+                        <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+                            <% if element[:property_image].present? %>
+                                <%= retina_image_tag(element[:property_image], :small, :class => "workable_jobs_property_img") %>
+                                <br>
+                            <% end %>
+                            <%= element[:code] %>
+                        </p>
+                        <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+                            <% if element[:last_activity_member_profile_image].present? %>
+                            <%= retina_image_tag(element[:last_activity_member_profile_image], :small, :class => "workable_jobs_member_img") %>
+                            <br>
+                            <% end %>
+                            <% if element[:last_activity_member_slack_dm_url].nil? %>
+                                <%= element[:last_activity_member_name] %><br>
+                            <% else %>
+                                <a href="<%= element[:last_activity_member_slack_dm_url] %>"><%= element[:last_activity_member_name] %></a><br>
+                            <% end %>
+                            <span class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_sub_text">
+                                <%= element[:last_activity_member_action] %><br>
+                                <%= element[:last_activity_member_date] %>
+                            </span>
+                        </p>                        
+                        <p class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_sub_text"><%= element[:employee_date_in_job] %><br>-to-<br><span class="workable_jobs_color_<%= element[:employee_date_last_worked_color] %> workable_jobs_bkg_color_<%= element[:employee_date_last_worked_bkg_color] %>"><%= element[:employee_date_last_worked] %></span><br><br><span class="workable_jobs_color_white"><%= element[:employee_days_in_job_string] %></span></p>
+                        <p class="workable_jobs_text_jobs_table_row_sub_text">
+                            <span class="workable_jobs_color_white"><%= element[:acceptance_percentage_string] %></span><br>
+                            <% element[:notes_alerts].each do |note_alert| %>
+                                <span class="workable_jobs_bkg_color_<%= note_alert[:bkgrd_color]%> workable_jobs_color_<%= note_alert[:color]%>"><%= note_alert[:text] %></span><br>
+                            <% end %>
+                        </p>
+                    </div>
+                <% end %>
+            </div>
+
+        <% end %>
+        </div>
+    </div>
+
+</div>
+

@@ -1,0 +1,22 @@
+.inactive_user {
+  opacity: 0.5;
+  color: red;
+}
+
+.users_table_div {
+  display: block;
+  overflow-x: auto;
+}
+
+table.users_table, th.users_table, td.users_table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table.users_table tr:nth-child(even) {
+  background-color: #eee;
+}
+table.users_table tr:nth-child(odd) {
+  background-color: #fff;
+}
+

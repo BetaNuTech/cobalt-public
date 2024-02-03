@@ -1,0 +1,67 @@
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+<% end %>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Property Image (4:3):</strong><br>
+  <%= retina_image_tag(@property.image, :normal) if @property.image? %>
+</p>
+
+<p class="properties_background_grey">
+  <strong>Property Logo:</strong><br>
+  <%= retina_image_tag(@property.logo, :normal) if @property.logo? %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= "#{@property.city}, #{@property.state}" %>
+</p>
+
+<p>
+  <strong>Number of Units:</strong>
+  <%= @property.num_of_units %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @property.code %>
+</p>
+
+<p>
+  <strong>Slack Channel:</strong>
+  <%= @property.slack_channel %>
+</p>
+
+<p>
+  <strong>Sparkle Blueshift PM Template Name:</strong>
+  <%= @property.sparkle_blshift_pm_templ_name %>
+</p>
+
+<p>
+  <strong>Manager Strikes:</strong>
+  <%= @property.manager_strikes %>
+</p>
+
+<% if @property.slack_channel.present? %>
+  <div>
+    <%= button_to "Send test message to Slack Channel", 
+      send_test_message_to_slack_property_path(@property.id),
+      method: :post %>
+  </div>
+  <br />
+<% end %>
+
+<p>
+  <strong>Active:</strong>
+  <%= @property.active %>
+</p>
+
+
+<%= link_to 'Edit', edit_property_path(@property) %> |
+<%= link_to 'Back', properties_path %>

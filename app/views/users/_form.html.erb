@@ -1,0 +1,73 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= retina_image_tag(@user.profile_image, :thumb) if @user.profile_image? %><br>
+    <%= f.label :profile_image, 'Profile Image' %><br>
+    <%= f.file_field :profile_image %>
+  </div>
+  <div class="field">
+    <%= f.label :email, 'Email' %><br>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :first_name, 'First Name' %><br>
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="field">
+    <%= f.label :last_name, 'Last Name' %><br>
+    <%= f.text_field :last_name %>
+  </div>
+  <div class="field">
+    <%= f.label :t1_role, 'T1 Role' %><br>
+    <%= f.select :t1_role, User::T1_ROLES %>
+  </div>
+  <div class="field">
+    <%= f.label :t2_role, 'T2 Role' %><br>
+    <%= f.select :t2_role, User::T2_ROLES %>
+  </div>
+  <div class="field"> 
+    <%= f.label :slack_username, "Slack Member ID" %> * Please do not include an "@"<br>
+    <%= f.text_field :slack_username %>
+  </div>
+  <div class="field"> 
+    <%= f.label :slack_corp_username, "Corporate Slack Member ID" %> * Please do not include an "@"<br>
+    <%= f.text_field :slack_corp_username %>
+  </div>
+  <div class="field">
+    <%= f.label :team_id, "Team *" %><br>
+    <%= f.collection_select :team_id, Team.all.where(active: true).order(:code), :id, :code, { include_blank: true }, 
+      {:multiple => false} %>  
+    <p style="font-size: 10pt">
+      * Team leads must be assigned one and only one team.
+    </p>
+  </div>
+  <div class="field">
+    <%= f.label :property_ids, "Property *" %><br>
+    <%= f.collection_select :property_ids, Property.properties.where(active: true).where.not(code: Property.portfolio_code()).order(:code), :id, :code, {}, 
+      {:multiple => true} %>  
+    <p style="font-size: 10pt">
+      * Property managers and maint. supers must be assigned one and only one property.
+    </p>
+  </div>
+  
+  <% if @user.persisted? %>
+    <div class="field">
+      <%= f.check_box :active %>
+      <%= f.label :active, "Active - uncheck to deactivate the user." %>
+    </div>
+  <% end %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,19 @@
+# == Schema Information
+#
+# Table name: user_properties
+#
+#  id                      :integer          not null, primary key
+#  user_id                 :integer
+#  property_id             :integer
+#  blue_shift_status       :string
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  maint_blue_shift_status :string
+#  trm_blue_shift_status   :string
+#
+
+default:
+  property_id: 1 #home 
+  user_id: 1 # homer
+  blue_shift_status: "none"
+  maint_blue_shift_status: "none"

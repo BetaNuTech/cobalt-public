@@ -1,0 +1,168 @@
+# == Schema Information
+#
+# Table name: metrics
+#
+#  id                                                              :integer          not null, primary key
+#  property_id                                                     :integer
+#  position                                                        :integer
+#  date                                                            :date
+#  number_of_units                                                 :decimal(, )
+#  physical_occupancy                                              :decimal(, )
+#  cnoi                                                            :decimal(, )
+#  trending_average_daily                                          :decimal(, )
+#  trending_next_month                                             :decimal(, )
+#  occupancy_average_daily                                         :decimal(, )
+#  occupancy_budgeted_economic                                     :decimal(, )
+#  occupancy_average_daily_30_days_ago                             :decimal(, )
+#  average_rents_net_effective                                     :decimal(, )
+#  average_rents_net_effective_budgeted                            :decimal(, )
+#  basis                                                           :decimal(, )
+#  basis_year_to_date                                              :decimal(, )
+#  expenses_percentage_of_past_month                               :decimal(, )
+#  expenses_percentage_of_budget                                   :decimal(, )
+#  renewals_number_renewed                                         :decimal(, )
+#  renewals_percentage_renewed                                     :decimal(, )
+#  collections_current_status_residents_with_last_month_balance    :decimal(, )
+#  collections_unwritten_off_balances                              :decimal(, )
+#  collections_percentage_recurring_charges_collected              :decimal(, )
+#  collections_current_status_residents_with_current_month_balance :decimal(, )
+#  collections_number_of_eviction_residents                        :decimal(, )
+#  maintenance_percentage_ready_over_vacant                        :decimal(, )
+#  maintenance_number_not_ready                                    :decimal(, )
+#  maintenance_turns_completed                                     :decimal(, )
+#  maintenance_open_wos                                            :decimal(, )
+#  created_at                                                      :datetime         not null
+#  updated_at                                                      :datetime         not null
+#  rolling_30_net_sales                                            :decimal(, )
+#  rolling_10_net_sales                                            :decimal(, )
+#  leases_attained                                                 :decimal(, )
+#  leases_goal                                                     :decimal(, )
+#  leases_alert_message                                            :string
+#  leases_attained_no_monies                                       :decimal(, )
+#  average_market_rent                                             :decimal(, )
+#  average_rent_delta_percent                                      :decimal(, )
+#  renewals_unknown                                                :decimal(, )
+#  leases_last_24hrs                                               :decimal(, )
+#  leases_last_24hrs_applied                                       :boolean
+#  maintenance_total_open_work_orders                              :decimal(, )
+#  maintenance_vacants_over_nine_days                              :decimal(, )
+#  average_rent_weighted_per_unit_specials                         :decimal(, )
+#  average_rent_year_over_year_without_vacancy                     :decimal(, )
+#  average_rent_year_over_year_with_vacancy                        :decimal(, )
+#  concessions_per_unit                                            :decimal(, )
+#  concessions_budgeted_per_unit                                   :decimal(, )
+#  average_days_vacant_over_seven                                  :decimal(, )
+#  denied_applications_current_month                               :decimal(, )
+#  collections_eviction_residents_over_two_months_due              :decimal(, )
+#  renewals_residents_month_to_month                               :decimal(, )
+#  budgeted_trended_occupancy                                      :decimal(, )
+#  projected_cnoi                                                  :decimal(, )
+#  renewals_ytd_percentage                                         :decimal(, )
+#  average_rent_1bed_net_effective                                 :decimal(, )
+#  average_rent_1bed_new_leases                                    :decimal(, )
+#  average_rent_1bed_renewal_leases                                :decimal(, )
+#  average_rent_2bed_net_effective                                 :decimal(, )
+#  average_rent_2bed_new_leases                                    :decimal(, )
+#  average_rent_2bed_renewal_leases                                :decimal(, )
+#  average_rent_3bed_net_effective                                 :decimal(, )
+#  average_rent_3bed_new_leases                                    :decimal(, )
+#  average_rent_3bed_renewal_leases                                :decimal(, )
+#  average_rent_4bed_net_effective                                 :decimal(, )
+#  average_rent_4bed_new_leases                                    :decimal(, )
+#  average_rent_4bed_renewal_leases                                :decimal(, )
+#  addendum_received                                               :boolean          default(FALSE)
+#  main_metrics_received                                           :boolean          default(FALSE)
+#
+
+one:
+  property_id: 1 # home 
+  date: 2016-05-31
+  position: 2
+  number_of_units: 2
+  physical_occupancy: 0.6
+  trending_average_daily: 0.7
+  trending_next_month: 0.8
+  occupancy_average_daily: 0.2
+  occupancy_budgeted_economic: 0.3
+  occupancy_average_daily_30_days_ago: 0.2
+  average_rents_net_effective: 5
+  average_rents_net_effective_budgeted: 7
+  basis: 0.2
+  basis_year_to_date: 0.3
+  expenses_percentage_of_past_month: 0.4
+  expenses_percentage_of_budget: 0.5
+  renewals_unknown: 3
+  renewals_number_renewed: 1
+  renewals_percentage_renewed: 0.2
+  collections_current_status_residents_with_last_month_balance: 88
+  collections_unwritten_off_balances: 32
+  collections_percentage_recurring_charges_collected: 32.3
+  collections_current_status_residents_with_current_month_balance: 5
+  maintenance_percentage_ready_over_vacant: 55.2
+  maintenance_number_not_ready: 23
+  maintenance_turns_completed: 87
+  maintenance_open_wos: 18
+  rolling_30_net_sales: 9
+  rolling_10_net_sales: 3
+  
+two:
+  property_id: 1 # home 
+  date: 2016-05-30
+  position: 2
+  number_of_units: 2
+  physical_occupancy: 0.6
+  trending_average_daily: 0.7
+  trending_next_month: 0.8
+  occupancy_average_daily: 0.2
+  occupancy_budgeted_economic: 0.3
+  occupancy_average_daily_30_days_ago: 0.2
+  average_rents_net_effective: 5
+  average_rents_net_effective_budgeted: 7
+  basis: 0.2
+  basis_year_to_date: 0.3
+  expenses_percentage_of_past_month: 0.4
+  expenses_percentage_of_budget: 0.5
+  renewals_unknown: 3
+  renewals_number_renewed: 1
+  renewals_percentage_renewed: 0.2
+  collections_current_status_residents_with_last_month_balance: 88
+  collections_unwritten_off_balances: 32
+  collections_percentage_recurring_charges_collected: 32.3
+  collections_current_status_residents_with_current_month_balance: 5
+  maintenance_percentage_ready_over_vacant: 55.2
+  maintenance_number_not_ready: 23
+  maintenance_turns_completed: 87
+  maintenance_open_wos: 18
+  rolling_30_net_sales: 9
+  rolling_10_net_sales: 3
+  
+three:
+  property_id: 1 # home 
+  date: 2016-05-29
+  position: 2
+  number_of_units: 2
+  physical_occupancy: 0.6
+  trending_average_daily: 0.7
+  trending_next_month: 0.8
+  occupancy_average_daily: 0.2
+  occupancy_budgeted_economic: 0.3
+  occupancy_average_daily_30_days_ago: 0.2
+  average_rents_net_effective: 5
+  average_rents_net_effective_budgeted: 7
+  basis: 0.2
+  basis_year_to_date: 0.3
+  expenses_percentage_of_past_month: 0.4
+  expenses_percentage_of_budget: 0.5
+  renewals_unknown: 3
+  renewals_number_renewed: 1
+  renewals_percentage_renewed: 0.2
+  collections_current_status_residents_with_last_month_balance: 88
+  collections_unwritten_off_balances: 32
+  collections_percentage_recurring_charges_collected: 32.3
+  collections_current_status_residents_with_current_month_balance: 5
+  maintenance_percentage_ready_over_vacant: 55.2
+  maintenance_number_not_ready: 23
+  maintenance_turns_completed: 87
+  maintenance_open_wos: 18
+  rolling_30_net_sales: 9
+  rolling_10_net_sales: 3

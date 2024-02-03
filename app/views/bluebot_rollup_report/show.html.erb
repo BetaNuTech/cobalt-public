@@ -1,0 +1,97 @@
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+  <span id="header_title">Bluebot Rollup Report</span>
+<% end %>
+
+<span id="bluebot_rollup_form">
+<%= form_for(@report_form, url: bluebot_rollup_report_path, method: :get) do |form| %>
+  <% if @team_codes.count > 0 %>
+    <%= select_tag :team_code, options_for_select(@team_codes, @team_code) %>
+  <% end %>
+  <%= form.label :end_month, 'End Month', class: "bluebot_rollup_form_label" %>
+  <%= form.select :end_month, end_of_month_selections(@report_form.end_month) %>
+  <%= form.submit "Update", class: "bluebot_rollup_form_button" %>
+<% end %>
+</span>
+
+<div id="bluebot_rollup_report">  
+  <table id="bluebot_rollup_report_table" class="stripe" width="100%" cellpadding="0" cellspacing="0" border="0" class="table stripe" >
+    <thead>
+      <th>
+        Property
+      </th>
+      <th>
+        <%=@date_names[0]%>
+      </th>
+      <th>
+        <%=@date_names[1]%>
+      </th>
+      <th>
+        <%=@date_names[2]%>
+      </th>
+      <th>
+        <%=@date_names[3]%>
+      </th>
+      <th>
+        <%=@date_names[4]%>
+      </th>
+      <th>
+        <%=@date_names[5]%>
+      </th>
+      <th>
+        <%=@date_names[6]%>
+      </th>
+      <th>
+        <%=@date_names[7]%>
+      </th>
+      <th>
+        <%=@date_names[8]%>
+      </th>
+      <th>
+        <%=@date_names[9]%>
+      </th>
+      <th>
+        <%=@date_names[10]%>
+      </th>
+      <th>
+        <%=@date_names[11]%>
+      </th>
+      <th>
+        <%=@date_names[12]%>
+      </th>
+      <th>
+        <%=@date_names[13]%>
+      </th>
+      <th>
+        <%=@date_names[14]%>
+      </th>
+      <th>
+        Year
+      </th>
+      <th>
+        Year
+      </th>
+      <th>
+        <%=@quarter_data_a_name%>
+      </th>
+      <th>
+        <%=@quarter_data_b_name%>
+      </th>
+      <th>
+        <%=@quarter_data_c_name%>
+      </th>
+      <th>
+        <%=@quarter_data_d_name%>
+      </th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>

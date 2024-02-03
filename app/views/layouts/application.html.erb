@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @title_name %></title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="<%= body_class %>">
+  <%= hidden_field_tag 'javascript_controller_identifier', @javascript_controller_name %>
+  <div id="header">
+    <svg id="application_header_svg">
+      <%= show_svg('header_background.svg') %>
+      <% if @dev_app %>
+        <span id="dev_app_header">
+          DEV
+        </span>
+      <% end %>
+      <% if current_user.present? %>
+        <span id="global_menu_items">
+          <%= current_user.email %>
+          |
+          <% if can? :manage, User %>
+            <%= link_to "Users", users_path %>
+            |
+          <% end %>
+          <% if can? :update, Property %>
+            <%= link_to "Properties", properties_path %>
+            |
+            <%= link_to "Teams", teams_path %>
+            |
+          <% end %>
+          <%= link_to "Sign out", destroy_user_session_path, method: "delete", id: "sign_out" %>      
+        </span>
+
+      <% else %>
+        <div id="application_header_logo">
+            <%= link_to root_path, data: { turbolinks: false } do %>
+                <%= show_svg('cobalt_report_white.svg') %>
+            <% end %>
+        </div>
+      <% end %>      
+      <%= content_for?(:header) ? yield(:header) : "" %>
+    </svg>
+
+  </div>
+  <div class="content">
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    
+    <%= yield %>
+  </div>
+</body>
+</html>

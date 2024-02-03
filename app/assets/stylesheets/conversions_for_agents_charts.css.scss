@@ -1,0 +1,19 @@
+body {
+  min-width: 1024px;
+}
+
+.cfa_graph_container {
+  border: 1px solid black;
+  left: 20px;
+  background-color: white;
+  margin: 3px;
+  float: left;
+  
+  .chart_title {
+    font-size: 8pt;
+  }
+
+  .legend {
+      font-size: 8pt;
+  }
+}  

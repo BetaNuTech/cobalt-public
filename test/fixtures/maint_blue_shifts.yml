@@ -1,0 +1,81 @@
+# == Schema Information
+#
+# Table name: maint_blue_shifts
+#
+#  id                               :integer          not null, primary key
+#  property_id                      :integer
+#  created_on                       :date
+#  people_problem                   :boolean
+#  people_problem_fix               :text
+#  people_problem_fix_by            :date
+#  vendor_problem                   :boolean
+#  vendor_problem_fix               :text
+#  vendor_problem_fix_by            :date
+#  parts_problem                    :boolean
+#  parts_problem_fix                :text
+#  parts_problem_fix_by             :date
+#  need_help                        :boolean
+#  need_help_with                   :text
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
+#  user_id                          :integer
+#  archived                         :boolean
+#  archived_status                  :string
+#  metric_id                        :integer
+#  comment_thread_id                :integer
+#  people_problem_comment_thread_id :integer
+#  vendor_problem_comment_thread_id :integer
+#  parts_problem_comment_thread_id  :integer
+#  need_help_comment_thread_id      :integer
+#  archive_edit_user_id             :integer
+#  reviewed                         :boolean          default(FALSE)
+#  initial_archived_status          :string
+#  archive_edit_date                :date
+#  initial_archived_date            :date
+#
+
+default:
+  id: 1
+  property_id: 1 #home 
+  user_id: 1 # homer
+  metric: one
+  created_on: 2016-07-16
+  created_at: 2016-07-16
+  people_problem: false
+  vendor_problem: false
+  parts_problem: true
+  parts_problem_fix: MyText
+  parts_problem_fix_by: 2016-07-16
+  parts_problem_comment_thread_id: 2
+  need_help: false
+  archived: false
+  
+second:
+  id: 2
+  property_id: 1 #home 
+  user_id: 1 # homer
+  metric: one
+  created_on: 2016-06-16
+  created_at: 2016-06-16
+  people_problem: false
+  vendor_problem: false
+  parts_problem: true
+  parts_problem_fix: MyText
+  parts_problem_fix_by: 2016-06-16
+  need_help: false
+  archived: false
+  
+third:
+  id: 3
+  property: home 
+  user: homer
+  metric: one
+  created_on: 2016-05-16
+  created_at: 2016-05-16
+  people_problem: false
+  vendor_problem: false
+  parts_problem: true
+  parts_problem_fix: MyText
+  parts_problem_fix_by: 2016-07-16
+  need_help: false
+  archived: false

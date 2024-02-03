@@ -1,0 +1,154 @@
+.level-1 {
+  color: blue;
+}
+.level-2 {
+  color: green;
+}
+.level-3 {
+  color: red;
+}
+.level-4 {
+  color: white;
+  background-color: rgb(255, 123, 0);
+}
+.level-5 {
+  color: white;
+  background-color: red;
+}
+.level-6 {
+  color: white;
+  background-color: rgb(180, 3, 3);
+}
+
+#severity-scale {
+  float: right;
+  margin-top: 5px;
+  padding-top: 0px;
+  padding-bottom: 8px;
+}
+
+#date_selection {
+  position: absolute;
+  top: 40px;
+  left: 200px;
+  color: white;
+}
+
+#trm_blueshift_metrics {
+  .flash_red.flashing {
+    color: red;
+  }
+  
+  .flash_blue.flashing {
+    color: blue;
+  }
+
+  .flash_red.flashing_background {
+    background-color: red;
+    color: white !important;
+    span, span a {
+      color: white !important;      
+    }
+  }
+  
+  .flash_blue.flashing_background {
+    background-color: blue;
+    color: white !important;
+    span, span a {
+      color: white !important;      
+    }
+  }
+
+
+  .flash_blue.flashing {
+    td, td span, td a {
+      color: white !important;
+      background-color: blue;
+    }
+  }
+  
+  .flash_red.flashing {
+    td, td span, td a {
+      color: white !important;
+      background-color: red;
+    }
+  }
+  
+  a.flash {
+    color: black;
+    text-decoration: none;
+  }
+  
+  a:visited {
+    color: black;
+  }
+  
+  a.blue {
+    color: blue;
+  }
+  
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  table {
+    td {
+      white-space: nowrap;
+      span[data-metric] {
+        cursor: pointer;
+      }
+    }
+    
+
+    td, th {
+      text-align: left;
+    }
+    
+    th {
+      white-space: nowrap;
+    }
+    
+    th span.info {
+      background: url(image-path('question_mark.png')) no-repeat; background-size: 16px;
+      position:absolute;
+      top: -2px;
+      margin-left: -5px;
+    }
+  }
+
+  table.dataTable.stripe tbody tr.odd{
+    background-color: #F3F3F3 !important;
+  }
+
+  #trm_blueshift_metrics_table {
+    thead {
+      th span.info {
+        display: none;
+      }
+    }
+    tbody {
+      tr > td:nth-child(3), tr > td:nth-child(9), tr > td:nth-child(10){
+        padding-left: 0px;
+      }
+    }
+  } 
+
+  div.dataTables_wrapper {
+    width: 100%;
+    
+    table thead tr {
+      th:nth-child(3), th:nth-child(9), th:nth-child(10) {
+        padding-left: 12px;
+      }
+      
+      th:nth-child(9) {
+        width: 131px;
+      }
+    }
+    
+    .DTFC_LeftBodyLiner {
+      border-bottom: 1px solid #111;
+    }
+  }
+}

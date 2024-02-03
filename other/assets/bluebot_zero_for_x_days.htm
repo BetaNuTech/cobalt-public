@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="stylesheets/bluebot_zero_for_x_days.css" rel="stylesheet">
+    <style>
+      progress[value]#progressBar::-webkit-progress-value::before {
+        content: '87%';
+        position: absolute;
+        right: 46%;
+        top: 18%;
+        font-weight: bold;
+        color: darkslategray;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <!--<p>Property Name</p>
+    <p>Month YYYY Sales Goal</p>-->
+    <p id="question_marks" style="font-size: 36pt">? ? ? ? ?</p>
+    <p style="font-size: 16pt">You haven't leased an apartment in</p>
+    <p id="num_of_days" style="font-size: 16pt"><strong>FOUR</strong> DAYS!</p>
+    <p id="delta">+3</p>    
+    <progress id="progressBar" max="100" value="87" class="css3"></progress>
+    <progress id="progressBarLastMonth" max="100" value="60" class="css3"></progress>
+    <p id="fraction" style="font-size: 20pt">00/00</p>
+    
+    <!--<progress max="100" value="50">
+      <div class="progress-bar">
+          <span style="width: 50%;">Progress: 50%</span>
+      </div>
+    </progress>-->
+    <p id="status">(You've leased net *X* in the last four days.)</p>
+    <!-- <div>
+      <div class="alert">
+        <p class="alert_title">ALERT!</p>
+        <p class="alert_message">This is the alert message</p>
+      </div>
+    </div> -->
+    <img src="images/bluestone_logo_white.png" alt="Bluestone Properties logo" style="width:110px;height:21px;">
+  </body>
+</html>

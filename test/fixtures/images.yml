@@ -1,0 +1,22 @@
+# == Schema Information
+#
+# Table name: images
+#
+#  id             :integer          not null, primary key
+#  caption        :string
+#  imageable_id   :integer
+#  imageable_type :string
+#  path           :string(2000)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
+
+one:
+  caption: MyString
+  imageable_id: 
+  path: MyString
+
+two:
+  caption: MyString
+  imageable_id: 
+  path: MyString

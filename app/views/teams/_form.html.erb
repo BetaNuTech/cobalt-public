@@ -1,0 +1,44 @@
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+<% end %>
+
+<%= form_for(@team) do |f| %>
+  <% if @team.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@team.errors.count, "error") %> prohibited this team from being saved:</h2>
+
+      <ul>
+      <% @team.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <h3>Team Code: <strong><%= @team.code%></strong></h3>
+  <div class="field">
+    <%= retina_image_tag(@team.logo, :normal) if @team.logo? %><br>
+    <%= f.label :logo, 'Logo' %><br>
+    <%= f.file_field :logo %>
+  </div>
+  <div class="field">
+    <%= f.label :slack_channel, 'Slack Channel' %> * Please prepend the slack channel with "#"<br>
+    <%= f.text_field :slack_channel %>
+  </div>
+  <div class="field">
+    <%= f.check_box :active %>
+    <%= f.label :active, "Active - enable/disable team." %>
+  </div>
+  <div class="field">
+    <%= check_box_tag 'team[is_a_property]' %>
+    <%= label_tag "Convert to a Property." %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

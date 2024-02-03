@@ -1,0 +1,138 @@
+
+#bluebot_agent_sales_rollup_form {
+  float: right;
+  margin: 5px;
+}
+.bluebot_agent_sales_rollup_form_label {
+  padding-left: 5px;
+  color: white;
+}
+
+#date_selection {
+  position: absolute;
+  top: 40px;
+  left: 200px;
+  color: white;
+}
+
+#bluebot_agent_sales_rollup_report {
+  background-color: #1E7AB6;
+
+  .flash_red.flashing {
+    color: red;
+  }
+  
+  .flash_blue.flashing {
+    color: blue;
+  }
+
+  .flash_red.flashing_background {
+    background-color: red;
+    color: white !important;
+    span, span a {
+      color: white !important;      
+    }
+  }
+  
+  .flash_blue.flashing_background {
+    background-color: blue;
+    color: white !important;
+    span, span a {
+      color: white !important;      
+    }
+  }
+
+
+  .flash_blue.flashing {
+    td, td span, td a {
+      color: white !important;
+      background-color: blue;
+    }
+  }
+  
+  .flash_red.flashing {
+    td, td span, td a {
+      color: white !important;
+      background-color: red;
+    }
+  }
+  
+  a.flash {
+    color: black;
+    text-decoration: none;
+  }
+  
+  a:visited {
+    color: black;
+  }
+  
+  a.blue {
+    color: blue;
+  }
+  
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  #bluebot_agent_sales_rollup_report_table_wrapper, table, table thead, table th, table tbody, table tbody tr, table tbody tr td {
+    background-color: #1E7AB6;
+    color: white;
+  }
+
+  tr.odd td {
+    background-color: #3C9CD3;
+  }
+
+  table {
+    td {
+      white-space: nowrap;
+    }
+
+    td, th {
+      text-align: left;
+    }
+    
+    th {
+      white-space: nowrap;
+    }
+    
+    th span.info {
+      background: url(image-path('question_mark.png')) no-repeat; background-size: 16px;
+      position:absolute;
+      top: -2px;
+      margin-left: -5px;
+    }
+  }
+
+  #bluebot_agent_sales_rollup_report_table {
+    thead {
+      th span.info {
+        display: none;
+      }
+    }
+    tbody {
+      tr > td:nth-child(3), tr > td:nth-child(9), tr > td:nth-child(10){
+        padding-left: 0px;
+      }
+    }
+  } 
+
+  div.dataTables_wrapper {
+    width: 100%;
+    
+    table thead tr {
+      th:nth-child(3), th:nth-child(9), th:nth-child(10) {
+        padding-left: 12px;
+      }
+      
+      th:nth-child(9) {
+        width: 131px;
+      }
+    }
+    
+    .DTFC_LeftBodyLiner {
+      border-bottom: 1px solid #FFF;
+    }
+  }
+}

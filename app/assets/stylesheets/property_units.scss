@@ -1,0 +1,475 @@
+// Place all the styles related to the property_units controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.property_units-show {
+    background-color: #061F54;
+}
+
+#property_units_show_container {
+    // background-color: blue;
+    // margin: 0px;
+    width: 100%;
+    border: 0px solid black;
+    padding: 0px;
+}
+
+.property_units_property_select {
+    margin-left: 10px;
+}
+
+
+// STATS
+#property_units_stats_section {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    padding-top: 0px;
+    padding-bottom: 10px;
+
+    .property_units_stats {
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: 0px;
+        margin-right: 5px;
+        width: 280px;
+        border-color: white;
+        border-style: solid;
+        border-width: 2px;
+
+        .property_units_stats_title {
+            margin-left: 0px;
+        }
+
+        .property_units_stats_value {
+            width: 70px;
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+    }
+
+    .property_units_average_stats {
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: 5px;
+        margin-right: 0px;
+        width: 350px;
+        border-color: white;
+        border-style: solid;
+        border-width: 2px;
+
+        .property_units_average_stats_title {
+            margin-left: 0px;
+        }
+
+        .property_units_average_stats_value {
+            width: 80px;
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+    }
+
+    .property_units_metrics_vertical_bar {
+        margin: auto;
+        margin-left: 0px;
+        margin-right: 0px;
+        padding: 0px;
+        width: 3px;
+        height: 150px;
+        border-color: white;
+        border-style: solid;
+        border-width: 0px;
+        border-left-width: 3px;
+    }
+}
+
+// UNITS
+.property_units_section {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .property_units_units_table {
+        margin-top: 0px;
+        margin-bottom: auto;
+        margin-left: 12px;
+        margin-right: 12px;
+        width: 1000px;
+
+        .property_units_units_table_header {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+        }
+
+        .property_units_units_table_row {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+        }
+    }
+}
+
+.property_units_section_spacer {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    height: 22px;
+    padding: 0px;
+}
+
+
+// Text Formatting
+.property_units_text_open_units_descriptor {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-top: -15px;
+    margin-bottom: auto;
+    text-align: center;
+    font-size: 10pt;
+    font-weight: normal
+}
+.property_units_text_metric {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-bottom: 0px;
+    text-align: center;
+    font-size: 12pt;
+    font-weight: normal
+}
+.property_units_text_metric_large {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-top: -20px;
+    margin-bottom: -20px;
+    text-align: center;
+    font-size: 60pt;
+    font-weight: bold
+}
+.property_units_text_metric_date {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    text-align: center;
+    font-size: 13pt;
+    font-weight: normal
+}
+.property_units_text_metric_descriptor {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-top: -3px;
+    margin-bottom: 3px;
+    text-align: center;
+    font-size: 8pt;
+    font-weight: normal
+}
+.property_units_text_metric_descriptor_large {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    text-align: center;
+    font-size: 15pt;
+    font-weight: bold
+}
+.property_units_text_metric_days {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-top: -20px;
+    margin-bottom: -20px;
+    text-align: center;
+    font-size: 46pt;
+    font-weight: bold
+}
+.property_units_text_section_title {
+    margin-top: -10px;
+    margin-bottom: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 16pt;
+    font-weight: normal
+}
+.property_units_text_units_team_header {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 16pt;
+    font-weight: bold
+}
+.property_units_text_units_table_header {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 13pt;
+    font-weight: bold
+}
+.property_units_units_table_row_title {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin: 0px;
+    padding-left: 5px;
+    padding-top: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 11pt;
+    font-weight: normal;
+    font-style: italic; 
+}
+.property_units_text_units_table_row {
+    margin: auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 11pt;
+    font-weight: bold
+}
+.property_units_text_units_table_row_sub_text {
+    margin: auto;
+    padding-bottom: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 10pt;
+    font-weight: bold
+}
+.property_units_text_price_survey_date_title {
+    margin: auto;
+    margin-left: 0px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 16pt;
+    font-weight: bold
+}
+.property_units_text_price_survey_date {
+    margin: auto;
+    margin-right: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: right;
+    font-size: 18pt;
+    font-weight: normal
+}
+.property_units_text_price_table_header {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 14pt;
+    font-weight: bold
+}
+.property_units_text_price_table_row_first {
+    margin: auto;
+    margin-left: 5px;
+    padding-bottom: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 12pt;
+    font-weight: bold
+}
+.property_units_text_price_table_row {
+    margin: auto;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 12pt;
+    font-weight: normal
+}
+.property_units_text_title {
+    margin: auto;
+    padding-left: 10px;
+    padding-top: 0px;
+    padding-bottom: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 14pt;
+    font-weight: normal
+}
+.property_units_text_info {
+    margin: auto;
+    padding-left: 20px;
+    padding-top: 0px;
+    padding-bottom: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 10pt;
+    font-weight: normal
+}
+.property_units_text_stats_title {
+    margin: auto;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 12pt;
+    font-weight: normal
+}
+.property_units_text_stats_value {
+    margin: auto;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: right;
+    font-size: 12pt;
+    font-weight: normal
+}
+.property_units_table_row {
+    margin: auto;
+    padding-left: 10px;
+    padding-top: 0px;
+    padding-bottom: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 10pt;
+    font-weight: normal
+}
+
+// Colors
+.property_units_color_dark_blue {
+    color: #061F54
+}
+.property_units_bkg_color_dark_blue {
+    background-color: #061F54
+}
+.property_units_color_blue {
+    color: #0F3C69
+}
+.property_units_bkg_color_blue, .property_units_bkg_color_units_table_row_even {
+    background-color: #0F3C69
+}
+.property_units_bkg_color_light_blue, .property_units_bkg_color_units_table_row_odd {
+    background-color: #367CAA
+}
+.property_units_color_light_blue {
+    color: #367CAA
+}
+.property_units_bkg_color_very_light_blue {
+    background-color: #ABC0D2
+}
+.property_units_bkg_color_very_light_gray {
+    background-color: lightgray
+}
+.property_units_color_red, .property_units_color_alert {
+    color: #E20019
+}
+.property_units_color_darkorange {
+    color: darkorange;
+}
+.property_units_color_white, .property_units_color_no_alert {
+    color: #FFFFFF
+}
+.property_units_color_off_white {
+    color: #DAE3EB
+}
+.property_units_color_white_semi_transparent {
+    color: rgba(255,255,255,0.2);
+}
+.property_units_bkg_color_white {
+    background-color: #FFFFFF
+}
+.property_units_bkg_color_red{
+    background-color: #E20019
+}
+.property_units_bkg_color_off_white {
+    background-color: #DAE3EB
+}
+.property_units_bkg_color_transparent {
+    background-color: transparent
+}
+.property_units_bkg_color_darkorange {
+    background-color: darkorange
+}
+
+// SVG
+
+
+// Images
+.property_units_member_img {
+    width: 50px;
+    height: 50px;
+    background-color: lightgray
+}
+.property_units_property_img {
+    width: 66px;
+    height: 50px;
+    background-color: lightgray
+}
+.property_units_team_logo {
+    height: 100px;
+    padding-bottom: 10px;
+    text-align: center;
+    background-color: transparent
+}
+.property_units_team_logo_white_bkgrd {
+    height: 50px;
+    background-color: white
+}
+
+// Flex Containers
+.property_units_flex_container_horizontal  {
+    display: flex;
+    justify-content: center;
+    align-content: center
+}
+.property_units_flex_container_horizontal_spaced  {
+    display: flex;
+    justify-content: space-between;
+    align-content: center
+}
+.property_units_flex_container_horizontal_spaced_evenly  {
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center
+}
+.property_units_flex_container_vertical {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-content: center
+}
+.property_units_flex_container_vertical_space_evenly {
+    flex-direction: column;
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center
+}
+
+// Grid Containers
+.property_units_grid_container_stats_section {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto;
+    grid-template-rows: auto;
+    column-gap: 0px;
+    justify-items: center;
+    align-items: center;
+}
+.property_units_grid_container_stats_row {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    column-gap: 0px;
+    justify-items: center;
+    align-items: start
+}
+.property_units_grid_container_units_table {
+    display: grid;
+    grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
+    grid-template-rows: auto;
+    column-gap: 0px;
+}
+
+

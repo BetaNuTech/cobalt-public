@@ -1,0 +1,47 @@
+# == Schema Information
+#
+# Table name: properties
+#
+#  id                            :integer          not null, primary key
+#  code                          :string
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  blue_shift_status             :string
+#  current_blue_shift_id         :integer
+#  slack_channel                 :string
+#  full_name                     :string
+#  manager_strikes               :integer          default(0), not null
+#  current_maint_blue_shift_id   :integer
+#  maint_blue_shift_status       :string
+#  team_id                       :integer
+#  active                        :boolean
+#  type                          :string
+#  city                          :string
+#  state                         :string
+#  current_trm_blue_shift_id     :integer
+#  trm_blue_shift_status         :string
+#  sparkle_blshift_pm_templ_name :string
+#  logo                          :string
+#  image                         :string
+#  num_of_units                  :integer
+#  last_no_blue_shift_needed     :datetime
+#
+
+home:
+  id: 1
+  code: "My home"
+  blue_shift_status: "not_required"
+  maint_blue_shift_status: "not_required"
+  slack_channel: "#home"
+  
+portfolio:
+  code: "Porfolio"
+  blue_shift_status: "not_required"
+  maint_blue_shift_status: "not_required"
+  slack_channel: "#portfolio"
+  
+unassigned_property:
+  code: "moon"
+  blue_shift_status: "not_required"
+  maint_blue_shift_status: "not_required"
+  slack_channel: "#moon"

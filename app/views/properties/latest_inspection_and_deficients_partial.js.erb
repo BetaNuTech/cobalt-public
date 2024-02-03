@@ -1,0 +1,2 @@
+$("#property_latest_inspection_and_deficients_<%= @property.id %>").html('<%= escape_javascript(render(partial: 'latest_inspection_and_deficients', locals: {property: @property})) %>')
+$("#property_latest_inspection_and_deficients_<%= @property.id %>").fadeIn();

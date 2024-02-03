@@ -1,0 +1,109 @@
+# == Schema Information
+#
+# Table name: blue_shifts
+#
+#  id                                                  :integer          not null, primary key
+#  property_id                                         :integer
+#  created_on                                          :date
+#  people_problem                                      :boolean
+#  people_problem_fix                                  :text
+#  people_problem_fix_by                               :date
+#  product_problem                                     :boolean
+#  product_problem_fix                                 :text
+#  product_problem_fix_by                              :date
+#  pricing_problem                                     :boolean
+#  pricing_problem_fix                                 :text
+#  pricing_problem_fix_by                              :date
+#  need_help                                           :boolean
+#  need_help_with                                      :text
+#  created_at                                          :datetime         not null
+#  updated_at                                          :datetime         not null
+#  user_id                                             :integer
+#  comment_thread_id                                   :integer
+#  people_problem_comment_thread_id                    :integer
+#  product_problem_comment_thread_id                   :integer
+#  pricing_problem_comment_thread_id                   :integer
+#  need_help_comment_thread_id                         :integer
+#  archived                                            :boolean
+#  archived_status                                     :string
+#  metric_id                                           :integer
+#  no_people_problem_reason                            :text
+#  no_people_problem_checked                           :boolean
+#  archive_edit_user_id                                :integer
+#  initial_archived_status                             :string
+#  archive_edit_date                                   :date
+#  reviewed                                            :boolean          default(FALSE)
+#  people_problem_reason_all_office_staff              :boolean          default(FALSE)
+#  people_problem_reason_short_staffed                 :boolean          default(FALSE)
+#  people_problem_reason_specific_people               :boolean          default(FALSE)
+#  people_problem_specific_people                      :text
+#  people_problem_details                              :text
+#  product_problem_reason_curb_appeal                  :boolean          default(FALSE)
+#  product_problem_reason_unit_make_ready              :boolean          default(FALSE)
+#  product_problem_reason_maintenance_staff            :boolean          default(FALSE)
+#  product_problem_details                             :text
+#  product_problem_specific_people                     :text
+#  initial_archived_date                               :date
+#  people_problem_fix_results                          :text
+#  product_problem_fix_results                         :text
+#  archived_failure_reasons                            :string
+#  need_help_marketing_problem                         :boolean
+#  need_help_marketing_problem_marketing_reviewed      :boolean
+#  need_help_capital_problem                           :boolean
+#  need_help_capital_problem_explained                 :text
+#  need_help_capital_problem_asset_management_reviewed :boolean
+#  need_help_capital_problem_maintenance_reviewed      :boolean
+#  basis_triggered_value                               :decimal(, )
+#  trending_average_daily_triggered_value              :decimal(, )
+#  physical_occupancy_triggered_value                  :decimal(, )
+#  pricing_problem_denied                              :boolean          default(FALSE)
+#  pricing_problem_approved                            :boolean          default(FALSE)
+#  pricing_problem_approved_cond                       :boolean          default(FALSE)
+#  pricing_problem_approved_cond_text                  :text
+#
+
+default:
+  id: 1
+  property_id: 1 #home 
+  user_id: 1 # homer
+  metric: one
+  created_on: 2016-07-16
+  created_at: 2016-07-16
+  people_problem: false
+  product_problem: false
+  pricing_problem: true
+  pricing_problem_fix: MyText
+  pricing_problem_fix_by: 2016-07-16
+  pricing_problem_comment_thread_id: 1
+  need_help: false
+  archived: false
+  
+second:
+  id: 2
+  property_id: 1 #home 
+  user_id: 1 # homer
+  metric: one
+  created_on: 2016-06-16
+  created_at: 2016-06-16
+  people_problem: false
+  product_problem: false
+  pricing_problem: true
+  pricing_problem_fix: MyText
+  pricing_problem_fix_by: 2016-06-16
+  need_help: false
+  archived: false
+  
+third:
+  id: 3
+  property: home 
+  user: homer
+  metric: one
+  created_on: 2016-05-16
+  created_at: 2016-05-16
+  people_problem: false
+  product_problem: false
+  pricing_problem: true
+  pricing_problem_fix: MyText
+  pricing_problem_fix_by: 2016-07-16
+  need_help: false
+  archived: false

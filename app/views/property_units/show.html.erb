@@ -1,0 +1,177 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<% content_for :header do %>
+    <div id="application_header_logo">
+        <%= link_to root_path, data: { turbolinks: false } do %>
+            <%= show_svg('cobalt_report_white.svg') %>
+        <% end %>
+    </div>
+<% end %>
+
+<div id="hud">
+    <div id="loading"></div>
+</div>
+
+<div id="property_units_show_container">
+    <% if @property.present? %>
+        <%= hidden_field_tag :property_id, @property.id %>
+    <% end %>
+
+    <%= form_tag property_units_path, method: 'get' do %>
+        <%= hidden_field_tag :sort_by, @sort_option_selected %>
+        <%= hidden_field_tag :sort_default, @sort_default %>
+        <%= select_tag :property_code, options_for_select(@property_code_options, @property.code), class: "property_units_property_select" %>
+        <%= submit_tag "Change Property/Team", class: "btn btn-primary", onclick: "show_hud();" %>
+    <% end %>
+
+    <p class="property_units_color_white property_units_text_title"><%= "Units Availability for #{@property.full_name}" %></p>
+
+    <%# STATS %>
+    <div id="property_units_stats_section" class="property_units_grid_container_stats_section property_units_bkg_color_dark_blue">
+        <div class="property_units_stats property_units_color_white">
+            <div class="property_units_flex_container_horizontal_spaced">
+                <p class="property_units_color_white property_units_text_stats_title property_units_stats_title"># of Units:</p>
+                <p class="property_units_color_white property_units_text_stats_value property_units_stats_value"><%= @units.count %></p>
+            </div>
+            <div class="property_units_flex_container_horizontal_spaced">
+                <p class="property_units_color_white property_units_text_stats_title property_units_stats_title"># of Vacant Rented: </p>
+                <p class="property_units_color_white property_units_text_stats_value property_units_stats_value"><%= @stats[:num_of_vacant_rented] %></p>
+            </div>
+            <div class="property_units_flex_container_horizontal_spaced">
+                <p class="property_units_color_white property_units_text_stats_title property_units_stats_title"># of Vacant Unrented:</p>
+                <p class="property_units_color_<%= @stats[:num_of_vacant_unrented] > 0 ? 'alert' : 'white' %> property_units_text_stats_value property_units_stats_value"><%= @stats[:num_of_vacant_unrented] %></p>
+            </div>
+            <div class="property_units_flex_container_horizontal_spaced">
+                <p class="property_units_color_white property_units_text_stats_title property_units_stats_title"># of Notice Rented:</p>
+                <p class="property_units_color_white property_units_text_stats_value property_units_stats_value"><%= @stats[:num_of_notice_rented] %></p>
+            </div>
+            <div class="property_units_flex_container_horizontal_spaced">
+                <p class="property_units_color_white property_units_text_stats_title property_units_stats_title"># of Notice Unrented:</p>
+                <p class="property_units_color_<%= @stats[:num_of_notice_unrented] > 0 ? 'alert' : 'white' %> property_units_text_stats_value property_units_stats_value"><%= @stats[:num_of_notice_unrented] %></p>
+            </div>
+        </div>
+        <div class="property_units_average_stats property_units_color_white">
+            <div class="property_units_flex_container_horizontal_spaced">
+                <p class="property_units_color_white property_units_text_stats_title property_units_average_stats_title">Average Days Vacant:</p>
+                <p class="property_units_color_white property_units_text_stats_value property_units_average_stats_value"><%= @stats[:avg_days_vacant]  %></p>
+            </div>
+            <div class="property_units_flex_container_horizontal_spaced">
+                <p class="property_units_color_white property_units_text_stats_title property_units_average_stats_title">Average Days Vacant to Ready:</p>
+                <p class="property_units_color_white property_units_text_stats_value property_units_average_stats_value"><%= @stats[:avg_days_vacant_to_ready] %></p>
+            </div>
+            <div class="property_units_flex_container_horizontal_spaced">
+                <p class="property_units_color_white property_units_text_stats_title property_units_average_stats_title">Average Days Ready to Leased:</p>
+                <p class="property_units_color_white property_units_text_stats_value property_units_average_stats_value"><%= @stats[:avg_days_ready_to_leased] %></p>
+            </div>
+            <div class="property_units_flex_container_horizontal_spaced">
+                <p class="property_units_color_white property_units_text_stats_title property_units_average_stats_title">Average Days Ready to Occupied:</p>
+                <p class="property_units_color_white property_units_text_stats_value property_units_average_stats_value"><%= @stats[:avg_days_ready_to_occupied] %></p>
+            </div>
+        </div>
+    </div>
+
+    <% if @units.present? && @units.first.present? %>
+        <p class="property_units_color_light_blue property_units_text_info">Data Start: <%= @units.first.data_start_datetime.strftime("%x %r") %>, Last Update: <%= @units.first.updated_at.strftime("%x %r") %></p>
+    <% end %>
+
+    <%# UNITS %>
+    <div class="property_units_section property_units_bkg_color_very_light_blue">
+        <%# UNITS TABLE %>
+        <div class="property_units_units_table">
+            <div class="property_units_units_table_header property_units_bkg_color_white property_units_grid_container_units_table">
+                <% if @is_multiple_properties == true %>
+                    <p class="property_units_color_blue property_units_text_units_table_header">
+                        <a onClick="show_hud();load_new_uri('<%= @sort_by_unit_uri %>');" style="cursor: pointer; cursor: hand;">Property<br>Unit</a>
+                    </p>
+                <% else %>
+                    <p class="property_units_color_blue property_units_text_units_table_header">
+                        <a onClick="show_hud();load_new_uri('<%= @sort_by_unit_uri %>');" style="cursor: pointer; cursor: hand;">Unit</a>
+                    </p>
+                <% end %>
+                <p class="property_units_color_blue property_units_text_units_table_header" >
+                    <a onClick="show_hud();load_new_uri('<%= @sort_by_unit_type_uri %>');" style="cursor: pointer; cursor: hand;">Type</a>
+                </p>
+                <p class="property_units_color_blue property_units_text_units_table_header" >
+                    <a onClick="show_hud();load_new_uri('<%= @sort_by_occupancy_uri %>');" style="cursor: pointer; cursor: hand;">Occupancy</a>
+                </p>
+                <p class="property_units_color_blue property_units_text_units_table_header" >
+                    <a onClick="show_hud();load_new_uri('<%= @sort_by_status_uri %>');" style="cursor: pointer; cursor: hand;">Status</a>
+                </p>
+                <p class="property_units_color_blue property_units_text_units_table_header" >
+                    <a onClick="show_hud();load_new_uri('<%= @sort_by_rent_ready_uri %>');" style="cursor: pointer; cursor: hand;">Rent<br>Ready</a>
+                </p>
+                <p class="property_units_color_blue property_units_text_units_table_header" >
+                    <a onClick="show_hud();load_new_uri('<%= @sort_by_market_rent_uri %>');" style="cursor: pointer; cursor: hand;">Market<br>Rent</a>
+                </p>
+                <p class="property_units_color_blue property_units_text_units_table_header" >
+                    <a onClick="show_hud();load_new_uri('<%= @sort_by_days_vacant_uri %>');" style="cursor: pointer; cursor: hand;">Days<br>Vacant<br>(Prev)</a>
+                </p>
+                <p class="property_units_color_blue property_units_text_units_table_header" >
+                    <a onClick="show_hud();load_new_uri('<%= @sort_by_days_vacant_to_ready_uri %>');" style="cursor: pointer; cursor: hand;">Days<br>Vacant to<br>Ready<br>(Prev)</a>
+                </p>
+                <p class="property_units_color_blue property_units_text_units_table_header" >
+                    <a onClick="show_hud();load_new_uri('<%= @sort_by_days_ready_to_leased_uri %>');" style="cursor: pointer; cursor: hand;">Days<br>Ready to<br>Leased<br>(Prev)</a>
+                </p>
+                <p class="property_units_color_blue property_units_text_units_table_header" >
+                    <a onClick="show_hud();load_new_uri('<%= @sort_by_days_ready_to_occupied_uri %>');" style="cursor: pointer; cursor: hand;">Days<br>Ready to<br>Occupied<br>(Prev)</a>
+                </p>
+            </div>
+
+            <% @units.each_with_index do |element, index| %>
+                <div class="property_units_units_table_row property_units_grid_container_units_table property_units_bkg_color_units_table_row_<%= index.odd? ? 'odd' : 'even' %>">
+                    <p class="property_units_color_white<%= element.occupancy == 'occupied' && element.lease_status == 'leased' ? '_semi_transparent' : '' %> property_units_text_units_table_row">
+                        <% if @is_multiple_properties == true %>
+                            <%= element.property.code %><br><%= element.name %>
+                        <% else %>
+                            <%= element.name %>
+                        <% end %>                        
+                    </p>
+                    <p class="property_units_color_white<%= element.occupancy == 'occupied' && element.lease_status == 'leased' ? '_semi_transparent' : '' %> property_units_text_units_table_row">
+                        <%= element.unit_type %>
+                    </p>
+                    <p class="property_units_color_<%= element.occupancy != 'occupied' ? 'alert' : 'white' %><%= element.occupancy == 'occupied' && element.lease_status == 'leased' ? '_semi_transparent' : '' %> property_units_text_units_table_row">
+                        <%= element.occupancy %>
+                    </p>
+                    <p class="property_units_color_<%= element.lease_status != 'leased' ? 'alert' : 'white' %><%= element.occupancy == 'occupied' && element.lease_status == 'leased' ? '_semi_transparent' : '' %> property_units_text_units_table_row">
+                        <%= element.lease_status %>
+                    </p>
+                    <p class="property_units_color_<%= element.rent_ready != true ? 'alert' : 'white' %><%= element.occupancy == 'occupied' && element.lease_status == 'leased' ? '_semi_transparent' : '' %>  property_units_text_units_table_row">
+                        <%= element.rent_ready %>
+                    </p>
+                    <p class="property_units_color_white<%= element.occupancy == 'occupied' && element.lease_status == 'leased' ? '_semi_transparent' : '' %> property_units_text_units_table_row">
+                        $<%= element.market_rent.round() %>
+                    </p>
+                    <p class="property_units_color_white<%= element.occupancy == 'occupied' && element.lease_status == 'leased' ? '_semi_transparent' : '' %> property_units_text_units_table_row">
+                        <%= element.days_vacant %>  <% if element.prev_days_vacant.present? %>(<%= element.prev_days_vacant %>)<% end %>
+                    </p>
+                    <p class="property_units_color_white<%= element.occupancy == 'occupied' && element.lease_status == 'leased' ? '_semi_transparent' : '' %> property_units_text_units_table_row">
+                        <%= element.days_vacant_to_ready %> <% if element.prev_days_vacant_to_ready.present? %>(<%= element.prev_days_vacant_to_ready %>)<% end %>
+                    </p>
+                    <p class="property_units_color_white<%= element.occupancy == 'occupied' && element.lease_status == 'leased' ? '_semi_transparent' : '' %> property_units_text_units_table_row">
+                        <%= element.days_ready_to_leased %> <% if element.prev_days_ready_to_leased.present? %>(<%= element.prev_days_ready_to_leased %>)<% end %>
+                    </p>
+                    <p class="property_units_color_white<%= element.occupancy == 'occupied' && element.lease_status == 'leased' ? '_semi_transparent' : '' %> property_units_text_units_table_row">
+                        <%= element.days_ready_to_occupied %> <% if element.prev_days_ready_to_occupied.present? %>(<%= element.prev_days_ready_to_occupied %>)<% end %>
+                    </p>
+                </div>
+            <% end %>
+        </div>
+    </div>
+
+
+
+</div>
+
+<script>
+    function show_hud() {
+        $('#hud').show();
+    }
+    function load_new_uri(uri) {
+        // var queryDict = {}
+        // location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]}
+        setTimeout(() => { window.location.replace(uri); }, 100);  // Delayed just for HUD to show
+    }
+    $(document).ready(function() {
+        $('#hud').hide();
+    });
+</script>

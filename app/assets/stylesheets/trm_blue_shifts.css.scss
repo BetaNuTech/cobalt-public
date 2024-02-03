@@ -1,0 +1,110 @@
+#header {
+  img:nth-child(2) {
+    margin-left: 20px;
+  }
+}
+
+#trm_blue_shift_show_container .thread, #trm_blue_shift_form {
+  margin-left: 10px;
+  width: 800px;
+}
+
+#trm_blue_shift_form {
+  
+  #view_past_trm_blue_shifts {
+    float: left; 
+    width: 30%;
+  }
+  
+  #archive_container {
+    float: none; 
+    text-align: right; 
+    width: 100%;
+    #archive_details_container {
+      display: none;
+    }
+    #edit_archive_details_container {
+      display: none;
+    }
+
+    form {
+      margin-left: 10px;
+      display: inline;
+    }
+  }
+  
+  fieldset {
+    border: none;
+  }
+  
+  input:disabled, textarea:disabled {
+    opacity: 0.9;
+    // -webkit-text-fill-color:#000000;
+  }
+  
+  .change_date {
+    margin-left: 15px;
+  }
+  
+  .trm_blue_shift_metrics {
+    display: table;
+    table-layout: fixed; /*Optional*/
+    width: 100%;    
+    span {
+      display: table-cell;
+      width: 240px;
+    }
+  }
+  .trm_blue_shift_section {
+    margin-top: 30px;
+    .trm_blue_shift_selection {
+      margin-top: 6px;
+    }
+  }
+  
+  .trm_blue_shift_input {
+    margin-top: 6px;
+    display: none;
+  }
+
+  .inspection_section {
+    margin-left: 6px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .inspection_title {
+    color:blue;
+    display: inline;
+    padding-left: 12px;
+    padding-right: 6px;
+  }
+
+  .inspection_report {
+    display: inline;
+    padding-left: 12px;
+  }
+  
+  .inspection_alert {
+    color:red;
+    display: inline;
+    padding-left: 12px;
+  }
+
+  span[data-rent-change-reasons] {
+    cursor: pointer;
+  }
+
+  .text_area_static_text {
+    background-color: lightgray;
+  }
+}
+
+#audit_line_items {
+  font-size: 12px;
+}
+
+textarea {
+  font-size: 13px;
+}

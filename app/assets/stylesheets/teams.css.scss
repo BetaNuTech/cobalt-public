@@ -1,0 +1,17 @@
+.inactive_team {
+  opacity: 0.5;
+  color: red;
+}
+
+table.teams_table, th.teams_table, td.teams_table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table.teams_table tr:nth-child(even) {
+  background-color: #eee;
+}
+table.teams_table tr:nth-child(odd) {
+  background-color: #fff;
+}
+

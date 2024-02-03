@@ -1,0 +1,87 @@
+#dev_app_header {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  width: 50;
+  height: 15px;
+  margin: 0;
+  text-align: center;
+  background-color: red;
+  color: white;
+  font-size: 10px;
+}
+
+#header {
+  height: 90px;
+  color: white;
+  
+  img {
+    vertical-align: top;    
+  }
+
+  #global_menu_items {
+    position: absolute;
+    right: 30px;     
+    color: white;
+    font-size: 10pt;
+  }
+
+  #header_title {
+    position: absolute;
+    top: 40px;
+    left: 200px;
+  }
+}
+
+// Remove space between header and content
+.content {
+  margin-top: -15px;
+}
+
+.metrics-index, 
+.costar_market_data-show,
+.collections_details-show {
+  .content {
+    margin-top: -10px;
+  }
+}
+
+.sessions-new .content, .passwords-new .content {
+  margin: 10px;
+}
+
+.entity_table {
+  th, td {
+    padding: 5px 10px 5px 10px;
+  }
+}
+
+.field {
+  margin-bottom: 10px;
+}
+
+
+#application_header_logo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  margin: 0px;
+  width: 155px;
+  height: 60px;
+  padding: 0px;
+}
+
+#application_header_second_image {
+  position: absolute;
+  top: 10px;
+  left: 190px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#application_header_svg {
+ margin: 0px;
+ padding: 0px;
+ width: 100%;
+ height: 100%;
+}

@@ -1,0 +1,173 @@
+/* Basic resets */
+
+* { 
+    margin:0; padding:0; 
+    box-sizing: border-box;
+}
+
+body {
+	background-color:rgb(39, 118, 184);
+	margin: 10px auto 0;
+	max-width: 1220px;
+	font-family: "Expletus Sans", sans-serif;
+}
+
+p {
+  color: white;
+}
+
+#title {
+	position: absolute;
+	text-align: right;		
+    top: 10px;
+    right: 10px;
+    margin: 0 0 0 0;
+    font-size: 18px;
+}
+
+#star_def {
+	margin-bottom: 10px;
+}
+
+.agent {
+	text-align: left;		
+	font-size: 15px;
+	width: 40%;
+	height: 100%;
+	float:left;
+	padding: 8px 10px 10px 8px;
+}
+
+.agent-header {
+	text-align: left;		
+	font-size: 15px;
+	width: 40%;
+	height: 100%;
+	float:left;
+	padding: 8px;		
+}
+
+.property {
+	text-align: center;		
+	font-size: 15px;
+	width: 30%;
+	height: 100%;
+	padding: 16px 10px 0px 10px;		
+	float:left;	
+}
+
+.property-header {
+	text-align: center;		
+	font-size: 15px;
+	width: 30%;
+	height: 100%;
+	padding: 8px;		
+	float:left;	
+}
+
+.goal {
+	text-align: center;		
+	font-size: 15px;
+	width: 15%;
+	height: 100%;
+	padding: 16px 10px 0px 10px;		
+	float:left;	
+}
+
+.goal-header {
+	text-align: center;		
+	font-size: 15px;
+	width: 15%;
+	height: 100%;
+	padding: 8px;		
+	float:left;	
+}
+
+.sales {
+	text-align: center;		
+	font-size: 15px;
+	width: 15%;
+	height: 100%;
+	padding: 16px 10px 0px 10px;		
+	float:left;	
+}
+
+.sales-header {
+	text-align: center;		
+	font-size: 15px;
+	width: 15%;
+	height: 100%;
+	padding: 8px;		
+	float:left;	
+}
+
+.percentage {
+	text-align: center;		
+	font-size: 15px;
+	width: 15%;
+	height: 100%;
+	padding: 16px 10px 0px 10px;		
+	float:left;	
+}
+
+.cell {
+	height: 50px;
+}
+
+.header {
+	height: 34px;
+}
+
+.odd {
+	background-color: rgb(46, 142, 203);
+}
+
+div {
+  width: 100%;
+  display:block;
+}
+
+div.horz_line {
+	height: 2px;
+	background-color: white;
+}
+
+.img-header {
+	display:block;
+	margin-bottom: 10px;
+}
+
+.img-star {
+	margin-bottom: -5px;
+	margin-left: -3px;
+	margin-right: -1px;
+	width:21px;
+	height:21px;
+}
+
+.column_left {
+	padding-left: 0px;
+	padding-right: 5px;
+}
+
+.column_center {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.column_right {
+	padding-left: 5px;
+	padding-right: 0px;
+}
+
+.column {
+	float: left;
+	width: 33.33%;
+}
+  
+/* Clear floats after the columns */
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}

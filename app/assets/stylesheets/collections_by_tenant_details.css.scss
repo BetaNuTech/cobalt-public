@@ -1,0 +1,164 @@
+
+#collections_by_tenant_details .w3-border {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: white;
+}
+
+#collections_by_tenant_details_form {
+  float: left;
+  margin: 5px;
+}
+
+#collections_by_tenant_details_header {
+  margin: 20px;
+  font-weight: bold;
+}
+
+#collections_by_tenant_details_timestamp {
+  margin-left: 20px;
+}
+
+a#collections_faq_pdf {
+  display: inline-block;
+  margin-left: 8px;
+  margin-bottom: 0px;
+  width: 179px; 
+  height: 48px; 
+  background-image: url(image-path('collections_faq.png'));
+}
+
+a#collections_credit_card_process_pdf {
+  display: inline-block;
+  margin-left: 8px;
+  margin-bottom: 0px;
+  width: 179px; 
+  height: 48px; 
+  background-image: url(image-path('collections_credit_card_process.png'));
+}
+
+#collections_by_tenant_details {
+  .flash_red.flashing {
+    color: red;
+  }
+  
+  .flash_blue.flashing {
+    color: blue;
+  }
+
+  .flash_red.flashing_background {
+    background-color: red;
+    color: white !important;
+    span, span a {
+      color: white !important;      
+    }
+  }
+  
+  .flash_blue.flashing_background {
+    background-color: blue;
+    color: white !important;
+    span, span a {
+      color: white !important;      
+    }
+  }
+
+
+  .flash_blue.flashing {
+    td, td span, td a {
+      color: white !important;
+      background-color: blue;
+    }
+  }
+  
+  .flash_red.flashing {
+    td, td span, td a {
+      color: white !important;
+      background-color: red;
+    }
+  }
+  
+  a.flash {
+    color: black;
+    text-decoration: none;
+  }
+  
+  a:visited {
+    color: black;
+  }
+  
+  a.blue {
+    color: blue;
+  }
+  
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  table {
+    td {
+      white-space: nowrap;
+      span[data-metric] {
+        cursor: pointer;
+      }
+    }
+
+    td, th {
+      text-align: left;
+    }
+    
+    th {
+      white-space: nowrap;
+    }
+    
+    th span.info {
+      background: url(image-path('question_mark.png')) no-repeat; background-size: 16px;
+      position:absolute;
+      top: -2px;
+      margin-left: -5px;
+    }
+  }
+
+  table.dataTable.stripe tbody tr.odd {
+    background-color: #F3F3F3 !important;
+  }
+
+  table.dataTable.stripe tbody tr.odd.darker {
+    background-color: rgb(221, 193, 193) !important;
+  }
+
+  table.dataTable.stripe tbody tr.even.darker {
+    background-color: rgb(236, 209, 209) !important;
+  }
+
+  #collections_by_tenant_details_table {
+    thead {
+      th span.info {
+        display: none;
+      }
+    }
+    tbody {
+      tr > td:nth-child(3), tr > td:nth-child(9), tr > td:nth-child(10){
+        padding-left: 0px;
+      }
+    }
+  }
+
+  div.dataTables_wrapper {
+    width: 100%;
+    
+    table thead tr {
+      th:nth-child(3), th:nth-child(9), th:nth-child(10) {
+        padding-left: 12px;
+      }
+      
+      th:nth-child(9) {
+        width: 131px;
+      }
+    }
+    
+    .DTFC_LeftBodyLiner {
+      border-bottom: 1px solid #111;
+    }
+  }
+}

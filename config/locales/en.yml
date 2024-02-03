@@ -1,0 +1,67 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at https://guides.rubyonrails.org/i18n.html.
+
+en:
+  unauthenticated: "You need to sign in or sign up before continuing."
+  signed_in: "You are already signed in."
+  metric_descriptions:
+    property: "Property code # units (physical occupancy) rolling 30d net sales:rolling 10d net sales"
+    cnoi: "The performance to budget for collected revenue minus operating expenses, excluding all capital and non-controllable expenses, for the current year excluding current month and only including previous month after the 15th of the current month. (Projected CNOI)"
+    trending: "Average Daily Trending: next month calendar / 2 months out calendar, adjusted for tenants without payment  GOAL: 92%"
+    occupancy: "Average daily physical occupancy, adjusted for tenants without payment / budgeted economic occupancy GOAL: BEAT BUDGET"
+    average_rents: "Average market rent (weighted specials) / Average rent / Net effective budgeted average rent (%YoY-w/o-vacancy %YoY-w/-vacancy) GOAL: BEAT BUDGET"
+    concessions: "Concessions per unit (excluding bluelight), adjusted for tenants without payment / Concessions budgeted per unit"
+    basis: "Your average rents * occupancy / budgeted averge rents * budgeted occupancy ( CNR YTD excluding current month and excluding evictions) GOAL: 100%"
+    expenses: "% of budget (% of budget YTD). Prior to 9/13/16: % of month past (% of budget spent for operating (not contract, utilities or payroll) plus ongoing capital)."
+    renewals: "(Unknown renewals) Number renewed in current month / % renewed for all lease expirations in current month / MTM / % YTD GOAL: 50%"
+    collections: " (Non-Eviction, Current status residents with Bal past 20 days > $500) Unwritten-off Balances past 20 days / % recurr charges collected compared to budget for all current residents (Non-Eviction, Current residents with Current Mnth Bal > $500) # Eviction Residents (# Eviction Residents w/ at least 2 months due)"
+    maintenance: "% ready units over 9 days / vacant units over 9 days (# units not ready more than 9 days : # turns completed in month) # open wos over 48 hours old GOAL 100% (0-*) 0 (Note: a turn is completed when the ready button is clicked in Yardi)"
+    work_orders: "WOs > 48 hrs / Total WOs"
+  alerts:
+    blue_shifts:
+      fix_by_date_update: "*Blueshift* %{problem} problem fix by date for *%{property}* has been changed by *%{user}* from *%{original_date}* to *%{new_date}*. %{blue_shift_url}"
+    maint_blue_shifts:
+      fix_by_date_update: "*Maintenance Blueshift* %{problem} problem fix by date for *%{property}* has been changed by *%{user}* from *%{original_date}* to *%{new_date}*. %{blue_shift_url}"
+    trm_blue_shifts:
+      fix_by_date_update: "*%{property}* -> *TRM Blueshift* %{problem} problem fix by date has been changed by *%{user}* from *%{original_date}* to *%{new_date}*. %{trm_blue_shift_url}"
+  conversions_for_properties_descriptions:
+    ideal_leads: "Replaces actuals for avg renewals with 50%, avg conversion with 40% and avg closing with 40%"
+    blueshift_leads: "Replaces actual calcs for avg conversion with 40% and avg closing with 40%"
+    bluesky_leads: "BlueSky leads (+/-delta to Cobalt) / All BlueSky leads, including duplicates"
+  collections_details_descriptions:
+    occ_trend: "% Occupied / Average Daily Occupancy Adjusted / Average Daily Trending 2 Months Out Adjusted"
+    collections: "% of $ Paid-in-Full / % of $ as Payment Plan"
+    unknown: "# of Unknowns (% of Residents) # of residents that owe more $100 w/o notes"
+    payment_plan: "# of Payment Plans (% of Residents)"
+    paid_in_full: "# Paid-in-Full (% of Residents)"
+    evictions: "# of Evictions (% of Residents)"
+
+      

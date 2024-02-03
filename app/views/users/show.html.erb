@@ -1,0 +1,50 @@
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+<% end %>
+
+<p>
+  <strong>Profile Image:</strong><br>
+  <%= retina_image_tag(@user.profile_image, :thumb) if @user.profile_image? %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @user.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @user.last_name %>
+</p>
+
+<p>
+  <strong>Tier 1 Role:</strong>
+  <%= @user.t1_role %>
+</p>
+
+<p>
+  <strong>Tier 2 Role:</strong>
+  <%= @user.t2_role %>
+</p>
+
+<p>
+  <strong>Slack Member ID:</strong>
+  <%= @user.slack_username %>
+</p>
+
+<p>
+  <strong>Corporate Slack Member ID:</strong>
+  <%= @user.slack_corp_username %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

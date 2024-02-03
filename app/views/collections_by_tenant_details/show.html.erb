@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+        <%= show_svg('cobalt_collections_white.svg') %>
+      <% end %>
+  </div>
+  <span id="header_title">Collections by Tenant for <strong><%=@property_name_html%></strong></span>
+<% end %>
+
+<input id='property_id' type='hidden' value='<%= @property.id %>'>
+<input id='timestamp_string' type='hidden' value='<%= @timestamp_string %>'>
+
+<div id="collections_by_tenant_details_timestamp">
+  <strong>UPDATED: <span id='timestamp_localized'></span></strong>
+  <a id="collections_faq_pdf" alt="Collections FAQ" href="/COVID19_Q_and_A_Collection_Efforts_Only.pdf" target=\"_blank\"></a>
+  <a id="collections_credit_card_process_pdf" alt="Collections Credit Card Process" href="/COVID19_Collection_Efforts_Process_Credit_Card_Payments.pdf" target=\"_blank\"></a>
+  <br><br>
+  <%=@property_details_one_html%>
+  <br>
+  <%=@property_details_two_html%>
+</div>
+
+
+
+<div id="collections_by_tenant_details">  
+  <table id="collections_by_tenant_details_table" class="stripe" width="100%" cellpadding="0" cellspacing="0" border="0" class="table" >
+    <thead>
+      <th>
+        RESIDENT
+      </th>
+      <th>
+      </th>
+      <th>
+        TCODE
+      </th>
+      <th>
+        UNIT
+      </th>
+      <th>
+        RENT
+      </th>
+      <th>
+        UNPAID
+      </th>
+      <th>
+        PAYMENT<br>
+        PLAN
+      </th>
+      <th>
+        (N)
+      </th>
+      <th>
+        (E)
+      </th>
+      <th>
+        NOTES
+      </th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>

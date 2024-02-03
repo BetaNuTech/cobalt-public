@@ -1,0 +1,34 @@
+# config/settings.yml
+defaults: &defaults
+  basic_auth_username: <%= ENV['BASIC_AUTH_USERNAME'] %> 
+  basic_auth_password: <%= ENV['BASIC_AUTH_PASSWORD'] %> 
+  s3_bucket: <%= ENV['S3_BUCKET'] %>
+  aws_key: <%= ENV['AWS_KEY'] %>
+  aws_secret: <%= ENV['AWS_SECRET'] %>
+  host: <%= ENV["HOST"] %>
+  slack_api_token: <%= ENV["SLACK_API_TOKEN"] %>
+  slack_api_token_test: <%= ENV["SLACK_API_TOKEN_TEST"] %>
+  slack_redbot_api_token: <%= ENV["SLACK_REDBOT_API_TOKEN"] %>
+  slack_redbot_api_token_test: <%= ENV["SLACK_REDBOT_API_TOKEN_TEST"] %>
+  slack_maint_bluebot_api_token: <%= ENV["SLACK_MAINT_BLUEBOT_API_TOKEN"] %>
+  slack_maint_bluebot_api_token_test: <%= ENV["SLACK_MAINT_BLUEBOT_API_TOKEN_TEST"] %>
+  slack_corp_yodabot_api_token: <%= ENV["SLACK_CORP_YODABOT_API_TOKEN"] %>
+  slack_corp_redbot_api_token: <%= ENV["SLACK_CORP_REDBOT_API_TOKEN"] %>
+  slack_corp_bluebot_api_token: <%= ENV["SLACK_CORP_BLUEBOT_API_TOKEN"] %>
+  slack_calendarbot_api_token: <%= ENV["SLACK_CALENDARBOT_API_TOKEN"] %>
+  slack_test_mode: <%= ENV["SLACK_TEST_MODE"] %>
+  blueshift_x_rolling_days: <%= ENV["BLUESHIFT_X_ROLLING_DAYS"] %>
+  blueshift_y_consecutive_days: <%= ENV["BLUESHIFT_Y_CONSECUTIVE_DAYS"] %>
+  redbot_strikes_disabled: <%= ENV["REDBOT_STRIKES_DISABLED"] %>
+  slack_enabled: <%= ENV["SLACK_ENABLED"] %>
+  druid_prospect_stats_url: <%= ENV["DRUID_PROSPECT_STATS_URL"] %>
+  application_host: <%= ENV["APPLICATION_HOST"] %>
+  
+development:
+  <<: *defaults
+  
+test:
+  <<: *defaults
+  
+production:
+  <<: *defaults

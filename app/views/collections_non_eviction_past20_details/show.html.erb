@@ -1,0 +1,34 @@
+
+
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+  <span id="header_title">Collections: Non-Eviction with Balance over 20 days > $500 for <strong><%=@property_name%></strong> for <strong><%=@date%></strong></span>
+<% end %>
+
+<div id="collections_non_eviction_past20_details">  
+  <table id="collections_non_eviction_past20_details_table" class="stripe" width="100%" cellpadding="0" cellspacing="0" border="0" class="table" >
+    <thead>
+      <th>
+        Property
+      </th>
+      <th>
+        Yardi Code
+      </th>
+      <th>
+        Tenant
+      </th>
+      <th>
+        Unit
+      </th>
+      <th>
+        Balance
+      </th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,156 @@
+.costar_market_data-show {
+  background-color: black;
+  color: white;
+}
+
+.costar-level-1 {
+  color: white;
+  background-color: #4f52ff;
+}
+.costar-level-2 {
+  color: #4f52ff;
+}
+// .costar-level-3 {
+//   // Neutral
+// }
+.costar-level-4 {
+  color: #ff3131;
+}
+.costar-level-5 {
+  color: white;
+  background-color: #ff3131;
+}
+
+#costar_market_data {
+  color: #FFFFFF !important;
+
+  .flash_red.flashing {
+    color: rgb(255, 42, 42);
+  }
+  
+  .flash_blue.flashing {
+    color: blue;
+  }
+
+  .flash_red.flashing_background {
+    background-color: red;
+    color: white !important;
+    span, span a {
+      color: white !important;      
+    }
+  }
+  
+  .flash_blue.flashing_background {
+    background-color: blue;
+    color: white !important;
+    span, span a {
+      color: white !important;      
+    }
+  }
+
+
+  .flash_blue.flashing {
+    td, td span, td a {
+      color: white !important;
+      background-color: blue;
+    }
+  }
+  
+  .flash_red.flashing {
+    td, td span, td a {
+      color: white !important;
+      background-color: red;
+    }
+  }
+  
+  a.flash {
+    color: black;
+    text-decoration: none;
+  }
+  
+  a:visited {
+    color: black;
+  }
+  
+  a.blue {
+    color: blue;
+  }
+  
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  table {
+    td {
+      white-space: nowrap;
+      span.compliance_issue {
+        cursor: pointer;
+      }
+      // color: #FFFFFF !important;
+      // background-color: #000000 !important;
+    }
+
+    td, th {
+      text-align: left;
+    }
+    
+    th, tr td {
+      white-space: nowrap;
+      color: #FFFFFF !important;
+      background-color: #000000 !important;
+    }
+    
+    th span.info {
+      background: url(image-path('question_mark.png')) no-repeat; background-size: 16px;
+      position:absolute;
+      top: -2px;
+      margin-left: -5px;
+    }
+  }
+
+  table.dataTable.stripe tbody tr.odd {
+    background-color: #171717 !important;
+  }
+
+  table.dataTable.stripe tbody tr.even {
+    background-color: #000000 !important;
+  }
+
+  #costar_market_data_table {
+    thead {
+      th span.info {
+        display: none;
+      }
+    }
+    tbody {
+      tr > td:nth-child(3), tr > td:nth-child(9), tr > td:nth-child(10){
+        padding-left: 0px;
+      }
+    }
+  } 
+
+  div.dataTables_wrapper {
+    width: 100%;
+    
+    table thead tr {
+      th:nth-child(3), th:nth-child(9), th:nth-child(10) {
+        padding-left: 12px;
+      }
+      
+      th:nth-child(9) {
+        width: 131px;
+      }
+    }
+    
+    .DTFC_LeftBodyLiner {
+      border-bottom: 1px solid #111;
+    }
+  }
+}
+
+// SVG
+.in_development_svg_construction_hat {
+  width: 35px;
+  height: 22px;
+}

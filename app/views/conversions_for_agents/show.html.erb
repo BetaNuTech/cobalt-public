@@ -1,0 +1,60 @@
+
+
+<% content_for :header do %>
+    <div id="application_header_logo">
+        <%= link_to root_path, data: { turbolinks: false } do %>
+            <%= show_svg('cobalt_report_white.svg') %>
+        <% end %>
+    </div>
+  <span id="header_title">Conversions for Agents for <strong><%=@property_name%></strong> on <strong><%=@date%></strong></span>
+<% end %>
+
+<div id="severity-scale">
+  <span><strong>Severity Scale: </strong></span>
+  <span class="level-1">1</span><span> </span>
+  <span class="level-2">2</span><span> </span>
+  <span class="level-3">3</span><span> </span>
+  <span class="level-6">4</span>
+</div>
+
+<div id="conversions_for_agents">
+  <div style="float: none; display=block; margin-top: -20px; margin-bottom: 10px;">
+  <%= @bluebot_agent_sales_rollup_report_link %>
+  </div>  
+  <table id="conversions_for_agents_table" class="stripe" width="100%" cellpadding="0" cellspacing="0" border="0" class="table" >
+    <thead>
+      <th>
+        Agent Name
+      </th>
+      <th>
+        Leads (T30)
+      </th>
+      <th>
+        Conversion (T30)
+      </th>
+      <th>
+        Closing (T30)
+      </th>
+      <th>
+        Leads (T180)
+      </th>
+      <th>
+        Conversion (T180)
+      </th>
+      <th>
+        Closing (T180)
+      </th>
+      <th>
+        Leads (1YR)
+      </th>
+      <th>
+        Conversion (1YR)
+      </th>
+      <th>
+        Closing (1YR)
+      </th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,923 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+  <div id="application_header_second_image"><%= image_tag "blue_shift_logo.png" %></div>
+<% end %>
+
+<input id='current_metric_id' type='hidden' value='<%= @current_metric.id %>'>
+<input id='property_id' type='hidden' value='<%= @property.id %>'>
+<input id='created_on_date' type='hidden' value='<%= @todays_date %>'>
+<input id='created_on_date_for_cfp' type='hidden' value='<%= @todays_date.strftime("%m/%d/%Y") %>'>
+
+<div id="blue_shift_form">
+  <div id="view_past_blue_shifts">
+    <%= link_to "View past BlueShifts", property_blue_shifts_path(property_id: @property.id) %>
+  </div>
+  <br />
+  <%# <% if @maint_blueshift_html %> 
+    <%# <br />   %>
+    <%# <div id="view_maint_blue_shift"> %>
+      <%# <%= @maint_blueshift_html.html_safe %> 
+    <%# </div> %>
+  <%# <% end %>
+  <div id="archive_container">
+    <% if @blue_shift.archived? %>
+      <span style="color: <%= @blue_shift.archived_status == 'success' ? 'blue' : 'red' %>">
+        
+        <% if @blue_shift.initial_archived_status != @blue_shift.archived_status && @blue_shift.archive_edit_user && @blue_shift.archive_edit_date %>
+          Archived as a <%= @blue_shift.initial_archived_status %>
+          (Overridden as a <%= @blue_shift.archived_status %> by <%= @blue_shift.archive_edit_user.first_name %> <%= @blue_shift.archive_edit_user.last_name %> on <%= @blue_shift.archive_edit_date %>)
+        <% else %> 
+          Archived as a <%= @blue_shift.archived_status %>
+        <% end %>
+        <br />
+        <% if can? :edit_archived_status, @blue_shift %> 
+          <%= form_for [@property, @blue_shift], method: @blue_shift.persisted? ? 'patch' : 'post',
+            url: { action: "archive" } do |f| %>
+            <button id="edit_archive_action">Change</button>
+            <span id="edit_archive_details_container">
+              <br>
+              <span>Change Archived BlueShift to</span>
+              <%= f.radio_button :archived_status, "success", value: "success", class: 'editable'  %>
+              <%= f.label :archived_status_success, "Success" %>
+              <%= f.radio_button :archived_status, "failure", value: "failure", class: 'editable'  %>
+              <%= f.label :archived_status_failure, "Failure" %>
+              
+              <%= f.submit "Submit", class: "editable", 
+                data: { confirm: "Are you sure you wish to update this archive?" } %>
+              <button id="cancel_edit_archive">Cancel</button>
+            </span>
+          <% end %> 
+        <% end %> 
+      </span>
+    <% elsif can? :archive, @blue_shift %>
+      <%= form_for [@property, @blue_shift], method: @blue_shift.persisted? ? 'patch' : 'post',
+        url: { action: "archive" } do |f| %>
+        <button id="archive_action">Archive</button>
+        <span id="archive_details_container">
+          <span>Archive  BlueShift as a</span>
+          <%= f.radio_button :archived_status, "success", value: "success", class: 'editable'  %>
+          <%= f.label :archived_status_success, "Success" %>
+          <%= f.radio_button :archived_status, "failure", value: "failure", class: 'editable'  %>
+          <%= f.label :archived_status_failure, "Failure" %>
+          
+          <%= f.submit "Submit for Archiving", class: "editable", 
+            data: { confirm: "Are you sure you wish to archive this BlueShift?" } %>
+          <button id="cancel_archiving">Cancel</button>
+        </span>
+      <% end %> 
+    <% end %>
+    <% if can? :delete, @blue_shift %>
+      <%= button_to "Delete", 
+        property_blue_shift_path(@blue_shift.property.id, @blue_shift.id), 
+        method: :delete, 
+        data: { confirm: "Are you sure you wish to delete this BlueShift? All data, comments, and images associated with this BlueShift will be deleted as well." },
+        class: "editable" %>
+    <% end %>
+  </div>
+  
+  <% if @blue_shift.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@blue_shift.errors.count, "error") %> prohibited
+        the BlueShift from being saved:
+      </h2>
+      <ul>
+        <% @blue_shift.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <br>
+  <%= form_for [@property, @blue_shift], method: @blue_shift.persisted? ? 'patch' : 'post' do |f| %>
+    <div>
+      <label>
+        <% if @property.type == 'Team' %>
+          TEAM:
+        <% else %>
+          PROPERTY:
+        <% end %>
+      </label>
+      <%= @property.code %>
+    </div>
+    <% if @property.type != 'Team' %>
+      <div>
+      <label>
+        LOCATION:
+      </label>
+      <%= @property.city %>, <%= @property.state %>
+      </div>
+    <% end %>
+    <div>
+      <label>
+        NAME/TITLE:
+      </label>
+      <%= @blue_shift.user.name %>
+    </div>
+    <div>
+      <label>
+        BLUESHIFT CREATION DATE:
+      </label>
+      <span id="created_on_readonly_text">
+        <%= formatted_date(@todays_date) %>
+      </span>
+      <%= f.hidden_field :created_on, value: @todays_date.to_s %>
+    </div>
+    <% if @due_date %>
+      <div>
+        <label>
+          BLUESHIFT DUE DATE:
+        </label>
+        <span>
+          <%= formatted_date(@due_date) %>
+        </span>
+      </div>
+    <% end %>
+
+    <br/>
+    <div><u>Blueshift Creation Date Metrics:</u></div>
+    <div class="blue_shift_metrics">
+      <span class="level-<%= @current_metric.physical_occupancy_level %>">
+        Occupancy:
+        <%= number_to_percentage(@current_metric.physical_occupancy, precision: 1, strip_insignificant_zeros: true) %>
+      </span>
+      <span class="level-<%= @current_metric.trending_average_daily_level %>" style="text-align: center;">
+        Trending (T60):
+        <%= number_to_percentage(@current_metric.trending_average_daily, precision: 1, strip_insignificant_zeros: true) %>
+      </span>
+      <span class="level-<%= @current_metric.basis_level %>" style="text-align: center;">
+        CNR:
+        <%= number_to_percentage(@current_metric.basis, precision: 1, strip_insignificant_zeros: true) %>
+        <% if @current_metric.basis_level > 2 %>
+          <br>(C <%= number_to_percentage(@current_metric.collections_percentage_recurring_charges_collected, precision: 1, strip_insignificant_zeros: true) %>)
+        <% end %>
+      </span>
+      <span class="level-<%= @current_metric.cnoi_level %>" style="text-align: center;">
+        CNOI:
+        <%= number_to_percentage(@current_metric.cnoi, precision: 1, strip_insignificant_zeros: true) %>
+      </span>
+    </div>
+    <br/>
+    <div><u>Blueshift Budget Goal Metrics (Automatic Successful Archive, if Blueshift No longer <em><a class="level-1" href="/blueshift_triggers.pdf" target="_blank">Required</a></em>):</u></div>
+    <div class="blue_shift_metrics">
+      <span class="level-1">
+        <% if @latest_metric %>
+          Occupancy: <%= number_to_percentage(Metric.blue_shift_threshold_for_physical_occupancy(@latest_metric), precision: 1, strip_insignificant_zeros: true)%>
+        <% else %>
+          Occupancy: <%= number_to_percentage(Metric.blue_shift_threshold_for_physical_occupancy(@current_metric), precision: 1, strip_insignificant_zeros: true)%>
+        <% end %>
+      </span>
+      <span class="level-1" style="text-align: center;">
+        <% if @latest_metric %>
+          Trending (T60): <%= number_to_percentage(Metric.blue_shift_threshold_for_trending_average_daily(@latest_metric), precision: 1, strip_insignificant_zeros: true)%>
+        <% else %>
+          Trending (T60): <%= number_to_percentage(Metric.blue_shift_threshold_for_trending_average_daily(@current_metric), precision: 1, strip_insignificant_zeros: true)%>
+        <% end %>
+      </span>
+      <span class="level-1" style="text-align: center;">
+        CNR: <%= number_to_percentage(Metric.blue_shift_threshold_for_basis(), precision: 1, strip_insignificant_zeros: true)%>
+      </span>
+      <span class="level-0" style="text-align: center;">
+      </span>
+    </div>
+    <br/>
+    <div><u>Blueshift Triggered Success Goal Metrics (<%= @x_rolling_days %>-Day Averages):</u></div>
+    <div class="blue_shift_metrics">
+      <% if !@blue_shift.physical_occupancy_triggered_value.nil? %>
+        <span class="level-0">
+          <% if @latest_metric %>
+            Occupancy: <%= number_to_percentage(Metric.blue_shift_success_value_for_physical_occupancy(@blue_shift, @latest_metric), precision: 1, strip_insignificant_zeros: true)%>
+          <% else %>
+            Occupancy: <%= number_to_percentage(Metric.blue_shift_success_value_for_physical_occupancy(@blue_shift, @current_metric), precision: 1, strip_insignificant_zeros: true)%>
+          <% end %>
+        </span>
+      <% else %>
+        <span class="level-0" style="text-align: center;">
+        </span>
+      <% end %>
+      <% if !@blue_shift.trending_average_daily_triggered_value.nil? %>
+        <span class="level-0" style="text-align: center;">
+          <% if @latest_metric %>
+            Trending (T60): <%= number_to_percentage(Metric.blue_shift_success_value_for_trending_average_daily(@blue_shift, @latest_metric), precision: 1, strip_insignificant_zeros: true)%>
+          <% else %>
+            Trending (T60): <%= number_to_percentage(Metric.blue_shift_success_value_for_trending_average_daily(@blue_shift, @current_metric), precision: 1, strip_insignificant_zeros: true)%>
+          <% end %>
+        </span>
+      <% else %>
+        <span class="level-0" style="text-align: center;">
+        </span>
+      <% end %>
+      <% if !@blue_shift.basis_triggered_value.nil? %>
+        <span class="level-0" style="text-align: center;">
+          CNR:
+          <%= number_to_percentage(Metric.blue_shift_success_value_for_basis(@blue_shift), precision: 1, strip_insignificant_zeros: true) %>
+        </span>
+      <% else %>
+        <span class="level-0" style="text-align: center;">
+        </span>
+      <% end %>
+      <span class="level-0" style="text-align: center;">
+      </span>
+    </div>
+    <br/>
+    <% if @latest_metric %>
+    <div><u><% if @is_archived_current %>Archived<% else %>Current<% end %> Metrics for Success (<%= @x_rolling_days %>-Day Averages, Locked the Day after Due Date):</u></div>
+    <div class="blue_shift_metrics">
+      <% if !@blue_shift.physical_occupancy_triggered_value.nil? %>
+        <span class="level-0"  style="text-align: left;">
+          Occupancy:
+          <%= number_to_percentage(@current_or_archived_average_physical_occupancy_value, precision: 1, strip_insignificant_zeros: true) %>
+        </span>
+      <% else %>
+        <span class="level-0" style="text-align: center;">
+        </span>
+      <% end %>
+      <% if !@blue_shift.trending_average_daily_triggered_value.nil? %>
+        <span class="level-0"  style="text-align: center;">
+          Trending (T60):
+          <%= number_to_percentage(@current_or_archived_average_trending_average_daily_value, precision: 1, strip_insignificant_zeros: true) %>
+        </span>
+      <% else %>
+        <span class="level-0" style="text-align: center;">
+        </span>
+      <% end %>
+      <% if !@blue_shift.basis_triggered_value.nil? %>
+        <span class="level-0"  style="text-align: center;">
+          CNR
+          <%= number_to_percentage(@current_or_archived_average_basis_value, precision: 1, strip_insignificant_zeros: true) %>
+        </span>
+      <% else %>
+        <span class="level-0" style="text-align: center;">
+        </span>
+      <% end %>
+      <span class="level-0" style="text-align: center;">
+      </span>
+    </div>
+    <br>
+    <div><u><% if @is_archived_current %>Archived<% else %>Current<% end %> Metrics:</u></div>
+    <div class="blue_shift_metrics">
+      <span class="level-<%= @latest_metric.physical_occupancy_level %>">
+        Occupancy:
+        <%= number_to_percentage(@latest_metric.physical_occupancy, precision: 1, strip_insignificant_zeros: true) %> 
+      </span>
+      <span class="level-<%= @latest_metric.trending_average_daily_level %>" style="text-align: center;">
+        Trending (T60):
+        <%= number_to_percentage(@latest_metric.trending_average_daily, precision: 1, strip_insignificant_zeros: true) %> 
+      </span>
+      <span class="level-<%= @latest_metric.basis_level %>" style="text-align: center;">
+        CNR
+        <%= number_to_percentage(@latest_metric.basis, precision: 1, strip_insignificant_zeros: true) %> 
+        <% if @latest_metric.basis_level > 2 %>
+        (C <%= number_to_percentage(@latest_metric.collections_percentage_recurring_charges_collected, precision: 1, strip_insignificant_zeros: true) %>)
+        <% end %>
+      </span>
+        <span class="level-<%= @latest_metric.cnoi_level %>" style="text-align: center;">
+        CNOI:
+        <%= number_to_percentage(@latest_metric.cnoi, precision: 1, strip_insignificant_zeros: true) %>
+      </span>
+    </div>
+    <% end %>
+    <br>
+
+    <p>
+      <strong>
+        MY 
+        <% if @metrics_names_causing_blue_shift.length == 0 %>
+          PAST METRIC
+        <% elsif @metrics_names_causing_blue_shift.length == 1 %>
+            <%= @metrics_names_causing_blue_shift[0].html_safe %>
+        <% elsif @metrics_names_causing_blue_shift.length == 2 %>
+          <%= @metrics_names_causing_blue_shift.join(" AND ").html_safe %>
+        <% elsif @metrics_names_causing_blue_shift.length >= 3 %>
+          <%= @metrics_names_causing_blue_shift[0..@metrics_names_causing_blue_shift.length-2].join(", ").html_safe %>
+          AND <%= @metrics_names_causing_blue_shift[@metrics_names_causing_blue_shift.length-1].html_safe %>
+        <% end %> 
+      
+
+        <%= @metrics_names_causing_blue_shift.length > 1 ? "ARE" : "IS" %>
+        <span class="red">IN THE RED</span> BECAUSE I HAVE:
+      </strong>
+    </p>
+    <div class="blue_shift_section">
+      <strong>
+        A PEOPLE PROBLEM? </span><a id="product_problem_video" alt="Product Problem Video" target="_blank" href="https://prezi.com/view/YS6vTB3w3RnK2UBeOBES"></a>
+      </strong>
+      <div class="blue_shift_selection">
+        <%= f.radio_button :people_problem, false, value: false, checked: true,
+          class: can?(:add_blue_shift_problem, @blue_shift, :people_problem) ? 'editable' : '' %> 
+        <%= f.label :people_problem_false do %>
+          <strong>NO</strong> - 
+          Our team's pipeline numbers are good. We are each individually claiming enough leads, 
+          and have good conversion and closing ratios. 
+          I've verified this by reviewing the key metrics below.
+        <% end %>
+        <div class="blue_shift_input_false">
+          <div id="conversions_for_agents">  
+            <table id="conversions_for_agents_table" class="stripe" width="100%" cellpadding="0" cellspacing="0" border="0" class="table" >
+              <thead>
+                <th>
+                  Agent Name
+                </th>
+                <th>
+                  Leads (T30)
+                </th>
+                <th>
+                  Conversion (T30)
+                </th>
+                <th>
+                  Closing (T30)
+                </th>
+                <th>
+                  Leads (T180)
+                </th>
+                <th>
+                  Conversion (T180)
+                </th>
+                <th>
+                  Closing (T180)
+                </th>
+                <th>
+                  Leads (1YR)
+                </th>
+                <th>
+                  Conversion (1YR)
+                </th>
+                <th>
+                  Closing (1YR)
+                </th>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <br />
+          <div id="bluebot_agent_sales_rollup_report">  
+            <table id="bluebot_agent_sales_rollup_report_table" class="stripe" width="100%" cellpadding="0" cellspacing="0" border="0" class="table" >
+              <thead>
+                <th>
+                  Agent
+                </th>
+                <th>
+                  <%=@date_names[0]%>
+                </th>
+                <th>
+                  <%=@date_names[1]%>
+                </th>
+                <th>
+                  <%=@date_names[2]%>
+                </th>
+                <th>
+                  <%=@date_names[3]%>
+                </th>
+                <th>
+                  <%=@date_names[4]%>
+                </th>
+                <th>
+                  <%=@date_names[5]%>
+                </th>
+                <th>
+                  <%=@date_names[6]%>
+                </th>
+                <th>
+                  <%=@date_names[7]%>
+                </th>
+                <th>
+                  <%=@date_names[8]%>
+                </th>
+                <th>
+                  <%=@date_names[9]%>
+                </th>
+                <th>
+                  <%=@date_names[10]%>
+                </th>
+                <th>
+                  <%=@date_names[11]%>
+                </th>
+                <th>
+                  Year
+                </th>
+                <th>
+                
+                </th>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <br />
+          I have reviewed the pipeline data, and even though some numbers are bad, I do not feel we have a people problem. Here's why:
+          <br />
+          <% if can?(:add_blue_shift_problem, @blue_shift, :people_problem) %>
+            <%= f.text_area :no_people_problem_reason, cols: 90, rows: 10, class: 'editable' %>
+          <% else %>
+            <div class="text_area_static_text"><%= simple_format(@blue_shift.no_people_problem_reason || '') %></div>
+          <% end %> 
+
+          <br />
+          <%= f.check_box :no_people_problem_checked,
+            class: can?(:add_blue_shift_problem, @blue_shift, :people_problem) ? 'editable' : ''%>
+          <strong>
+            I stand behind my statement that we have "No People Problem" to a level that I will accept full accountability for a shopping score below 90% on me or any of my team.
+          </strong>
+          <br /><br />      
+        </div>
+      </div>
+      <div class="blue_shift_selection">
+        <%= f.radio_button :people_problem, true, value: true,
+          class: can?(:add_blue_shift_problem, @blue_shift, :people_problem) ? 'editable' : ''  %>
+        <%= f.label :people_problem_true do %>
+          <strong>YES</strong> - 
+          I am listing below the specific people problem(s), and what I am doing to fix: <a href="/conversions_for_agents?property_id=<%= @property.id %>&date=<%= @todays_date %>" target="_blank">Click here for Agent details</a>
+        <% end %>
+        <div class="blue_shift_input">
+          Select all that apply:</br>
+          <% if can?(:add_blue_shift_problem, @blue_shift, :people_problem) %>
+            <%= f.check_box :people_problem_reason_all_office_staff, class: 'editable' %> All office staff</br>
+            <%= f.check_box :people_problem_reason_short_staffed, class: 'editable' %> Short-staffed</br>
+            <%= f.check_box :people_problem_reason_specific_people, class: 'editable'  %> Specific employee(s) (write name(s) below):</br>
+            <%= f.text_area :people_problem_specific_people, cols: 42, rows: 4, class: 'editable' %></br>
+            People problem detail:</br>
+            <%= f.text_area :people_problem_details, cols: 90, rows: 10, class: 'editable' %></br>
+            
+            <% if !@previous_people_problem_plan_to_fix.nil? %>
+              Plan to fix
+              <div class="popup" onclick="prevPeopleProblemFixPopupFunction()">(Previous plan to fix)
+                <span class="popuptext" id="PrevPeopleProblemFixPopup"><%= @previous_people_problem_plan_to_fix%></span>
+              </div>:</br>
+            <% else %>
+              Plan to fix:</br>
+            <% end %>
+            <%= f.text_area :people_problem_fix, cols: 90, rows: 10, class: 'editable' %>
+          <% else %>
+            <%= f.check_box :people_problem_reason_all_office_staff, class: 'editable', onclick: 'return false;' %> All office staff</br>
+            <%= f.check_box :people_problem_reason_short_staffed, class: 'editable', onclick: 'return false;' %> Short-staffed</br>
+            <%= f.check_box :people_problem_reason_specific_people, class: 'editable', onclick: 'return false;' %> Specific employee(s) (write below):</br>
+            <div class="text_area_static_text"><%= simple_format(@blue_shift.people_problem_specific_people || '') %></div></br>
+            People problem detail:</br>
+            <div class="text_area_static_text"><%= simple_format(@blue_shift.people_problem_details || '') %></div></br>
+            <% if !@previous_people_problem_plan_to_fix.nil? %>
+              Plan to fix 
+              <div class="popup" onclick="prevPeopleProblemFixPopupFunction()">(Previous plan to fix)
+                <span class="popuptext" id="PrevPeopleProblemFixPopup"><%= @previous_people_problem_plan_to_fix%></span>
+              </div>:</br>
+            <% else %>
+              Plan to fix:</br>
+            <% end %>
+            <div class="text_area_static_text"><%= simple_format(@blue_shift.people_problem_fix || '') %></div>
+          <% end %> 
+
+          Results:</br>
+          <% if @unlock_people_problem_fix_results and can?(:edit_results, @blue_shift) %>
+            <%= f.text_area :people_problem_fix_results, cols: 90, rows: 10, class: 'editable' %>
+          <% elsif @blue_shift.archived %>
+            <div class="text_area_static_text"><%= simple_format(@blue_shift.people_problem_fix_results || '') %></div>
+          <% else %>
+            <textarea cols="90" placeholder="<locked until fix by date>" disabled></textarea>
+          <% end %>
+
+          <br /><br />        
+          I WILL FIX MY PEOPLE PROBLEM BY 
+          <%= render "editable_date", f: f, 
+            problem: :people_problem,
+            attribute: "people_problem_fix_by",
+            value: @blue_shift.people_problem_fix_by %>
+        </div>
+      </div>
+    </div>
+    
+    <div class="blue_shift_section">
+      <strong>
+        A PRODUCT PROBLEM? <span class="level-1"><a href="/blueshift_product_problem_HELP_04212021.pdf" target=\"_blank\">HELP</a></span><a id="product_problem_video" alt="Product Problem Video" target="_blank" href="https://prezi.com/view/w7mEgsyvGAdXAR9On6AA"></a>
+      </strong>
+      <div class="blue_shift_selection">
+        <%= f.radio_button :product_problem, false, value: false, checked: true,
+          class: can?(:add_blue_shift_problem, @blue_shift, :product_problem) ? 'editable' : '' %> 
+        <%= f.label :product_problem_false do %>
+          <strong>NO</strong> - 
+          I completed a recent Sparkle Blueshift Product Inspection and scored my property high.
+          I understand that a low score is not bad, but shows how good my eye is, and allows me to demonstrate my skill in fixing problems. 
+          Nevertheless, I stand behind this new high score, and welcome Bluestone or third party inspectors to verify it.
+          I understand the consequences of a false high score.
+          <div id="property_latest_inspection_<%= @blue_shift.property.id %>">
+            <%= render partial: 'properties/latest_inspection', locals: {property: @blue_shift.property, created_on: @blue_shift.created_on} %>
+          </div>
+        <% end %>
+      </div>
+      <div class="blue_shift_selection">
+        <%= f.radio_button :product_problem, true, value: true,
+          class: can?(:add_blue_shift_problem, @blue_shift, :product_problem) ? 'editable' : ''   %>
+        <%= f.label :product_problem_true do %>
+          <strong>YES</strong> - 
+          I am listing below the specific curb appeal/unit make ready, or maintenance team problem(s), and what I am doing to fix: 
+        <% end %>
+        <div class="blue_shift_input">
+          Select all that apply:</br>
+          <% if can?(:add_blue_shift_problem, @blue_shift, :product_problem) %>
+            <%= f.check_box :product_problem_reason_curb_appeal, class: 'editable' %> Curb appeal</br>
+            <%= f.check_box :product_problem_reason_unit_make_ready, class: 'editable' %> Unit make ready</br>
+            <%= f.check_box :product_problem_reason_maintenance_staff, class: 'editable'  %> Maintenance staff (write name(s) below):</br>
+            <%= f.text_area :product_problem_specific_people, cols: 42, rows: 4, class: 'editable' %></br>
+            Product problem detail:</br>
+            <%= f.text_area :product_problem_details, cols: 90, rows: 10, class: 'editable' %></br>
+            <% if !@previous_product_problem_plan_to_fix.nil? %>
+              Plan to fix
+              <div class="popup" onclick="prevProductProblemFixPopupFunction()">(Previous plan to fix)
+                <span class="popuptext" id="PrevProductProblemFixPopup"><%= @previous_product_problem_plan_to_fix%></span>
+              </div>:</br>
+            <% else %>
+              Plan to fix:</br>
+            <% end %>
+            <%= f.text_area :product_problem_fix, cols: 90, rows: 10, class: 'editable' %>
+          <% else %>
+            <%= f.check_box :product_problem_reason_curb_appeal, class: 'editable', onclick: 'return false;' %> Curb appeal</br>
+            <%= f.check_box :product_problem_reason_unit_make_ready, class: 'editable', onclick: 'return false;' %> Unit make ready</br>
+            <%= f.check_box :product_problem_reason_maintenance_staff, class: 'editable', onclick: 'return false;' %> Maintenance staff (write below):</br>
+            <div class="text_area_static_text"><%= simple_format(@blue_shift.product_problem_specific_people || '') %></div></br>
+            Product problem detail:</br>
+            <div class="text_area_static_text"><%= simple_format(@blue_shift.product_problem_details || '') %></div></br>
+            <% if !@previous_product_problem_plan_to_fix.nil? %>
+              Plan to fix
+              <div class="popup" onclick="prevProductProblemFixPopupFunction()">(Previous plan to fix)
+                <span class="popuptext" id="PrevProductProblemFixPopup"><%= @previous_product_problem_plan_to_fix%></span>
+              </div>:</br>
+            <% else %>
+              Plan to fix:</br>
+            <% end %>
+            <div class="text_area_static_text"><%= simple_format(@blue_shift.product_problem_fix || '') %></div>
+          <% end %> 
+
+          Results:</br>
+          <% if @unlock_product_problem_fix_results and can?(:edit_results, @blue_shift) %>
+            <%= f.text_area :product_problem_fix_results, cols: 90, rows: 10, class: 'editable' %>
+          <% elsif @blue_shift.archived %>
+            <div class="text_area_static_text"><%= simple_format(@blue_shift.product_problem_fix_results || '') %></div>
+          <% else %>
+            <textarea cols="90" placeholder="<locked until fix by date>" disabled></textarea>
+          <% end %>
+
+          <br /><br />        
+          I WILL FIX MY PRODUCT PROBLEM BY 
+          <%= render "editable_date", f: f, 
+            problem: :product_problem,
+            attribute: "product_problem_fix_by",
+            value: @blue_shift.product_problem_fix_by %>
+        </div>       
+      </div>  
+    </div>
+    
+    <div class="blue_shift_section">
+      <strong>
+        A PRICING PROBLEM? <span class="level-1"><a href="/blueshift_pricing_problem_HELP_04012019.pdf" target=\"_blank\">HELP</a></span><a id="pricing_problem_video" alt="Pricing Problem Video" target="_blank" href="https://prezi.com/view/a6f1QarDRP8vtoGLTFWS"></a>
+      </strong>
+      <div class="blue_shift_selection">
+        <%= f.radio_button :pricing_problem, false, value: false, checked: true,
+          class: can?(:add_blue_shift_problem, @blue_shift, :pricing_problem) ? 'editable' : '' %> 
+        <%= f.label :pricing_problem_false do %>
+          <strong>NO</strong> - 
+          The pricing algorithm works well, and if it hasn't changed my rents, I understand why.
+          <% if !@average_days_since_last_survey.nil? && @average_days_since_last_survey > 0 %>
+            <div class="survey_average_days_section"> 
+              <strong><div class="survey_average_days_title">AVERAGE DAYS SINCE LAST SURVEY:</div> <span class="level-<%= @average_days_since_last_survey_level %>"><%= @average_days_since_last_survey.round %></span></strong>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="blue_shift_selection">
+        <%= f.radio_button :pricing_problem, true, value: true,
+          class: can?(:add_blue_shift_problem, @blue_shift, :pricing_problem) ? 'editable' : ''   %>
+        <%= f.label :pricing_problem_true do %>
+          <strong>YES</strong> - 
+          The algorithm isn't working for my property. I've updated my market surveys and checked my <span class="level-1">Rent Change Reasons (review table below)</span>.
+          <br />
+        <% end %>
+        <div class="blue_shift_input">
+          <%= f.check_box :pricing_problem_approved, id: 'pricing_problem_approved_checkbox', class: can?(:edit_reviewed, @blue_shift) ? 'editable' : '', onclick: "pricingProblemApprovedCheckboxUpdated();" %>
+          <strong>
+            TRM Approved
+          </strong>
+          <br>
+          <%= f.check_box :pricing_problem_denied, id: 'pricing_problem_denied_checkbox', class: can?(:edit_reviewed, @blue_shift) ? ' editable' : '', onclick: "pricingProblemDeniedCheckboxUpdated();"%>
+          <strong>
+            TRM Denied
+          </strong>
+          <br>
+          <%= f.check_box :pricing_problem_approved_cond, id: 'pricing_problem_approved_cond_checkbox', class: can?(:edit_reviewed, @blue_shift) ? ' editable' : '', onclick: "pricingProblemApprovedCondCheckboxUpdated();"%>
+          <strong>
+            TRM Approved, w/ Conditions:
+          </strong>
+          <br>
+          <div id="pricing_problem_approved_cond_text">
+            <% if can?(:edit_reviewed, @blue_shift) %>
+              <%= f.text_area :pricing_problem_approved_cond_text, cols: 90, rows: 5, class: 'editable' %>
+            <% else %>
+              <div class="text_area_static_text"><%= simple_format(@blue_shift.pricing_problem_approved_cond_text || '') %></div>
+            <% end %>
+          </div>
+          <div id="rent_change_reasons">  
+            <table id="rent_change_reasons_table" class="stripe" width="100%" cellpadding="0" cellspacing="0" border="0" class="table" >
+              <thead>
+                <th>
+                  <br>
+                  Unit Type
+                  <br><br>
+                </th>
+                <th>
+                  Old<br>Market<br>Rent
+                </th>
+                <th>
+                  New<br>Rent
+                </th>
+                <th>
+                  Net<br>Effective<br>Avg. Rent
+                </th>
+                <th>
+                  Comp<br>Market<br>Rent
+                </th>
+                <th>
+                  Last<br>Three<br>Rent
+                </th>
+                <th>
+                  %<br>Change
+                </th>
+                <th>
+                  Change<br>Amount
+                </th>
+                <th>
+                  Trigger
+                </th>
+                <th>
+                  Next<br>Month
+                </th>
+                <th>
+                  Two<br>Months
+                </th>
+                <th>
+                  Three<br>Months
+                </th>
+                <th>
+                  Days Since<br>Last Survey
+                </th>
+                <th>
+                  Units<br>
+                  Vacant<br>
+                  Unrented
+                </th>
+                <th>
+                  Units<br>
+                  Notice<br>
+                  Unrented
+                </th>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <br />
+          I’ve read the reasons above, and here’s what the pricing algorithm is still missing: (describe below)
+          <% if can?(:add_blue_shift_problem, @blue_shift, :pricing_problem) %>
+            <%= f.text_area :pricing_problem_fix, cols: 90, rows: 10, class: 'editable' %>
+          <% else %>
+            <div class="text_area_static_text"><%= simple_format(@blue_shift.pricing_problem_fix || '') %></div>
+          <% end %>
+
+
+          <div id="price_image_uploads" class="image_uploads">
+            <%  @blue_shift.pricing_problem_images.each_with_index do |image, i| %>
+    
+              <% path = image.path %>
+              <% caption = image.caption %>
+              <% url = image.url %>
+              
+              <br />
+              <input type="hidden"
+                id='blue_shift_pricing_problem_image_<%=i%>' 
+                name='blue_shift[pricing_problem_image_<%=i%>]'
+                value="<%= path %>">
+                
+              <img src='<%= url%>' class="uploaded_image">
+              <br />
+              Caption 
+              <input type='text' class='image_caption' maxlength='255' 
+                id='blue_shift_pricing_problem_image_caption_<%=i%>' 
+                name='blue_shift[pricing_problem_image_caption_<%=i%>]'
+                value="<%= caption%>">
+              <br />
+            <% end %>
+          </div>
+          
+          <% if @show_pricing_problem_fix_by %>
+            <br /><br />        
+            I WILL FIX MY PRICING PROBLEM BY 
+            <%= render "editable_date", f: f, 
+              problem: :pricing_problem,
+              attribute: "pricing_problem_fix_by",
+              value: @blue_shift.pricing_problem_fix_by %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="blue_shift_section">
+      <%= f.check_box(:need_help) %>
+      <strong>
+        I HAVE A PROBLEM <i>OTHER THAN</i> PEOPLE, PRODUCT OR PRICE.
+      </strong>
+      <div class="blue_shift_input">
+        <% if @blue_shift.persisted? && @blue_shift.need_help_with %>
+          <div class="text_area_static_text"><%= simple_format(@blue_shift.need_help_with || '') %></div>
+        <% else %>
+          <%= f.text_area(:need_help_with, cols: 90, rows: 5) %>
+        <% end %> 
+        <br>
+        <div class="blue_shift_section">
+          <%= f.check_box(:need_help_marketing_problem) %>
+          <strong>
+          MARKETING PROBLEM?
+          </strong>
+          <div class="blue_shift_input">
+              Your Occupancy: <%= @current_metric.occupancy_average_daily %>% / Market Occupancy: <%= @costar_market_occupancy %>
+              <br>
+              <span class="level-1">Conversions for Property (review table below)</span>
+              <div id="conversions_for_properties">  
+                <table id="conversions_for_properties_table" class="stripe" width="100%" cellpadding="0" cellspacing="0" border="0" class="table" >
+                  <thead>
+                    <th>
+                      Property
+                    </th>
+                    <th>
+                      Units
+                    </th>
+                    <th>
+                      Occupancy
+                    </th>
+                    <th>
+                      Trending
+                    </th>
+                    <th>
+                      AVG Renewal
+                    </th>
+                    <th>
+                      AVG Decline
+                    </th>
+                    <th>
+                      AVG Conversion
+                    </th>
+                    <th>
+                      AVG Closing
+                    </th>
+                    <th>
+                      Leads Needed
+                    </th>
+                    <th>
+                      Leads Reported
+                    </th>
+                    <th>
+                      BlueSky Leads<span class="info" title="<%= t('conversions_for_properties_descriptions.bluesky_leads') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    </th>
+                    <th>
+                      ALERT
+                    </th>
+                    <th>
+                      Ideal Leads<span class="info" title="<%= t('conversions_for_properties_descriptions.ideal_leads') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    </th>
+                    <th>
+                      Blueshift Leads<span class="info" title="<%= t('conversions_for_properties_descriptions.blueshift_leads') %>">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    </th>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+              <br>
+              <%= f.check_box :need_help_marketing_problem_marketing_reviewed, class: can?(:edit_need_help_reviewed, @blue_shift) ? 'editable' : ''%>
+              <strong>
+                VP, Director of Marketing Reviewed
+              </strong>
+          </div> 
+        </div>
+        <br>
+        <div class="blue_shift_section">
+          <%= f.check_box(:need_help_capital_problem) %> 
+          <strong>
+          CAPITAL PROBLEM?
+          </strong>
+          <div class="blue_shift_input">
+            <% if @blue_shift.persisted? && @blue_shift.need_help_capital_problem_explained %>
+              <div class="text_area_static_text"><%= simple_format(@blue_shift.need_help_capital_problem_explained || '') %></div>
+            <% else %>
+              <%= f.text_area(:need_help_capital_problem_explained, cols: 90, rows: 5) %>
+            <% end %> 
+            <br>
+            <%= f.check_box :need_help_capital_problem_maintenance_reviewed, class: can?(:edit_need_help_reviewed, @blue_shift) ? 'editable' : ''%>
+            <strong>
+              VP, Maintenance Reviewed
+            </strong>
+            <br>
+            <%= f.check_box :need_help_capital_problem_asset_management_reviewed, class: can?(:edit_need_help_reviewed, @blue_shift) ? 'editable' : ''%>
+            <strong>
+              VP, Asset Management Reviewed
+            </strong>
+          </div>   
+        </div> 
+        <br>
+      </div>
+    </div>
+    <br><br>
+    <div class="blue_shift_section">
+      <%= f.check_box :reviewed, class: can?(:edit_reviewed, @blue_shift) ? 'editable' : ''%>
+      <strong>
+        TRM Reviewed
+      </strong>
+    </div>
+    <br />
+    <% if !@form_disabled or can?(:add_blue_shift_problem, @blue_shift, :people_problem) or
+      can?(:add_blue_shift_problem, @blue_shift, :product_problem) or
+      can?(:add_blue_shift_problem, @blue_shift, :pricing_problem) or
+      (@unlock_product_problem_fix_results and can?(:edit_results, @blue_shift)) or
+      (@unlock_people_problem_fix_results and can?(:edit_results, @blue_shift)) or
+      can?(:edit, @blue_shift)%>
+      <%= f.submit class: "editable" %>
+
+      <div id="image_upload_template">
+        <div class="image_upload">
+          <br />
+          <span class="upload_label"></span>
+          <%= f.s3_file_field :pricing_problem_image_index, :class => 'js-s3_file_field editable', 
+            key: "uploads/blue_shifts/{timestamp}-{unique_id}/${filename}" %>
+          <div class="progress">
+            <div class="meter" style="width: 0%">
+              Uploading
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    
+  <% end %>
+
+</div>
+
+<br />
+<br />
+
+<script id="template-upload" type="text/x-tmpl">
+  <div id="file-{%=o.unique_id%}" class="upload">
+    {%=o.name%}
+    <div class="progress"><div class="bar" style="width: 0%"></div></div>
+  </div>
+</script>
+
+<script id="template-download" type="text/x-tmpl">
+
+</script>
+
+<script>
+// When the user clicks on <div>, open the popup
+function prevPeopleProblemFixPopupFunction() {
+    var popup = document.getElementById("PrevPeopleProblemFixPopup");
+    popup.classList.toggle("show");
+}
+function prevProductProblemFixPopupFunction() {
+    var popup = document.getElementById("PrevProductProblemFixPopup");
+    popup.classList.toggle("show");
+}
+function pricingProblemApprovedCheckboxUpdated() {
+  var deniedCheckBox = document.getElementById("pricing_problem_denied_checkbox");
+  var approvedCondCheckBox = document.getElementById("pricing_problem_approved_cond_checkbox");
+  var approvedCondTextBox = document.getElementById("pricing_problem_approved_cond_text");
+
+  deniedCheckBox.checked = false;
+  approvedCondCheckBox.checked = false;
+  approvedCondTextBox.style.display = 'none';
+}
+function pricingProblemDeniedCheckboxUpdated() {
+  var approvedCheckBox = document.getElementById("pricing_problem_approved_checkbox");
+  var approvedCondCheckBox = document.getElementById("pricing_problem_approved_cond_checkbox");
+  var approvedCondTextBox = document.getElementById("pricing_problem_approved_cond_text");
+
+  approvedCheckBox.checked = false;
+  approvedCondCheckBox.checked = false;
+  approvedCondTextBox.style.display = 'none';
+}
+function pricingProblemApprovedCondCheckboxUpdated() {
+  var approvedCheckBox = document.getElementById("pricing_problem_approved_checkbox");
+  var approvedCondCheckBox = document.getElementById("pricing_problem_approved_cond_checkbox");
+  var deniedCheckBox = document.getElementById("pricing_problem_denied_checkbox");
+  var approvedCondTextBox = document.getElementById("pricing_problem_approved_cond_text");
+
+  if (approvedCondCheckBox.checked == true) {
+    approvedCondTextBox.style.display = 'block';
+  } else {
+    approvedCondTextBox.style.display = 'none';
+  }
+
+  approvedCheckBox.checked = false;
+  deniedCheckBox.checked = false;
+}
+</script>

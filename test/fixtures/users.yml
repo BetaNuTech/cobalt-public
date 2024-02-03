@@ -1,0 +1,96 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :integer          not null, primary key
+#  email                  :string           default(""), not null
+#  encrypted_password     :string           default(""), not null
+#  reset_password_token   :string
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :inet
+#  last_sign_in_ip        :inet
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  invitation_token       :string
+#  invitation_created_at  :datetime
+#  invitation_sent_at     :datetime
+#  invitation_accepted_at :datetime
+#  invitation_limit       :integer
+#  invited_by_id          :integer
+#  invited_by_type        :string
+#  invitations_count      :integer          default(0)
+#  role                   :string
+#  first_name             :string
+#  last_name              :string
+#  slack_username         :string
+#  active                 :boolean
+#  t1_role                :string
+#  t2_role                :string
+#  team_id                :integer
+#  view_all_properties    :boolean          default(FALSE)
+#  slack_corp_username    :string
+#  profile_image          :string
+#
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+homer: 
+  id: 1
+  email: homer@simpsons.com
+  encrypted_password: "$2a$11$gu6BBM4a8kfR5DZaMGSN3eGmNl2RIGVSXE.ueydrkVs0xCjJ8Rggi" #simpons
+  t1_role: admin
+  t2_role: NA
+  first_name: Homer
+  last_name: Simpson
+  slack_username: homer123
+  active: true
+  
+admin: 
+  id: 2
+  email: admin@simpsons.com
+  encrypted_password: "$2a$11$gu6BBM4a8kfR5DZaMGSN3eGmNl2RIGVSXE.ueydrkVs0xCjJ8Rggi" #simpons
+  t1_role: admin
+  t2_role: NA
+  first_name: Admin
+  last_name: Jones
+  slack_username: admin123
+  active: true
+  
+corporate: 
+  id: 3
+  email: corporate@simpsons.com
+  encrypted_password: "$2a$11$gu6BBM4a8kfR5DZaMGSN3eGmNl2RIGVSXE.ueydrkVs0xCjJ8Rggi" #simpons
+  t1_role: corporate
+  t2_role: NA
+  first_name: Corporate
+  last_name: Jones
+  slack_username: corporate123
+  active: true
+  
+property_manager: 
+  id: 4
+  email: manager@simpsons.com
+  encrypted_password: "$2a$11$gu6BBM4a8kfR5DZaMGSN3eGmNl2RIGVSXE.ueydrkVs0xCjJ8Rggi" #simpons
+  t1_role: property
+  t2_role: property_manager
+  first_name: PropertyManager
+  last_name: Jones
+  slack_username: property_manager123
+  active: true
+
+maint_super: 
+  id: 5
+  email: maint_super@simpsons.com
+  encrypted_password: "$2a$11$gu6BBM4a8kfR5DZaMGSN3eGmNl2RIGVSXE.ueydrkVs0xCjJ8Rggi" #simpons
+  t1_role: property
+  t2_role: maint_super
+  first_name: MaintSuper
+  last_name: Jones
+  slack_username: maint_super123
+  active: true

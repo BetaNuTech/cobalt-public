@@ -1,0 +1,521 @@
+// Place all the styles related to the workable_jobss controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.workable_jobs-index {
+    background-color: #061F54;
+}
+
+#workable_jobs_show_container, #workable_jobs_edit_container  {
+    padding-left: 10px;
+}
+
+
+#workable_jobs_export {
+    float: right;
+    margin-right: 10px;
+}
+
+
+#workable_jobs_index_container {
+    // background-color: blue;
+    // margin: 0px;
+    width: 100%;
+    border: 0px solid black;
+    padding: 0px;
+}
+
+#workable_jobs_alert_counts {
+    margin: 0px;
+    margin-left: 10px;
+
+    .workable_jobs_alert_count {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+
+// STATS
+#workable_jobs_stats_section {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    padding-top: 0px;
+    padding-bottom: 10px;
+
+    .workable_jobs_stats {
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: 10px;
+        margin-right: 10px;
+        width: 160px;
+
+        .workable_jobs_stats_box {
+            margin: 0px;
+            padding: 2px;
+            border: 1px solid white;
+        }
+    }
+
+    .workable_jobs_open_jobs {
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: 10px;
+        margin-right: 10px;
+        width: 140px;
+    }
+
+    .workable_jobs_metrics_vertical_bar {
+        margin: auto;
+        margin-left: 0px;
+        margin-right: 0px;
+        padding: 0px;
+        width: 3px;
+        height: 150px;
+        border-color: white;
+        border-style: solid;
+        border-width: 0px;
+        border-left-width: 3px;
+    }
+}
+
+// JOBS
+.workable_jobs_section {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .workable_jobs_jobs_table {
+        margin-top: 0px;
+        margin-bottom: auto;
+        margin-left: 20px;
+        margin-right: 20px;
+        width: 820px;
+
+        .workable_jobs_jobs_table_header {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+        }
+
+        .workable_jobs_jobs_table_row {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+
+            .workable_jobs_jobs_table_row_title {
+                width: 100%;
+            }
+        }
+    }
+
+    .workable_jobs_jobs_table_for_team {
+        margin-top: 0px;
+        margin-bottom: auto;
+        margin-left: 20px;
+        margin-right: 20px;
+        width: 820px;
+
+        .workable_jobs_jobs_table {
+            margin-top: 0px;
+            margin-bottom: 40px;
+            margin-left: 0px;
+            margin-right: 0px;
+            padding: 0px;
+            width: 100%;
+    
+            .workable_jobs_jobs_table_header {
+                margin: auto;
+                padding: 0px;
+                width: 100%;
+                text-align: center
+            }
+    
+            .workable_jobs_jobs_table_row {
+                margin: 0px;
+                padding: 0px;
+                width: 100%;
+    
+                .workable_jobs_jobs_table_row_title {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.workable_jobs_section_spacer {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    height: 22px;
+    padding: 0px;
+}
+
+
+// Text Formatting
+.workable_jobs_text_open_360_jobs {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-top: -20px;
+    margin-bottom: 0px;
+    text-align: center;
+    font-size: 48pt;
+    font-weight: normal
+}
+.workable_jobs_text_open_property_jobs {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    text-align: center;
+    font-size: 48pt;
+    font-weight: normal
+}
+.workable_jobs_text_open_jobs_descriptor {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-top: -15px;
+    margin-bottom: auto;
+    text-align: center;
+    font-size: 10pt;
+    font-weight: normal
+}
+.workable_jobs_text_metric {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-bottom: 0px;
+    text-align: center;
+    font-size: 10pt;
+    font-weight: normal
+}
+.workable_jobs_text_metric_large {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-top: -20px;
+    margin-bottom: -20px;
+    text-align: center;
+    font-size: 60pt;
+    font-weight: bold
+}
+.workable_jobs_text_metric_date {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    text-align: center;
+    font-size: 13pt;
+    font-weight: normal
+}
+.workable_jobs_text_metric_descriptor {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-top: -3px;
+    margin-bottom: 3px;
+    text-align: center;
+    font-size: 8pt;
+    font-weight: bold
+}
+.workable_jobs_text_metric_descriptor_medium {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-top: -3px;
+    margin-bottom: 3px;
+    text-align: center;
+    font-size: 10pt;
+    font-weight: bold
+}
+.workable_jobs_text_metric_descriptor_large {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    text-align: center;
+    font-size: 15pt;
+    font-weight: bold
+}
+.workable_jobs_text_metric_days {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-top: -20px;
+    margin-bottom: -20px;
+    text-align: center;
+    font-size: 46pt;
+    font-weight: bold
+}
+#workable_jobs_text_why {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 28pt;
+    font-weight: normal
+}
+.workable_jobs_text_section_title {
+    margin-top: -10px;
+    margin-bottom: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 16pt;
+    font-weight: normal
+}
+.workable_jobs_text_jobs_team_header {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 16pt;
+    font-weight: bold
+}
+.workable_jobs_text_jobs_table_header {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 13pt;
+    font-weight: bold
+}
+.workable_jobs_jobs_table_row_title {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin: 0px;
+    padding-left: 5px;
+    padding-top: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 11pt;
+    font-weight: normal;
+    font-style: italic; 
+}
+.workable_jobs_text_jobs_table_row {
+    margin: auto;
+    padding-bottom: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 12pt;
+    font-weight: bold;
+    line-height: 1;
+}
+.workable_jobs_text_jobs_table_row_time_to_title {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    line-height: 1;
+    font-size: 10pt;
+    font-weight: bold
+}
+.workable_jobs_text_jobs_table_row_time_to_sub_text {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    line-height: 1;
+    font-size: 8pt;
+    font-weight: bold
+}
+.workable_jobs_text_jobs_table_row_sub_text {
+    margin: auto;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 8pt;
+    font-weight: bold;
+    line-height: 1;
+}
+.workable_jobs_text_price_survey_date_title {
+    margin: auto;
+    margin-left: 0px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 16pt;
+    font-weight: bold
+}
+.workable_jobs_text_price_survey_date {
+    margin: auto;
+    margin-right: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: right;
+    font-size: 18pt;
+    font-weight: normal
+}
+.workable_jobs_text_price_table_header {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 14pt;
+    font-weight: bold
+}
+.workable_jobs_text_price_table_row_first {
+    margin: auto;
+    margin-left: 5px;
+    padding-bottom: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 12pt;
+    font-weight: bold
+}
+.workable_jobs_text_price_table_row {
+    margin: auto;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 12pt;
+    font-weight: normal
+}
+
+// Colors
+.workable_jobs_color_dark_blue {
+    color: #061F54
+}
+.workable_jobs_bkg_color_dark_blue {
+    background-color: #061F54
+}
+.workable_jobs_color_blue {
+    color: #0F3C69
+}
+.workable_jobs_bkg_color_blue, .workable_jobs_bkg_color_jobs_table_row_even {
+    background-color: #0F3C69
+}
+.workable_jobs_bkg_color_light_blue, .workable_jobs_bkg_color_jobs_table_row_odd {
+    background-color: #367CAA
+}
+.workable_jobs_color_light_blue {
+    color: #367CAA
+}
+.workable_jobs_bkg_color_very_light_blue {
+    background-color: #ABC0D2
+}
+.workable_jobs_bkg_color_very_light_gray {
+    background-color: lightgray
+}
+.workable_jobs_color_red, .workable_jobs_color_alert {
+    color: #E20019
+}
+.workable_jobs_color_white, .workable_jobs_color_no_alert {
+    color: #FFFFFF
+}
+.workable_jobs_color_off_white {
+    color: #DAE3EB
+}
+.workable_jobs_bkg_color_white {
+    background-color: #FFFFFF
+}
+.workable_jobs_bkg_color_red{
+    background-color: #E20019
+}
+.workable_jobs_bkg_color_off_white {
+    background-color: #DAE3EB
+}
+.workable_jobs_bkg_color_transparent {
+    background-color: transparent
+}
+.workable_jobs_bkg_color_darkorange {
+    background-color: darkorange
+}
+
+// SVG
+.workable_jobs_svg_job_search {
+    fill: white;
+    height: 150px;
+    width: 150px;
+    margin-top: auto;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    margin-right: 10px
+}
+
+
+// Images
+.workable_jobs_member_img {
+    width: 25px;
+    height: 25px;
+    background-color: lightgray
+}
+.workable_jobs_property_img {
+    width: 33px;
+    height: 25px;
+    background-color: lightgray
+}
+.workable_jobs_team_logo {
+    height: 100px;
+    padding-bottom: 10px;
+    text-align: center;
+    background-color: transparent
+}
+.workable_jobs_team_logo_white_bkgrd {
+    height: 50px;
+    background-color: white
+}
+
+// Flex Containers
+.workable_jobs_flex_container_horizontal  {
+    display: flex;
+    justify-content: center;
+    align-content: center
+}
+.workable_jobs_flex_container_horizontal_spaced  {
+    display: flex;
+    justify-content: space-between;
+    align-content: center
+}
+.workable_jobs_flex_container_horizontal_spaced_evenly  {
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center
+}
+.workable_jobs_flex_container_vertical {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-content: center
+}
+.workable_jobs_flex_container_vertical_space_evenly {
+    flex-direction: column;
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center
+}
+
+// Grid Containers
+.workable_jobs_grid_container_stats_section {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto;
+    grid-template-rows: auto;
+    column-gap: 0px;
+    justify-items: center;
+    align-items: center;
+}
+.workable_jobs_grid_container_jobs_section {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    column-gap: 0px;
+    justify-items: center;
+    align-items: start
+}
+.workable_jobs_grid_container_jobs_table_header {
+    display: grid;
+    grid-template-columns: 90px 80px 110px 160px 160px 220px;
+    grid-template-rows: auto;
+    column-gap: 0px;
+}
+.workable_jobs_grid_container_jobs_table_row {
+    display: grid;
+    grid-template-columns: 90px 80px 110px 160px 160px 220px;
+    grid-template-rows: auto;
+    column-gap: 0px;
+}
+

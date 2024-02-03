@@ -1,0 +1,33 @@
+<div id="trm_blue_shift_show_container">
+  <%= hidden_field_tag :trm_blue_shift_id, @trm_blue_shift.id %>
+  <%= hidden_field_tag :property_id, @property.id %>
+  
+  <%= render 'form' %>
+
+  <hr />
+
+  <%= commontator_thread(@trm_blue_shift.comment_thread) %>
+  
+  <br />
+  <div id="audit_log">
+    <h3>Activity</h3>
+    <div id="audit_line_items"%>
+      <% @audits.each do |audit| %>
+       <p>
+          On <%= audit.created_at.strftime('%m/%d/%Y %-l:%M:%S %p %z')  %>
+          <%= audit.user.present? ? audit.user.name : "Cobalt" %> performed a <%= audit.action %> action on
+          a <%= audit.auditable_type.split("::").last %> making these changes:
+            <% audit.audited_changes.each do |key, value| %>
+              <% if value.kind_of?(Array) %>
+                changing <%= key %> from "<%= value[0] %>" to "<%= value[1] %>"; 
+              <% else %>
+                assigning "<%= value %>" to <%= key %>;
+              <% end %>
+                  
+            <% end %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+  
+</div>

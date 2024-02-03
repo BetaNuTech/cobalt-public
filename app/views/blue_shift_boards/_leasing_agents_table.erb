@@ -1,0 +1,18 @@
+<%# TABLE HEADER %>
+<div id="blue_shift_board_people_table_header" class="blue_shift_board_bkg_color_white blue_shift_board_grid_container_people_table">
+    <p class="blue_shift_board_color_blue blue_shift_board_text_people_table_header" >Conversion</p>
+    <p class="blue_shift_board_color_blue blue_shift_board_text_people_table_header" >Closing</p>
+    <p class="blue_shift_board_color_blue blue_shift_board_text_people_table_header" >Bluebot</p>
+    <p class="blue_shift_board_color_blue blue_shift_board_text_people_table_header" >Bluebot (yr)</p>
+</div>
+<% @people_leasing_stats.each_with_index do |element, index| %>
+    <div class="blue_shift_board_people_table_row blue_shift_board_bkg_color_people_table_row_<%= index.odd? ? 'odd' : 'even' %>">
+        <p class="blue_shift_board_color_white blue_shift_board_people_table_row_agent blue_shift_board_text_people_table_row_agent"><%= element['agent'] %></p>
+    </div>
+    <div class="blue_shift_board_people_table_row blue_shift_board_bkg_color_people_table_row_<%= index.odd? ? 'odd' : 'even' %> blue_shift_board_grid_container_people_table">
+        <p class="blue_shift_board_color_<%= element['conversion_alert'] ? 'alert' : 'white' %> blue_shift_board_text_people_table_row_stats"><%= element['conversion'] %><%= element['conversion'].present? ? '%' : '--%' %></p>
+        <p class="blue_shift_board_color_<%= element['closing_alert'] ? 'alert' : 'white' %> blue_shift_board_text_people_table_row_stats"><%= element['closing'] %><%= element['closing'].present? ? '%' : '--%' %></p>
+        <p class="blue_shift_board_color_<%= element['sales_alert'] ? 'alert' : 'white' %> blue_shift_board_text_people_table_row_stats"><%= element['sales'].present? ? "#{element['sales']}/#{element['goal']}" : '-/-' %></p>
+        <p title="Past Monthly Goals Reached" class="blue_shift_board_color_white blue_shift_board_text_people_table_row_stats"><%= element['past_year_goal_data_is_na'] ? '-/-' : "#{element['past_year_goals_reached']}/#{element['past_year_active_months']}" %></p>
+    </div>
+<% end %>

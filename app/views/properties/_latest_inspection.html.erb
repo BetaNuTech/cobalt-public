@@ -1,0 +1,67 @@
+<div id="property_inspection_loading">
+  <strong>loading inspection data...</strong>
+</div>
+
+<div id="property_inspection_loaded">
+
+  <% if property.latest_inspection_by_date_error.present? %>
+    <div class="inspection_section"> 
+      <div class="inspection_alert"><strong><%= property.latest_inspection_by_date_error %></strong></div>
+    </div>
+  <% elsif property.latest_inspection_by_date.present? %>
+    <div class="inspection_section"> 
+      <% if property.latest_inspection_by_date["creationDate"].present? %>       
+        <strong><div class="inspection_title">BEFORE BLUESHIFT INSPECTION DATE:</div> <%= Time.at(property.latest_inspection_by_date["creationDate"]).to_date %></strong> 
+      <% end %>
+      <% if property.latest_inspection_by_date["score"].present? %>
+        <input id='inspection_score' type='hidden' value='<%= sprintf( "%0.01f", property.latest_inspection_by_date["score"].to_f) %>'>
+        <strong><div class="inspection_title">SCORE:</div> <a href="<%= property.latest_inspection_by_date["inspectionURL"] %>"><%= sprintf( "%0.01f", property.latest_inspection_by_date["score"].to_f) %></a></strong> 
+      <% end %>
+      <% if property.latest_inspection_by_date["inspectionReportURL"].present? %>
+        <div class="inspection_report"><strong><a href="<%= property.latest_inspection_by_date["inspectionReportURL"] %>">Inspection Report</a></strong></div>
+      <% else %>
+        <div class="inspection_alert"><strong>INSPECTION REPORT MISSING</strong></div>
+      <% end %>
+      <% if property.latest_inspection_by_date_alerts[:alert].present? %>
+        <br />              
+        <div class="inspection_alert"><strong><%= property.latest_inspection_by_date_alerts[:alert] %></strong></div>
+      <% end %> 
+    </div>
+  <% end %>
+
+  <% if property.latest_inspection_error.present? %>
+    <div class="inspection_section"> 
+      <div class="inspection_alert"><strong><%= property.latest_inspection_error %></strong></div>
+    </div>
+  <% elsif property.latest_inspection.present? %>
+    <div class="inspection_section"> 
+      <% if property.latest_inspection["creationDate"].present? %>       
+        <strong><div class="inspection_title">LATEST INSPECTION DATE:</div> <%= Time.at(property.latest_inspection["creationDate"]).to_date %></strong> 
+      <% end %>
+      <% if property.latest_inspection["score"].present? %>
+        <input id='inspection_score' type='hidden' value='<%= sprintf( "%0.01f", property.latest_inspection["score"].to_f) %>'>
+        <strong><div class="inspection_title">SCORE:</div> <a href="<%= property.latest_inspection["inspectionURL"] %>"><%= sprintf( "%0.01f", property.latest_inspection["score"].to_f) %></a></strong> 
+      <% end %>
+      <% if property.latest_inspection["inspectionReportURL"].present? %>
+        <div class="inspection_report"><strong><a href="<%= property.latest_inspection["inspectionReportURL"] %>">Inspection Report</a></strong></div>
+      <% else %>
+        <div class="inspection_alert"><strong>INSPECTION REPORT MISSING</strong></div>
+      <% end %>
+      <% if property.latest_inspection_alerts[:alert].present? %>
+        <br />              
+        <div class="inspection_alert"><strong><%= property.latest_inspection_alerts[:alert] %></strong></div>
+      <% end %>
+    </div>
+  <% else %>
+    <br />
+    <div class="inspection_alert"><strong>PLEASE USE SPARKLE TO DO NEW BLUESHIFT PRODUCT INSPECTION TODAY</strong></div>          
+  <% end %>
+</div>
+
+<% if property.should_update_latest_inspection? %>
+  <script type="text/javascript">
+    $("#property_inspection_loading").show();
+    $("#property_inspection_loaded").hide();
+    $.ajax({ "url": "<%= latest_inspection_partial_property_path(id: property.id, created_on: created_on) %>" });
+  </script>
+<% end %>

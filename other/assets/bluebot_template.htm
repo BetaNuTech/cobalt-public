@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link href="../other/assets/stylesheets/bluebot.css" rel="stylesheet">
+    <style>
+      progress[value]::-webkit-progress-value::before {
+        content: '[PERCENT]%';
+        position: absolute;
+        right: 46%;
+        top: 25%;
+      }
+    </style>
+  </head>
+  <body>
+    <!--<p>Property Name</p>
+    <p>Month YYYY Sales Goal</p>-->
+    <p style="font-size: 49pt">[STATS]</p>
+    <progress id="progressBar" max="100" value="[PERCENT]" class="css3"></progress>
+    <!--<progress max="100" value="50">
+      <div class="progress-bar">
+          <span style="width: 50%;">Progress: 50%</span>
+      </div>
+    </progress>-->
+    <p id="status">[STATUS]</p>
+    <div>
+      <div class="alert">
+        <p class="alert_title"><strong>ALERT!</strong></p>
+        <p class="alert_message"><strong>[ALERT]</strong></p>
+      </div>
+    </div>
+    <img src="../other/assets/images/bluestone_logo_white.png" alt="Bluestone Properties logo" style="width:110px;height:21px;">
+  </body>
+</html>

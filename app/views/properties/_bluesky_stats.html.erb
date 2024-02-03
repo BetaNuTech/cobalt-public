@@ -1,0 +1,22 @@
+<div class="bluesky_stats_people_stats_unclaimed_leads bluesky_stats_flex_container_horizontal_spaced">
+    <p class="bluesky_stats_text_people_stats_title bluesky_stats_color_dark_blue">UNCLAIMED<br>LEADS</p>
+    <p class="bluesky_stats_text_people_stats bluesky_stats_color_<%="#{@people_bluesky_unclaimed_leads_status}"%>">
+      <a id="bluesky_stats_open_bluesky_link" alt="Open Bluesky" target="_blank" href="https://www.blue-sky.app/home?property_id=<%= property.code %>">
+        <%= @people_bluesky_unclaimed_leads %>
+      </a>
+    </p>
+</div>
+<div class="bluesky_stats_people_stats_leadspeed bluesky_stats_flex_container_horizontal_spaced">
+    <p class="bluesky_stats_text_people_stats_title bluesky_stats_color_dark_blue">LEADSPEED</p>
+    <p class="bluesky_stats_text_people_stats bluesky_stats_color_<%="#{@people_bluesky_leadspeed_status}"%>"><%= @people_bluesky_leadspeed %></p>
+</div>
+<div class="bluesky_stats_people_stats_tenacity bluesky_stats_flex_container_horizontal_spaced">
+    <p class="bluesky_stats_text_people_stats_title bluesky_stats_color_dark_blue">TENACITY</p>
+    <p class="bluesky_stats_text_people_stats bluesky_stats_color_<%="#{@people_bluesky_tenacity_status}"%>"><%= @people_bluesky_tenacity %></p>
+</div>
+
+<% if property.should_update_bluesky_stats? %>
+  <script type="text/javascript">
+    $.ajax({ "url": "<%= bluesky_stats_partial_property_path(id: property.id, on_date: on_date) %>" });
+  </script>
+<% end %>

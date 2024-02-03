@@ -1,0 +1,67 @@
+<% if property.should_update_latest_inspection? %>
+  <div class="latest_inspection_and_deficients_text_inspection_error latest_inspection_and_deficients_color_white">SPARKLE DATA LOADING...</div>          
+<% elsif property.latest_inspection_error.present? %>
+  <div class="latest_inspection_and_deficients_text_inspection_error latest_inspection_and_deficients_color_alert"> 
+    <%= property.latest_inspection_error %>
+  </div>
+<% elsif property.latest_inspection.present? %>
+  <div class="latest_inspection_and_deficients_flex_container_horizontal_space_evenly"> 
+    <div class="latest_inspection_and_deficients_text_inspection_title latest_inspection_and_deficients_color_white">INSPECTION:</div>
+    <div class="latest_inspection_and_deficients_text_inspection_score latest_inspection_and_deficients_color_<%= property.latest_inspection_score_alert? ? "alert" : "blue" %>">
+      <a href="<%= property.latest_inspection["inspectionURL"] %>"><%= sprintf( "%0.01f", property.latest_inspection["score"].to_f) %>%</a>
+    </div>
+  </div>
+  <div class="latest_inspection_and_deficients_flex_container_horizontal_space_evenly"> 
+    <div class="latest_inspection_and_deficients_text_inspection_title latest_inspection_and_deficients_color_white">DATE:</div>
+    <div class="latest_inspection_and_deficients_text_inspection_date latest_inspection_and_deficients_color_<%= property.latest_inspection_date_alert? ? "alert" : "blue" %>">
+      <%= Time.at(property.latest_inspection["creationDate"]).to_date.strftime("%m/%d/%Y")  %>
+    </div>
+  </div>
+  <div class="latest_inspection_and_deficients_flex_container_horizontal_space_evenly"> 
+    <div class="latest_inspection_and_deficients_text_inspection_title latest_inspection_and_deficients_color_white">REPORT:</div>
+    <% if property.latest_inspection["inspectionReportURL"].present? %>
+      <a class="latest_inspection_and_deficients_text_inspection_report" href="<%= property.latest_inspection["inspectionReportURL"] %>"><svg class="latest_inspection_and_deficients_svg_report"><%= show_svg('doc.plaintext.svg') %></svg></a>
+    <% else %>
+      <div class="latest_inspection_and_deficients_text_inspection_report latest_inspection_and_deficients_color_alert">MISSING</div>
+    <% end %>
+  </div>
+  <div class="latest_inspection_and_deficients_di_table">
+    <div class="latest_inspection_and_deficients_di_table_header latest_inspection_and_deficients_bkg_color_white">
+      <p class="latest_inspection_and_deficients_text_inspection_table_title latest_inspection_and_deficients_color_dark_blue">DEFICIENT ITEMS</p>
+    </div>
+    <div class="latest_inspection_and_deficients_di_table_row latest_inspection_and_deficients_flex_container_horizontal_space_evenly"> 
+      <div class="latest_inspection_and_deficients_text_inspection_table_row_title latest_inspection_and_deficients_color_dark_blue">PAST DUE</div>
+      <div class="latest_inspection_and_deficients_text_property_di_value latest_inspection_and_deficients_color_<%= property.latest_inspection_property_di_past_due_alert? ? "alert" : "blue" %>">
+        <% if property.latest_inspection["deficientItemsURL"].present? %>
+          <a id="latest_inspection_and_deficients_open_sparkle_link" alt="Open Sparkle Deficient Items" target="_blank" href="<%= property.latest_inspection["deficientItemsURL"] %>">
+            <%= property.latest_inspection_property["numOfOverdueDeficientItems"] %>
+          </a>
+        <% else %>
+          <%= property.latest_inspection_property["numOfOverdueDeficientItems"] %>
+        <% end %>
+      </div>
+    </div>
+    <div class="latest_inspection_and_deficients_di_table_row latest_inspection_and_deficients_flex_container_horizontal_space_evenly"> 
+      <div class="latest_inspection_and_deficients_text_inspection_table_row_title latest_inspection_and_deficients_color_dark_blue">ACTIONS REQ'D</div>
+      <div class="latest_inspection_and_deficients_text_property_di_value latest_inspection_and_deficients_color_<%= property.latest_inspection_property_di_actions_required_alert? ? "alert" : "blue" %>">
+        <% if property.latest_inspection["deficientItemsURL"].present? %>
+          <a id="latest_inspection_and_deficients_open_sparkle_link" alt="Open Sparkle Deficient Items" target="_blank" href="<%= property.latest_inspection["deficientItemsURL"] %>">
+            <%= property.latest_inspection_property["numOfRequiredActionsForDeficientItems"] %>
+          </a>
+        <% else %>
+          <%= property.latest_inspection_property["numOfRequiredActionsForDeficientItems"] %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+
+<% else %>
+  <div class="latest_inspection_and_deficients_text_inspection_error latest_inspection_and_deficients_color_alert">PLEASE USE SPARKLE TO DO NEW BLUESHIFT PRODUCT INSPECTION TODAY</div>          
+<% end %>
+
+<% if property.should_update_latest_inspection? %>
+  <script type="text/javascript">
+    $.ajax({ "url": "<%= latest_inspection_and_deficients_partial_property_path(id: property.id) %>" });
+  </script>
+<% end %>

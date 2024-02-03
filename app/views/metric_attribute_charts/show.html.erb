@@ -1,0 +1,28 @@
+
+
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+  <span id="date_selection">
+      Showing Charts for Metric: <strong><%= @metric_attribute %></strong>
+      <% if @date %> ending on <strong><%= @date %></strong> <% end %>
+  </span>
+<% end %>
+
+<% if @team_codes.count > 0 %>
+  <%= form_tag metric_attribute_charts_path(attribute: @metric_attribute), method: 'post' do %>
+    <%= hidden_field_tag :attribute, @metric_attribute %>
+    <%= hidden_field_tag :metric_attribute_charts_date, @date %>
+    <%= select_tag :team_code, options_for_select(@team_codes) %>
+    <%= submit_tag "View Team", class: "btn btn-primary" %>
+  <% end %>
+<% end %>
+
+<div id="charts">  
+  <% @charts_data.each_with_index do |data, index| %>
+    <div class="metric_graph_container" <%= data.to_s %>></div>
+  <% end %>
+</div>

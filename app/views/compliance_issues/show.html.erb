@@ -1,0 +1,28 @@
+
+
+<% content_for :header do %>
+    <div id="application_header_logo">
+        <%= link_to root_path, data: { turbolinks: false } do %>
+            <%= show_svg('cobalt_report_white.svg') %>
+        <% end %>
+    </div>
+  <span id="header_title">Compliance Issues for <strong><%=@property_name%></strong> on <strong><%=@date%></strong></span>
+<% end %>
+
+<div id="compliance_issues">  
+  <table id="compliance_issues_table" class="stripe" width="100%" cellpadding="0" cellspacing="0" border="0" class="table" >
+    <thead>
+      <th>
+        Issue
+      </th>
+      <th>
+        # of Culprits
+      </th>
+      <th>
+        Culprits (# of Days Culprit Reported)
+      </th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+    <link href="stylesheets/maint_bluebot_work_orders.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="div-top">
+
+      <div id="div-left">
+        <strong><p class="work-orders-header color-white">WOs completed yesterday</p></strong>
+        <strong><p id="work-orders-completed-metric" class="color-yellow">11</p></strong>
+        <p id="progress-bar-desc" class="color-white">30 Day % completed < 48 hours</p>
+        <div id="progress-bar" class="w3-panel w3-large">
+          <div id="progress-bar-inner" class="w3-container w3-center color-black" style="height:28px;width:52%">52%</div>
+        </div>
+        <!-- <p id="completed-status" class="color-white"><em>Wow! Great Work!!</em></p> -->
+        <!-- <p id="completed-status" class="color-white"><em>Should be 100%!!</em></p> -->
+        <p id="completed-status" class="color-white"><em>So close! Keep cranking!</em></p>
+      </div>
+
+      <div id="div-divider">
+        <div id="vertical-bar" class="background-color-white"></div>
+      </div>
+
+      <div id="div-right">
+        <strong><p class="work-orders-header color-white">Incomplete > 48 hours</p></strong>
+        <strong><p id="work-orders-incomplete-metric" class="color-yellow">9</p></strong>
+        <p id="incompletes-status" class="color-white"><em>Congratulations!</em></p>
+        <!-- <p id="incompletes-status" class="color-white"><em>ALMOST TO GOAL!</em></p> -->
+        <!-- <p id="incompletes-status" class="color-white"><em>Should be 100%!!</em></p> -->
+      </div>
+
+    </div>
+
+    <div id="div-footer">
+      <img src="images/bluestone_logo_white.png" alt="Bluestone Properties logo" style="width:220px;height:42px;">
+    </div>
+  </body>
+</html>

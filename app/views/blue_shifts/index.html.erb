@@ -1,0 +1,51 @@
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+<% end %>
+
+<h1>Listing Blue Shifts for <%= @property.code %></h1>
+
+<table class="entity_table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Date</th>
+      <th>Created by</th>
+      <th>People problem?</th>
+      <th>Product problem?</th>
+      <th>Pricing problem?</th>
+      <th>Needs help?</th>
+      <th>Latest fix by date</th>
+      <th>Archived</th>
+      <th>Archived Status</th>
+      <th>Failure Reasons</th>
+      <th>Overridden</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @blue_shifts.each do |blue_shift| %>
+      <tr>
+        <td><%= link_to 'Show', property_blue_shift_path(@property, blue_shift), data: { turbolinks: false } %></td>
+        <td><%= formatted_date(blue_shift.created_on) %></td>
+        <td><%= blue_shift.user.name %></td>
+        <td><%= blue_shift.people_problem %></td>
+        <td><%= blue_shift.product_problem %></td>
+        <td><%= blue_shift.pricing_problem %></td>
+        <td><%= blue_shift.need_help %></td>
+        <td><%= formatted_date(blue_shift.latest_fix_by_date) %></td>
+        <td><%= blue_shift.archived %></td>
+        <td style="color: <%= blue_shift.archived_status == 'success' ? 'blue' : 'red' %>"><%= blue_shift.archived_status %></td>
+        <td><nobr><%= blue_shift.archived_failure_reasons %></nobr></td>
+        <% if blue_shift.initial_archived_status != blue_shift.archived_status && blue_shift.archive_edit_user && blue_shift.archive_edit_date %>
+          <td><%= blue_shift.archive_edit_user.first_name %> <%= blue_shift.archive_edit_user.last_name %> on <%= blue_shift.archive_edit_date %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

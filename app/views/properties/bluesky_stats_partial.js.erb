@@ -1,0 +1,1 @@
+$("#bluesky_stats_<%= @property.id %>").html('<%= escape_javascript(render(partial: 'bluesky_stats', locals: {property: @property, on_date: nil})) %>')

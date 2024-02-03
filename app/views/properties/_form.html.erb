@@ -1,0 +1,75 @@
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+<% end %>
+
+<%= form_for(@property) do |f| %>
+  <% if @property.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@property.errors.count, "error") %> prohibited this property from being saved:</h2>
+
+      <ul>
+      <% @property.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <h3>Property Code: <strong><%= @property.code%></strong></h3>
+  
+  <div class="field">
+    <%= retina_image_tag(@property.image, :normal) if @property.image? %><br>
+    <%= f.label :image, 'Image' %> (Note: will be cropped to 4:3)<br>
+    <%= f.file_field :image %>
+  </div>
+  <div class="field properties_background_grey">
+    <%= retina_image_tag(@property.logo, :normal) if @property.logo? %><br>
+    <%= f.label :logo, 'Logo' %> (Required: white with transparent background)<br>
+    <%= f.file_field :logo %>
+  </div>
+  <div class="field">
+    <%= f.label :city, 'City' %><br>
+    <%= f.text_field :city %>
+  </div>
+  <div class="field">
+    <%= f.label :state, 'State' %> (XX)<br>
+    <%= f.text_field :state %>
+  </div>
+  <div class="field">
+    <%= f.label :num_of_units %><br>
+    <%= f.number_field :num_of_units %>
+  </div>
+  <div class="field">
+    <%= f.label :slack_channel, 'Slack Channel' %> * Please prepend the slack channel with "#"<br>
+    <%= f.text_field :slack_channel %>
+  </div>
+  <div class="field">
+    Sparkle Blueshift PM Template Name: <br>
+    <%= f.text_field :sparkle_blshift_pm_templ_name %>
+  </div>
+  <div class="field">
+    <%= f.label :manager_strikes, 'Manager Strikes' %> * Strikes can be overridden to values between 0 to 3 <br>
+    <%= f.number_field :manager_strikes %>
+  </div>
+  <div class="field">
+    <%= f.check_box :active %>
+    <%= f.label :active, "Active - enable/disable property." %>
+  </div>
+    <div class="field">
+    <%= check_box_tag 'property[is_a_team]' %>
+    <%= label_tag "Convert to a Team." %>
+  </div>
+  <div class="field">
+    <%= f.label :team_id, "Team" %><br>
+    <%= f.collection_select :team_id, Team.all.where(active: true).order(:code), :id, :code, { include_blank: true }, 
+      {:multiple => false} %>  
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

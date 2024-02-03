@@ -1,0 +1,794 @@
+// Place all the styles related to the blue_shift_boards controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.blue_shift_boards-show {
+    background-color: #061F54;
+}
+
+#blue_shift_board_show_container {
+    // background-color: blue;
+    // margin: 0px;
+    width: 100%;
+    border: 0px solid black;
+    padding: 0px;
+}
+
+
+// Header
+#blue_shift_board_header {
+    position: relative;
+    width: 100%;
+    height: 55px;
+    border: 0px solid black;
+    padding: 0px;
+
+    #bluestone_properties_logo {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        width: 185px;
+        height: 35px;
+    }
+}
+
+
+// Manager and Property data
+#blue_shift_board_manager_property {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    height: 110px;
+    border: 0px solid black;
+    padding: 0px;
+
+    #blue_shift_board_manager_img {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 100px;
+        height: 100px;
+        background-color: lightgray
+    }
+    
+    #blue_shift_board_manager_info {
+        position: absolute;
+        top: 5px;
+        bottom: 5px;
+        left: 110px;
+        padding: auto;
+    }
+
+    #blue_shift_board_property_img {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        width: 133px;
+        height: 100px;
+        background-color: lightgray
+    }
+
+    #blue_shift_board_property_info {   
+        position: absolute;
+        padding-left: 2px;
+        padding-right: 2px;
+        bottom: 5px;
+        right: 10px;
+        width: 133px;
+        height: 17px;
+        z-index: 1
+    }
+
+    #blue_shift_board_property_logo {
+        position: absolute;
+        top: 5px;
+        right: 153px;
+        width: 150px;
+        height: 100px
+    }
+}
+
+
+// Metrics
+#blue_shift_board_metrics {
+    position: relative;
+    margin: auto;
+    padding: 0px;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    // Width 5[120]
+    #blue_shift_board_metrics_trigger {
+        width: 120px;
+        height: 230px;
+    }
+
+    // Width 3[120]3
+    #blue_shift_board_metrics_latest {
+        width: 126px;
+        height: 230px;
+        border-color: white;
+        border-width: 3px;
+        border-style: solid;
+    }
+
+    #blue_shift_board_metrics_sapphire {
+        width: 120px;
+        height: 100%;
+    }
+
+    #blue_shift_board_metrics_goal {
+        width: 240px;
+        height: 230px;
+    }
+
+    .blue_shift_board_metrics_vertical_bar {
+        margin: auto;
+        margin-left: 0px;
+        margin-right: 0px;
+        padding: 0px;
+        width: 3px;
+        height: 150px;
+        border-color: white;
+        border-style: solid;
+        border-width: 0px;
+        border-left-width: 3px;
+    }
+
+    #blue_shift_board_metrics_cnoi {
+        width: 240px;
+        height: 150px;
+    }
+
+    #blue_shift_board_metrics_days {
+        width: 298px;
+        height: 230px;
+    }
+}
+
+
+// WHY?
+#blue_shift_board_why {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    height: 55px;
+    padding: 0px;
+}
+.blue_shift_board_why_horz_bar {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    width: 245px;
+    height: 3px;
+    padding: 0px;
+    border-color: #061F54;
+    border-style: solid;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 3px;
+    border-bottom-width: 0px;
+}
+.blue_shift_board_why_section_spacer {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    height: 22px;
+    padding: 0px;
+}
+
+// PEOPLE
+#blue_shift_board_people {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .blue_shift_board_people_stats {
+        margin-top: 0px;
+        margin-bottom: auto;
+        margin-left: 20px;
+        margin-right: 20px;
+        width: 250px;
+    }
+
+    #blue_shift_board_people_table {
+        margin-top: 0px;
+        margin-bottom: auto;
+        margin-left: 20px;
+        margin-right: 20px;
+        width: 460px;
+        cursor: pointer;
+
+        #blue_shift_board_people_table_header {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+        }
+
+        .blue_shift_board_people_table_row {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+
+            .blue_shift_board_people_table_row_agent {
+                width: 100%;
+            }
+        }
+    }
+
+    #blue_shift_board_people_workable_jobs_table {
+        margin-top: 0px;
+        margin-bottom: auto;
+        margin-left: 20px;
+        margin-right: 20px;
+        width: 460px;
+
+        #blue_shift_board_people_workable_jobs_table_header {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+        }
+
+        .blue_shift_board_people_workable_jobs_table_row {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+
+            .blue_shift_board_people_workable_jobs_table_row_title {
+                margin: 0px;
+                padding: 0px;
+                width: 100%;
+            }
+        }
+    }
+}
+
+// PRODUCT
+#blue_shift_board_product {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .blue_shift_board_product_sparkle {
+        margin-top: 0px;
+        margin-bottom: auto;
+        margin-left: 20px;
+        margin-right: 20px;
+        width: 270px;
+    }
+
+    #blue_shift_board_people_turns_for_property {
+        margin-top: 0px;
+        margin-bottom: auto;
+        margin-left: 20px;
+        margin-right: 20px;
+        width: 440px;
+        font-family: "Arial Narrow", Arial, sans-serif;
+        
+        .turns-header {
+            text-align: center;
+            margin: auto;
+            margin-top: 10px;
+            margin-bottom: 0px;
+            padding: 0px;
+            font-size: 14pt;
+            width: 90%;
+        }
+        
+        .status {
+            width: 80%;
+            margin: auto;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 12pt;
+        }
+        
+        #div-top {
+            width: 100%;
+            height: auto;
+            margin: 0px auto 0;
+        }
+        
+        #div-left {
+            width: 219px;
+            margin: auto;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            padding: 0px;
+        }
+        #turns-metric {
+            text-align: center;
+            margin: -10px auto -2px;
+            font-size: 48pt;
+        }
+        
+        #vertical-bar {
+            margin: 0px;
+            padding: 0px;
+            width: 2px;
+            height: 100%;
+        }
+        
+        #div-divider {
+            width: 2%;
+            float: left;
+            height: 100%;
+        }
+        
+        #div-right {
+            width: 219px;
+            margin: auto;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            padding: 0px;
+        }
+        #turns-todo-next {
+            text-align: center;
+            margin: -10px auto 0px;
+            font-size: 84pt;
+        }
+        
+        #div-footer {
+            width: 100%;
+            float: none;
+            margin: 10px auto 0px;
+        }
+        
+        #progress-bar {
+            width: 80%;
+            margin: 0px auto 10px;
+            padding: 0px;
+            border:1px solid #367CAA;
+        }
+        #progress-bar-inner {
+            font-size: 10pt;
+            height: 19px;
+        }
+        
+        img {
+            display:block;
+            margin-bottom: 5px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+}
+
+// PRICE
+#blue_shift_board_price {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .blue_shift_board_price_survey_and_leads {
+        margin-top: 0px;
+        margin-bottom: auto;
+        margin-left: 20px;
+        margin-right: 20px;
+        width: 270px;
+
+        .blue_shift_board_price_leads_needed {
+            margin: 0px;
+            padding: 0px;
+            padding-left: 10px;
+            padding-right: 10px;
+            width: 100%;
+            height: 70px;
+            border-color: #061F54;
+            border-style: solid;
+            border-left-width: 3px;
+            border-right-width: 3px;
+            border-top-width: 3px;
+            border-bottom-width: 3px;
+        }
+        .blue_shift_board_price_leads_received {
+            margin: 0px;
+            padding: 0px;
+            padding-left: 10px;
+            padding-right: 10px;
+            width: 100%;
+            height: 70px;
+            border-color: #061F54;
+            border-style: solid;
+            border-left-width: 3px;
+            border-right-width: 3px;
+            border-top-width: 0px;
+            border-bottom-width: 3px;
+        }
+
+        .blue_shift_board_price_leads_title {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: 0px;
+            margin-right: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: left;
+            font-size: 13pt;
+            font-weight: bold
+        }
+        .blue_shift_board_price_leads_data {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: 0px;
+            margin-right: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: left;
+            font-size: 20pt;
+            font-weight: bold
+        }
+    }
+    
+
+    #blue_shift_board_price_table {
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: 20px;
+        margin-right: 20px;
+        width: 440px;
+        cursor: pointer;
+
+        #blue_shift_board_price_table_header {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+        }
+
+        .blue_shift_board_price_table_row {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+        }
+    }
+}
+
+
+
+// Text Formatting
+#blue_shift_board_text_manager_name {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    font-size: 15pt;
+    font-weight: bold
+}
+#blue_shift_board_text_manager_title {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    font-size: 12pt;
+    font-weight: normal
+}
+#blue_shift_board_text_manager_date {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    font-size: 10pt;
+    font-weight: normal
+}
+.blue_shift_board_text_property_info {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    font-size: 8pt;
+    font-weight: normal
+}
+.blue_shift_board_text_metric {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-bottom: -5px;
+    text-align: center;
+    font-size: 22pt;
+    font-weight: normal
+}
+.blue_shift_board_text_metric_go_to_blueshift {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 0px;
+    text-align: center;
+    font-size: 18pt;
+    font-weight: normal
+}
+.blue_shift_board_text_metric_large {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-top: -20px;
+    margin-bottom: -20px;
+    text-align: center;
+    font-size: 60pt;
+    font-weight: bold
+}
+.blue_shift_board_text_metric_date {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    text-align: center;
+    font-size: 13pt;
+    font-weight: normal
+}
+.blue_shift_board_text_metric_descriptor {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    text-align: center;
+    font-size: 7pt;
+    font-weight: normal
+}
+.blue_shift_board_text_metric_descriptor_large {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    text-align: center;
+    font-size: 12pt;
+    font-weight: normal
+}
+.blue_shift_board_text_metric_days {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    margin-top: -20px;
+    margin-bottom: -20px;
+    text-align: center;
+    font-size: 46pt;
+    font-weight: bold
+}
+#blue_shift_board_text_why {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 28pt;
+    font-weight: normal
+}
+.blue_shift_board_text_why_title {
+    margin-top: 0px;
+    margin-bottom: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 16pt;
+    font-weight: normal
+}
+.blue_shift_board_text_people_table_header {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 14pt;
+    font-weight: bold
+}
+.blue_shift_board_text_people_table_row_agent {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin: 0px;
+    padding-left: 5px;
+    padding-top: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 11pt;
+    font-weight: normal;
+    font-style: italic; 
+}
+.blue_shift_board_text_people_table_row_stats {
+    margin: auto;
+    padding-bottom: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 20pt;
+    font-weight: bold
+}
+.blue_shift_board_text_price_survey_date_title {
+    margin: auto;
+    margin-left: 0px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 16pt;
+    font-weight: bold
+}
+.blue_shift_board_text_price_survey_date {
+    margin: auto;
+    margin-right: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: right;
+    font-size: 18pt;
+    font-weight: normal
+}
+.blue_shift_board_text_price_table_header {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 14pt;
+    font-weight: bold
+}
+.blue_shift_board_text_price_table_row_first {
+    margin: auto;
+    margin-left: 5px;
+    padding-bottom: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 12pt;
+    font-weight: bold
+}
+.blue_shift_board_text_price_table_row {
+    margin: auto;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 12pt;
+    font-weight: normal
+}
+
+// Colors
+.blue_shift_board_color_dark_blue {
+    color: #061F54
+}
+.blue_shift_board_bkg_color_dark_blue {
+    background-color: #061F54
+}
+.blue_shift_board_color_blue {
+    color: #0F3C69
+}
+.blue_shift_board_bkg_color_blue, .blue_shift_board_bkg_color_people_table_row_even, .blue_shift_board_bkg_color_price_table_row_even {
+    background-color: #0F3C69
+}
+.blue_shift_board_bkg_color_light_blue, .blue_shift_board_bkg_color_people_table_row_odd, .blue_shift_board_bkg_color_price_table_row_odd {
+    background-color: #367CAA
+}
+.blue_shift_board_color_light_blue {
+    color: #367CAA
+}
+.blue_shift_board_bkg_color_very_light_blue {
+    background-color: #ABC0D2
+}
+.blue_shift_board_color_red, .blue_shift_board_color_alert {
+    color: #E20019
+}
+.blue_shift_board_color_white, .blue_shift_board_color_no_alert {
+    color: #FFFFFF
+}
+.blue_shift_board_bkg_color_white {
+    background-color: #FFFFFF
+}
+.blue_shift_board_bkg_color_off_white {
+    background-color: #DAE3EB
+}
+
+// SVG
+.blue_shift_board_svg_star {
+    fill: white;
+    width: 35px;
+    height: 35px
+}
+#blue_shift_board_svg_people {
+    fill: white;
+    height: 150px;
+    width: 150px;
+    margin-top: auto;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    margin-right: 20px
+}
+#blue_shift_board_svg_product {
+    fill: white;
+    height: 150px;
+    width: 150px;
+    margin-top: auto;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    margin-right: 20px
+}
+#blue_shift_board_svg_price {
+    fill: white;
+    height: 150px;
+    width: 150px;
+    margin-top: auto;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    margin-right: 20px
+}
+.blue_shift_board_svg_thumbs_up {
+    fill: white;
+    height: 100px;
+    width: 100px;
+    margin: auto;
+    margin-left: 10px;
+    margin-right: 10px
+}
+
+// Images
+.blue_shift_board_img_sapphire {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    margin-bottom: 10px;
+    padding: 0px;
+}
+
+// Flex Containers
+.blue_shift_board_flex_container_horizontal  {
+    display: flex;
+    justify-content: center;
+    align-content: center
+}
+.blue_shift_board_flex_container_horizontal_spaced  {
+    display: flex;
+    justify-content: space-between;
+    align-content: center
+}
+.blue_shift_board_flex_container_horizontal_spaced_evenly  {
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center
+}
+.blue_shift_board_flex_container_vertical {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-content: center
+}
+.blue_shift_board_flex_container_vertical_space_evenly {
+    flex-direction: column;
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center
+}
+
+// Grid Containers
+.blue_shift_board_grid_container_metrics {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto;
+    grid-template-rows: auto;
+    column-gap: 0px;
+    justify-items: center;
+    align-items: center;
+}
+.blue_shift_board_grid_container_people_table {
+    display: grid;
+    grid-template-columns: 128px 100px 112px 120px;
+    grid-template-rows: auto;
+    column-gap: 0px;
+}
+.blue_shift_board_grid_container_jobs_table_header {
+    display: grid;
+    grid-template-columns: 120px 350px;
+    grid-template-rows: auto;
+    column-gap: 0px;
+}
+.blue_shift_board_grid_container_price_table_header {
+    display: grid;
+    grid-template-columns: 160px 70px 70px 160px;
+    grid-template-rows: auto;
+    column-gap: 0px;
+}
+.blue_shift_board_grid_container_price_table_row {
+    display: grid;
+    grid-template-columns: 160px 70px 70px 50px 90px;
+    grid-template-rows: auto;
+    column-gap: 0px;
+}
+.blue_shift_board_grid_container_ppp_section {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto;
+    column-gap: 0px;
+    justify-items: center;
+    align-items: start
+}
+.blue_shift_board_grid_container_turns_for_property {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto;
+    column-gap: 0px;
+    justify-items: center;
+    align-items: start;
+}

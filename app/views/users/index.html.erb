@@ -1,0 +1,54 @@
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+<% end %>
+
+<h1>Listing Users</h1>
+
+<%= link_to 'New User', new_user_path %>
+
+<br><br>
+
+<div class="users_table_div">
+  <table class="entity_table users_table" id="users" border="1">
+    <thead>
+      <tr>
+        <th class="users_table" >Image</th>
+        <th class="users_table" >Email</th>
+        <th class="users_table" >First Name</th>
+        <th class="users_table" >Last Name</th>
+        <th class="users_table" ><%= link_to 'Tier 1 Role', users_path(:sort => "role") %></th>
+        <th class="users_table" ><%= link_to 'Tier 2 Role', users_path(:sort => "role") %></th>
+        <th class="users_table" >Slack Member ID</th>
+        <th class="users_table" >Corporate Slack Member ID</th>
+        <th class="users_table" ><%= link_to 'Properties', users_path(:sort => "properties") %></th>
+        <th class="users_table" >Team</th>
+        <th class="users_table" colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @users.each do |user| %>
+        <tr class="<%= user.active ? 'active_user' : 'inactive_user'%>">
+          <td class="users_table" ><%= retina_image_tag(user.profile_image, :small) if user.profile_image? %></td>
+          <td class="users_table" ><%= user.email %></td>
+          <td class="users_table" ><%= user.first_name %></td>
+          <td class="users_table" ><%= user.last_name %></td>
+          <td class="users_table" ><%= user.t1_role %></td>
+          <td class="users_table" ><%= user.t2_role %></td>
+          <td class="users_table" ><%= user.slack_username %></td>
+          <td class="users_table" ><%= user.slack_corp_username %></td>
+          <td class="users_table" ><%= user.property_names.html_safe %></td>
+          <td class="users_table" ><%= user.team_lead_code %></td>
+          <td class="users_table" ><%= link_to 'Show', user %></td>
+          <td class="users_table" ><%= link_to 'Edit', edit_user_path(user) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<br>
+

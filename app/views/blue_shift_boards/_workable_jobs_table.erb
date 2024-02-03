@@ -1,0 +1,43 @@
+<%# TEAM HEADER %>
+<div class="blue_shift_board_people_workable_jobs_table_header workable_jobs_bkg_color_white">
+    <p class="workable_jobs_color_light_blue workable_jobs_text_jobs_team_header" ><%= @recruiting_link %></p>
+</div>
+<%# TABLE HEADER %>
+<div class="blue_shift_board_people_workable_jobs_table_header workable_jobs_bkg_color_white blue_shift_board_grid_container_jobs_table_header">
+    <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Title<br>Opened</p>
+    <p class="workable_jobs_color_blue workable_jobs_text_jobs_table_header" >Days</p>
+</div>
+<% @workable_jobs_data.each_with_index do |element, index| %>
+    <div class="blue_shift_board_people_workable_jobs_table_row workable_jobs_bkg_color_jobs_table_row_<%= index.odd? ? 'odd' : 'even' %>">
+        <p class="blue_shift_board_people_workable_jobs_table_row_title workable_jobs_color_white workable_jobs_jobs_table_row_title">
+            <% if element[:state] == 'closed' %>
+                UNPUBLISHED: 
+            <% end %>
+            <% if element[:url].present? %>
+                <a target="_blank" href="<%= element[:url] %>"><%= element[:title] %></a>
+            <% else %>
+                <%= element[:title] %>
+            <% end %>
+        </p>
+    </div>
+    <div class="blue_shift_board_people_workable_jobs_table_row blue_shift_board_grid_container_jobs_table_header workable_jobs_bkg_color_jobs_table_row_<%= index.odd? ? 'odd' : 'even' %>">
+        <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+            <%= element[:date_opened] %>
+        </p>
+        <p class="workable_jobs_color_white workable_jobs_text_jobs_table_row">
+            <% if element[:time_to_start].nil? %>
+                <%= element[:days_open] %>
+            <% end %>
+            <% if element[:time_to_fill].present? %>
+                <% if element[:time_to_start].nil? %><br><% end %>
+                <span class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_time_to_sub_text">days-to-fill: </span>
+                <span class="workable_jobs_color_white workable_jobs_text_jobs_table_row_time_to_title"><%= element[:time_to_fill] %></span>
+            <% end %>
+            <% if element[:time_to_start].present? %>
+                <span class="workable_jobs_color_off_white workable_jobs_text_jobs_table_row_time_to_sub_text"> days-to-start: </span>
+                <span class="workable_jobs_color_white workable_jobs_text_jobs_table_row_time_to_title"><%= element[:time_to_start] %></span>
+                <br>
+            <% end %>
+        </p>
+    </div>
+<% end %>

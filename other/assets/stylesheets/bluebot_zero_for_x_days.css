@@ -1,0 +1,160 @@
+/* Basic resets */
+
+* { 
+    margin:0; padding:0; 
+    box-sizing: border-box;
+}
+
+body {
+	background-color:rgb(39, 118, 184);
+	margin: 10px auto 0;
+	max-width: 400px;
+	font-family: "Expletus Sans", sans-serif;
+}
+
+p {
+  color: white;
+  text-align: center;
+	margin: 0 0 5px;
+}
+
+#question_marks {
+	margin: 0 0 0px;
+}
+
+#num_of_days {
+	margin: 0 0 10px;
+}
+
+#fraction {
+	position: absolute;
+	top: 138px;
+	right: 35px;
+  text-align: right;
+}
+
+#status {
+    margin: 0 0 10px 0;
+    font-size: 17px;
+    padding: 0px 10px;
+}
+
+#delta {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    margin: 0 0 0 0;
+    font-size: 17px;
+}
+
+progress {
+	display:inline-block;
+	width:80%;
+	height:30px;
+	padding:0;
+	margin: 0 0 -10px 0;
+	background:none;
+	border: 0;
+	text-align: center;
+	position:relative;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 0.8em;
+}
+progress::-webkit-progress-bar {
+	height:30px;
+	width:80%;
+	margin:0 auto;
+	background-color: rgb(39, 118, 184);
+	border: 1px solid white;
+}
+progress::-webkit-progress-value {
+	display:inline-block;
+	float:left;
+	height:28px;
+	margin:0px 0px 0 0;
+	background: white;
+}
+
+progress#progressBarLastMonth {
+	height:6px;
+	margin: 0 0 5px 0;
+	padding: 0;
+}
+progress#progressBarLastMonth::-webkit-progress-bar {
+	height:6px;
+}
+progress#progressBarLastMonth::-webkit-progress-value {
+	height:4px;
+	background: lightblue;	
+}
+
+/*progress[value]::-webkit-progress-value::before {
+  content: '87%';
+  position: absolute;
+  right: 46%;
+  top: 25%;
+}*/
+
+/*progress {
+	display:inline-block;
+	width:100%;
+	height:50px;
+	padding:0;
+	margin: auto;
+	background:none;
+	border: 0;
+	text-align: center;
+	position:relative;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 0.8em;
+}
+.progress-bar {
+	border: 1px solid white;
+
+  width: 50%;
+  height: 30px;
+  
+  position: relative;
+  display: block;
+}
+  
+.progress-bar > span {
+  background-color: white;
+	height: 28px;
+  display: block;
+  text-indent: -9999px;
+}*/
+
+div {
+  width: 100%
+}
+
+div div {
+  display:block;
+  width: 80%;
+  margin: auto;
+  background-color: white;
+  border: 1px solid black;
+	font-size: 17px;
+}
+
+p.alert_title {
+  margin: 0px;
+  padding-top: 10px;
+  color: red;
+  text-align: center;
+}
+
+p.alert_message {
+  margin: 0px;
+  padding: 10px;
+  color: red;
+	text-align: center;
+}
+
+img {
+	display:block;
+	margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}

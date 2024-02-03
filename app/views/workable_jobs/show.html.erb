@@ -1,0 +1,48 @@
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+<% end %>
+
+<div id="hud">
+  <div id="loading"></div>
+</div>
+
+<div id="workable_jobs_show_container">
+  <p>
+    <strong>Workable Hired Candidate Name:</strong>
+    <%= @workable_job.hired_candidate_name %>
+  </p>
+
+
+  <p>
+    <strong>Employee First Name (override):</strong>
+    <%= @workable_job.employee_first_name_override %>
+  </p>
+
+  <p>
+    <strong>Employee Last Name (override):</strong>
+    <%= @workable_job.employee_last_name_override %>
+  </p>
+
+  <p>
+    <strong>Employee Ignore:</strong>
+    <%= @workable_job.employee_ignore %>
+  </p>
+</div>
+
+
+<%= link_to 'Edit', edit_workable_job_path(@workable_job) %> |
+<%= link_to 'Back', workable_jobs_path(), class: '', onclick: "show_hud();" %>
+
+
+<script>
+    function show_hud() {
+        $('#hud').show();
+    }
+    $(document).ready(function() {
+        $('#hud').hide();
+    });
+</script>

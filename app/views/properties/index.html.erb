@@ -1,0 +1,53 @@
+<% content_for :header do %>
+  <div id="application_header_logo">
+      <%= link_to root_path, data: { turbolinks: false } do %>
+          <%= show_svg('cobalt_report_white.svg') %>
+      <% end %>
+  </div>
+<% end %>
+
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Properties</h1>
+
+<div class="properties_table_div">
+  <table class="entity_table properties_table" border="1">
+    <thead>
+      <tr>
+        <th class="properties_table" >Code</th>
+        <th class="properties_table" >Image</th>
+        <th class="properties_table" >Logo</th>
+        <th class="properties_table" ><%= link_to 'Team', properties_path(:filter => "team") %></th>
+        <th class="properties_table" ><%= link_to 'City', properties_path(:filter => "city") %></th>
+        <th class="properties_table" ><%= link_to 'State', properties_path(:filter => "state") %></th>
+        <th class="properties_table" >Units</th>
+        <th class="properties_table" >Slack_Channel</th>
+        <th class="properties_table" >Sparkle Manager Template</th>
+        <th class="properties_table" ><%= link_to 'PM Strikes', properties_path(:filter => "manager_strikes") %></th>
+        <th class="properties_table" colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @properties.each do |property| %>
+        <tr class="properties_table <%= property.active ? 'active_property' : 'inactive_property'%>">
+          <td class="properties_table" ><%= property.code %></td>
+          <td class="properties_table" ><%= retina_image_tag(property.image, :small) if property.image? %></td>
+          <td class="properties_table" ><%= retina_image_tag(property.logo, :small) if property.logo? %></td>
+          <td class="properties_table" ><%= property.team ? property.team.code : '' %></td>
+          <td class="properties_table" ><%= property.city %></td>
+          <td class="properties_table" ><%= property.state %></td>
+          <td class="properties_table" align="center"><%= property.num_of_units %></td>
+          <td class="properties_table" align="center"><%= property.slack_channel %></td>
+          <td class="properties_table" align="center"><%= property.sparkle_blshift_pm_templ_name %></td>
+          <td class="properties_table" align="center"><%= property.manager_strikes %></td>
+          <td class="properties_table" ><%= link_to 'Show', property %></td>
+          <td class="properties_table" ><%= link_to 'Edit', edit_property_path(property) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
